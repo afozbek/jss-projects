@@ -9,6 +9,7 @@ public class Rectangle extends Shape {
 		this.width = width;
 	}
 
+	@Override
 	public int drawArea() {
 		return this.height * this.width;
 	}
