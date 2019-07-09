@@ -13,11 +13,11 @@ public class DynamicServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
-        String query = req.getQueryString();
-        String checkString = url + query;
-        System.out.println(checkString);
-        if (checkString.contains("secured")) {
+        System.out.println(url);
+
+        if (url.contains("secured")) {
             resp.setStatus(403);
+            resp.setHeader("Content-Type", "text/plain");
             resp.getWriter().write("Your string contains secured :( ");
         } else {
             resp.setStatus(200);
