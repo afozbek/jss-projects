@@ -1,7 +1,6 @@
 package servlets.training;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +9,8 @@ import java.io.PrintWriter;
 
 //@WebServlet("/servlets.training.ParameterServlet")
 public class ParameterServlet extends HttpServlet {
-    public ParameterServlet() {}
+    public ParameterServlet() {
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,7 +20,7 @@ public class ParameterServlet extends HttpServlet {
         String param = "name";
         String paramValue = req.getParameter(param);
 
-        if(paramValue == null){
+        if (paramValue == null) {
             out.write("Please define the name parameter");
             return;
         }

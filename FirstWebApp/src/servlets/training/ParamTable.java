@@ -10,7 +10,7 @@ import java.io.IOException;
 //@WebServlet("/servlets.training.ParamTable")
 public class ParamTable extends HttpServlet {
     public ParamTable() {}
-
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String name = req.getParameter("name");
