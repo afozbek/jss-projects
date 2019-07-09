@@ -42,15 +42,7 @@ public class AtmServlet extends HttpServlet {
                 break;
             case "DEPOSIT":
                 System.out.println("Okey we get your money now :)");
-                synchronized (lock) {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        System.out.println("Thread cant be waited");
-                    } finally {
-                        this.money += newAmount;
-                    }
-                }
+                this.money += newAmount;
                 System.out.println("Money: $" + this.money);
                 break;
         }
