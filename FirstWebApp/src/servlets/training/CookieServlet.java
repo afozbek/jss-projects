@@ -43,7 +43,7 @@ public class CookieServlet extends HttpServlet {
         }
     }
 
-    //    @Override
+//    @Override
 //    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        String value = req.getParameter("name");
 //
