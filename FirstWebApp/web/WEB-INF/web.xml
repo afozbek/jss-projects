@@ -15,6 +15,19 @@
         <location>/ErrorServlet</location>
     </error-page>
 
+    <welcome-file-list>
+        <welcome-file>/public/public.html</welcome-file>
+    </welcome-file-list>
+
+    <!--    <filter>-->
+    <!--        <filter-name>filterLogin</filter-name>-->
+    <!--        <filter-class>FilterLogin</filter-class>-->
+    <!--    </filter>-->
+    <!--    <filter-mapping>-->
+    <!--        <filter-name>filterLogin</filter-name>-->
+    <!--        <url-pattern>/private/*</url-pattern>-->
+    <!--    </filter-mapping>-->
+
 
     <servlet>
         <servlet-name>SimpleCounterServlet</servlet-name>

@@ -10,7 +10,7 @@ public class Main {
 
     private static void insertUser(){
         String query = "insert into users (first_name, last_name,  is_admin, num_points)" +
-                " values ('Sena','Canim', 1, 13);";
+                       " values ('Sena','Canim', 1, 13);";
         try{
             statement.executeUpdate(query);
             System.out.println("Insert Success");
@@ -56,7 +56,7 @@ public class Main {
 
     public static void main(String[] args) {
         try{
-            String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
+            String url = "jdbc:mysql://localhost:3307/test?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey";
 
             // Creating a connection
             connection = DriverManager.getConnection(url,"root","");
