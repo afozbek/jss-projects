@@ -20,6 +20,6 @@
     <%--    <li><strong>Exception Message</strong>?=${exceptionMessage} </li>--%>
 </ul>
 
-Click <a id="homeUrl" href="index.jsp">home</a>
+Click <a id="homeUrl" href="../../index.jsp">home</a>
 </body>
 </html>
