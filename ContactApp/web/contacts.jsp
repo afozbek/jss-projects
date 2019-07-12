@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>contactapp.Servlets.Contacts</title>
+    <title>Your contacts will be here.</title>
 </head>
 <body>
+<div>
 
+</div>
 </body>
 </html>
