@@ -1,4 +1,4 @@
-package com.contactapp.Servlets;
+package com.contactapp.Servlets.Contact;
 
 import com.db.Database;
 
@@ -8,30 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-@WebServlet("/contact")
-public class ContactServlet extends HttpServlet {
-
+@WebServlet("/add-contact")
+public class AddContactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PreparedStatement statement;
-        ResultSet resultSet;
-        Connection conn = Database.getConnection();
-
-        String query = "select * from contacts;";
-
-        try {
-            statement = conn.prepareStatement(query);
-            resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                System.out.println("Your name: " + resultSet.getString("name") + " Your Phone: " + resultSet.getString("phone"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        req.getRequestDispatcher("contacts.jsp").forward(req, resp);
+        req.getRequestDispatcher("/contact/add-contact.jsp").forward(req, resp);
     }
 
     @Override
@@ -57,7 +42,8 @@ public class ContactServlet extends HttpServlet {
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            req.getRequestDispatcher("/contact/contacts.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("add-contact.jsp").forward(req, resp);
     }
 }
