@@ -5,18 +5,26 @@ import java.util.EventListener;
 
 public class Lesson implements Serializable {
 
+    private int lessonId;
     private String name;
     private int age;
     private double gpa;
 
-    public Lesson() {
-        this("", 0, 0.0);
-    }
-
-    public Lesson(String name, int age, double gpa) {
+    public Lesson(int lessonId, String name, int age, double gpa) {
+        this.lessonId = lessonId;
         this.name = name;
         this.age = age;
         this.gpa = gpa;
+    }
+
+    // Getter Setters
+
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getName() {
@@ -44,11 +52,10 @@ public class Lesson implements Serializable {
     }
 
     public static void main(String[] args) {
-        Lesson lesson = new Lesson();
+        Lesson lesson = new Lesson(1,"Recep", 23, 3.0);
+
         lesson.setAge(23);
         lesson.setGpa(3.0);
         lesson.setName("Recep");
-
-        Lesson recep = new Lesson("Recep", 23, 3.0);
     }
 }
