@@ -11,7 +11,7 @@
 <head>
     <title>Add-Contact</title>
 </head>
-<body style="font-family: monospace; display: flex; justify-content: center; align-items: center; background-color: #000000ed;">
+<body>
 <div class="container">
     <form class="form" action="/add-contact" method="post">
         <div class="inner-container">
