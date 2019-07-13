@@ -1,8 +1,6 @@
 package com.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Database {
     private static Connection connection;
@@ -29,11 +27,36 @@ public class Database {
 
     }
 
-    public static void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static void closeConnection(Connection conn,
+                                       Statement statement)
+            throws SQLException {
+
+
+        if (statement != null) {
+            statement.close();
+        }
+
+        if (conn != null) {
+            conn.close();
         }
     }
+
+    public static void closeConnection(Connection conn,
+                                       Statement statement,
+                                       ResultSet resultSet)
+            throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+
+        if (statement != null) {
+            statement.close();
+        }
+
+        if (conn != null) {
+            conn.close();
+        }
+    }
+
+
 }
