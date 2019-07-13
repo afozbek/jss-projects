@@ -27,10 +27,11 @@ public class ReviewContactServlet extends HttpServlet {
         try {
             statement = conn.prepareStatement(query);
             resultSet = statement.executeQuery();
-            while(resultSet.next()){
-                System.out.println("Your name: " + resultSet.getString("name") + " Your Phone: " + resultSet.getString("phone"));
+            while(resultSet.next()) {
+
             }
 
+            Database.closeConnection(conn, statement, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {

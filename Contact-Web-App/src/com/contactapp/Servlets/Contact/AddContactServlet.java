@@ -38,12 +38,12 @@ public class AddContactServlet extends HttpServlet {
             statement.executeUpdate();
             System.out.println("Insert success");
 
-            statement.close();
-            conn.close();
+
+            Database.closeConnection(conn, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            req.getRequestDispatcher("/contact/contacts.jsp").forward(req, resp);
+            resp.sendRedirect("/contacts");
         }
     }
 }
