@@ -12,5 +12,6 @@
 </head>
 <body>
 <h1>Welcome Page</h1>
+<a href="/contacts">To see your contacts</a>
 </body>
 </html>
