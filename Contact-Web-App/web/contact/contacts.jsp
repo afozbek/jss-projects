@@ -12,7 +12,8 @@
 </head>
 <body>
 <div>
-
+    <h1>Furkan Özbek</h1>
+    <a href="/add-contact">To add contact</a>
 </div>
 </body>
 </html>
