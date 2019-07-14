@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 @WebServlet("/add-contact")
 public class AddContactServlet extends HttpServlet {
@@ -28,22 +27,7 @@ public class AddContactServlet extends HttpServlet {
         String email = req.getParameter("name");
         String phone = req.getParameter("phone");
 
-        String query = "insert into contacts (name, email, phone)" +
-                " values (?,?,?);";
-        try {
-            statement = conn.prepareStatement(query);
-            statement.setString(1, name);
-            statement.setString(2, email);
-            statement.setString(3, phone);
-            statement.executeUpdate();
-            System.out.println("Insert success");
 
-
-            Database.closeConnection(conn, statement);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            resp.sendRedirect("/contacts");
-        }
+        resp.sendRedirect("/contacts");
     }
 }
