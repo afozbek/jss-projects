@@ -31,7 +31,7 @@
             <input class="button" type="submit" value="POST CONTACT">
         </div>
     </form>
-    <a href="/contacts" style="background: none; color: #f13273; margin:20px auto;">To see your contacts</a>
+    <a href="/contacts">To see your contacts</a>
 </div>
 </body>
 </html>

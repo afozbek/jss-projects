@@ -32,7 +32,7 @@
         </div>
         <input type="hidden" name="id" value="${id}" />
     </form>
-    <a href="/contacts" style="background: none; color: #f13273; margin:20px auto;">To see your contacts</a>
+    <a href="/contacts">To see your contacts</a>
 </div>
 <input type="hidden" name="id" value="${id}" />
 </body>
