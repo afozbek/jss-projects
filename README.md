@@ -1,1 +1,1 @@
-# Java Demo Projects
+# Java Summer School Projects
