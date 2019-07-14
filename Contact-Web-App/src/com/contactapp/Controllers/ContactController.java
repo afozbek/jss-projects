@@ -47,26 +47,26 @@ public class ContactController {
         return contactList;
     }
 
-    public static ContactBean getContact(int id){
+    public static ContactBean getContact(int id) {
         String query = "select * from contacts where id=?";
         conn = Database.getConnection();
         ContactBean contact;
-        try{
+        try {
             statement = conn.prepareStatement(query);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 contact = new ContactBean(id, name, email, phone);
                 return contact;
             }
-        }catch (SQLException | NullPointerException ex){
+        } catch (SQLException | NullPointerException ex) {
             System.out.println(ex.getMessage());
         } finally {
-            try{
+            try {
                 Database.closeConnection(conn, statement, resultSet);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -118,7 +118,7 @@ public class ContactController {
             return statement.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }finally {
+        } finally {
             try {
                 Database.closeConnection(conn, statement, resultSet);
             } catch (SQLException e) {
