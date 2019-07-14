@@ -8,11 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="../css/form-elements.css" rel="stylesheet" />
     <title>Your contacts will be here.</title>
 </head>
 <body>
 <div>
-    <h1>Furkan Özbek</h1>
+    <h1>Your contacts</h1>
     <a href="/add-contact">To add contact</a>
 </div>
 </body>

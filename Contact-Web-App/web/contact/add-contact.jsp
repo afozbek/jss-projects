@@ -5,10 +5,10 @@
   Time: 13:28
   To change this template use File | Settings | File Templates.
 --%>
-<link rel="stylesheet" type="text/css" href="../css/form-elements.css"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="../css/form-elements.css"/>
     <title>Add-Contact</title>
 </head>
 <body>
