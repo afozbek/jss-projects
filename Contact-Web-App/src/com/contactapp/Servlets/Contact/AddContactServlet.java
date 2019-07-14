@@ -1,5 +1,6 @@
 package com.contactapp.Servlets.Contact;
 
+import com.contactapp.Controllers.ContactController;
 import com.db.Database;
 
 import javax.servlet.ServletException;
@@ -27,6 +28,7 @@ public class AddContactServlet extends HttpServlet {
         String email = req.getParameter("name");
         String phone = req.getParameter("phone");
 
+        boolean isInserted = ContactController.addContact(name, email, phone);
 
         resp.sendRedirect("/contacts");
     }
