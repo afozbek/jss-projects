@@ -59,6 +59,7 @@ a {
     margin: 25px;
 }
 
+
 .button {
     min-width: 40%;
     height: 30px;
@@ -87,4 +88,24 @@ a {
     display: flex;
     flex-direction: column;
     width: 350px;
+}
+
+/*
+Table.css
+*/
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f13273;
+    color: black;
 }
