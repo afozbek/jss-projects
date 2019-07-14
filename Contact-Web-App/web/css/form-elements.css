@@ -22,14 +22,17 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 80%;
     margin: 5px;
 }
 
 .form-text {
     width: 70%;
-    border: none;
-    height: 25px;
+    border: 2px solid #f13273;
+    text-underline: #f13273;
+    color: #ef0555;
+    height: 27px;
+    outline: none;
     border-radius: 3px;
     padding: 0 5px;
     margin: 5px 0;
@@ -61,10 +64,18 @@ a {
     height: 30px;
     border-radius: 4px;
     outline: none;
-    background-color: white;
-    border: none;
+    color: inherit;
+    background:none;
+    border: 1px solid;
     cursor: pointer;
     margin: 25px 0;
+}
+
+.button:hover{
+    border: none;
+    background-color: #f13273;
+    color: black;
+    font-weight: 600;
 }
 
 .link-button {
