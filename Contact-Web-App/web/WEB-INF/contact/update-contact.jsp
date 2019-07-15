@@ -34,6 +34,5 @@
     </form>
     <a href="/contacts">To see your contacts</a>
 </div>
-<input type="hidden" name="id" value="${id}" />
 </body>
 </html>

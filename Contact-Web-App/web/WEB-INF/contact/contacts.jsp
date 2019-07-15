@@ -18,20 +18,23 @@
     <div>
         <table>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Operation</th>
+                <th style="text-align: center;">ID</th>
+                <th style="text-align: center;">Name</th>
+                <th style="text-align: center;">Email</th>
+                <th style="text-align: center;">Phone</th>
+                <th style="text-align: center;">Operation</th>
             </tr>
             <%--Update'ler id üzerinden olucak--%>
             <c:forEach var="contact" items="${contactList}">
                 <tr>
-                    <td><c:out value="${contact.getId()}"/></td>
+                    <td style="text-align: center;"><c:out value="${contact.getId()}"/></td>
                     <td><c:out value="${contact.getName()}"/></td>
                     <td><c:out value="${contact.getEmail()}"/></td>
                     <td><c:out value="${contact.getPhone()}"/></td>
-                    <td><a href="/update-contact?id=${contact.getId()}">UPDATE</a></td>
+                    <td class="table-ops">
+                        <span class="table-ops-item"><a href="/update-contact?id=${contact.getId()}">UPDATE</a></span>
+                        <span class="table-ops-item"><a href="/delete-contact?id=${contact.getId()}">DELETE</a></span>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
