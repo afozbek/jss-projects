@@ -127,4 +127,26 @@ public class ContactController {
         }
         return false;
     }
+
+    public static boolean deleteContact(Integer id) {
+        String query = "delete from contacts where id=?;";
+
+        conn = Database.getConnection();
+
+        try {
+            statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                Database.closeConnection(conn, statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
 }

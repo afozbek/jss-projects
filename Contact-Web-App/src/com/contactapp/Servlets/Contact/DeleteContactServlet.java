@@ -46,7 +46,6 @@ public class DeleteContactServlet extends HttpServlet {
         boolean isContactDeleted = false;
 
         if (contactID != null) {
-            // TODO
             isContactDeleted = ContactController.deleteContact(contactID);
         }
         System.out.println(isContactDeleted);
