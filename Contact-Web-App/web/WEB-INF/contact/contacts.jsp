@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="../css/form-elements.css" rel="stylesheet"/>
+    <link href="../../css/form-elements.css" rel="stylesheet"/>
     <title>Your contacts will be here.</title>
 </head>
 <body>

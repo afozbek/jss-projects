@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/form-elements.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/form-elements.css"/>
     <title>Add-Contact</title>
 </head>
 <body>
