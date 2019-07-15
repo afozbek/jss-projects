@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 public class AddContactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/contact/add-contact.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/contact/add-contact.jsp").forward(req, resp);
     }
 
     @Override

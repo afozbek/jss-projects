@@ -20,6 +20,6 @@ public class ReviewContactServlet extends HttpServlet {
 
         req.setAttribute("contactList", contactList);
 
-        req.getRequestDispatcher("/contact/contacts.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/contact/contacts.jsp").forward(req, resp);
     }
 }

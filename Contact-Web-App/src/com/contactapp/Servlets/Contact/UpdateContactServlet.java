@@ -21,7 +21,7 @@ public class UpdateContactServlet extends HttpServlet {
         if (id != null) {
             try {
                 contact = ContactController.getContact(Integer.parseInt(id));
-                if(contact == null){
+                if (contact == null) {
                     throw new NullPointerException();
                 }
                 req.setAttribute("id", id);
@@ -32,7 +32,7 @@ public class UpdateContactServlet extends HttpServlet {
                 System.out.println(ex.getMessage());
             }
         }
-        req.getRequestDispatcher("/contact/update-contact.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/contact/update-contact.jsp").forward(req, resp);
     }
 
 
