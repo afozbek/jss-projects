@@ -1,0 +1,28 @@
+.error-container {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container h1 {
+    margin-bottom: 35px;
+}
+
+.error-list {
+    font-size: 15px;
+    padding: 10px;
+    text-align: start;
+    list-style: none;
+    margin-left: 50px;
+}
+
+.error-item {
+    margin-top: 10px;
+    display: flex;
+}
+
+.error-item span {
+    color: aqua;
+}
