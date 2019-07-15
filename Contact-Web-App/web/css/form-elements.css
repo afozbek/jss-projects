@@ -46,6 +46,18 @@ a {
     width: 70%;
 }
 
+.table-ops {
+    display: flex;
+}
+
+.table-ops-item {
+    margin: 10px;
+}
+
+.table-ops-item a {
+    text-decoration: none;
+}
+
 .inner-container {
     display: flex;
     flex-direction: column;

@@ -19,6 +19,14 @@
         <error-code>500</error-code>
         <location>/error</location>
     </error-page>
-
-
+    <error-page>
+        <!-- Bad Request -->
+        <error-code>400</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <!-- Expectation Failed -->
+        <error-code>417</error-code>
+        <location>/error</location>
+    </error-page>
 </web-app>
