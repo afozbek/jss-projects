@@ -1,9 +1,38 @@
 package assigment2.classes.beans;
 
-public interface Food {
-    void prepare();
+public class Food {
+    private String name;
+    private double price;
+    private int time;
 
-    void cook();
+    @Override
+    public String toString() {
+        return "This food's name: " + getName() +
+                " - This food's price: " + getPrice() +
+                " - This food's prepare time: " + getTime();
+    }
 
-    void send();
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 }

@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface FoodAnnotation {
+
     double price() default 20;
 
     String desc() default "FOOD";
