@@ -42,33 +42,3 @@ public class MainClass {
 
     }
 }
-
-/*
-    ArrayList<Food> foods = new ArrayList<Food>();
-
-        foods.add(new Pizza());
-                foods.add(new Sushi());
-                foods.add(new Kebab());
-
-                for (Food food : foods) {
-                int time = 0;
-                FoodAnnotation foodAnnotation = food.getClass().getAnnotation(FoodAnnotation.class);
-        food.setName(foodAnnotation.desc());
-        food.setPrice(foodAnnotation.price());
-
-        Method[] methods = food.getClass().getDeclaredMethods();
-
-        for (Method method : methods) {
-        TimeAnnotation annotation = method.getAnnotation(TimeAnnotation.class);
-        if (annotation != null) {
-        time += annotation.takes();
-        }
-        }
-        food.setTime(time);
-        }
-
-        for (Food food : foods) {
-        System.out.println(food.toString());
-        }
-
- */
