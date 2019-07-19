@@ -12,5 +12,6 @@
         <module>first</module>
         <module>second</module>
         <module>assingments_3</module>
+        <module>spring-mvc-hello-world</module>
     </modules>
 </project>

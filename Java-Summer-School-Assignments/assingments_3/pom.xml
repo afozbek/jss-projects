@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>assingments_3</artifactId>
+    <artifactId>spring-mvc-hello-world</artifactId>
     <packaging>war</packaging>
 
-    <name>assingments_3 Maven Webapp</name>
+    <name>spring-mvc-hello-world Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -126,7 +126,7 @@
     </dependencies>
 
     <build>
-        <finalName>assingments_3</finalName>
+        <finalName>spring-mvc-hello-world</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
