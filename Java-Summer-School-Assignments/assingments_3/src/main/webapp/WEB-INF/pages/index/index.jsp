@@ -12,8 +12,9 @@
 </head>
 <body>
 <div class="container">
-    <h1>Hello from Maven - Index Page</h1>
+    <h1>Hello from Maven</h1>
     <h2>You have some messages: ${message}</h2>
+    <a href="/login">Please login</a>
 </div>
 </body>
 </html>
