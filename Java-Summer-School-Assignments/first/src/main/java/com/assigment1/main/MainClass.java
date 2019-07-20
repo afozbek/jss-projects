@@ -9,3 +9,4 @@ public class MainClass {
         class3.callMethod();
     }
 }
+

@@ -5,3 +5,5 @@ public class Class1 {
         throw new CustomException();
     }
 }
+
+
