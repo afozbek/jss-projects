@@ -7,10 +7,12 @@ public class Food {
 
     @Override
     public String toString() {
-        return "This food's name: " + getName() +
-                " - This food's price: " + getPrice() +
-                " - This food's prepare time: " + getTime();
+        return "This food's name: " + name +
+                " - This food's price: " + price +
+                " - This food's prepare time: " + time;
     }
+
+    // Getter & Setter
 
     public String getName() {
         return name;

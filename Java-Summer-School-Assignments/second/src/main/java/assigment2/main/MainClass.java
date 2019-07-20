@@ -33,6 +33,7 @@ public class MainClass {
                     time += annotation.takes();
                 }
             }
+
             food.setTime(time);
         }
 

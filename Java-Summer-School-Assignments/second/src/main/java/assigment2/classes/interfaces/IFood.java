@@ -7,3 +7,4 @@ public interface IFood {
 
     void send();
 }
+

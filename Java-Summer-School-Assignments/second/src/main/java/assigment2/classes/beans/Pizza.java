@@ -7,19 +7,16 @@ import assigment2.classes.interfaces.IFood;
 @FoodAnnotation(price = 22.5, desc = "PIZZA")
 public class Pizza extends Food implements IFood {
 
-
-    @TimeAnnotation(takes = 10)
+    @TimeAnnotation(takes = 13)
     public void prepare() {
-
     }
 
-    @TimeAnnotation(takes = 20)
+    @TimeAnnotation(takes = 26)
     public void cook() {
-
     }
 
-    @TimeAnnotation(takes = 15)
+    @TimeAnnotation(takes = 6)
     public void send() {
-
     }
 }
+
