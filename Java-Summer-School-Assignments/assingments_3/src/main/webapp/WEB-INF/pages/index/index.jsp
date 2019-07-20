@@ -3,8 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <%--    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"/>--%>
-
     <spring:url value="/resources/css/style.css" var="styleCSS"/>
 
     <link href="${styleCSS}" rel="stylesheet"/>
@@ -14,7 +12,7 @@
 <div class="container">
     <h1>Hello from Maven</h1>
     <h2>You have some messages: ${message}</h2>
-    <a href="/login">Please login</a>
+    <a href="/auth/login">Please login 😊</a>
 </div>
 </body>
 </html>
