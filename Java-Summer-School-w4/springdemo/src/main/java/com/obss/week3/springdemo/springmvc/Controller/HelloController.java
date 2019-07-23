@@ -2,7 +2,7 @@ package com.obss.week3.springdemo.springmvc.Controller;
 
 import com.obss.week3.springdemo.learningmanagementsystem.model.content.Content;
 import com.obss.week3.springdemo.learningmanagementsystem.model.content.ElearningContent;
-import com.obss.week3.springdemo.springmvc.ResponseMessage.ResponseMessage;
+import com.obss.week3.springdemo.springmvc.Error.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +41,10 @@ public class HelloController {
 
     @PostMapping("/add-content")
     public ResponseEntity<?> addContent(@RequestBody ElearningContent contentObj) {
-        ResponseMessage responseMessage;
+        ErrorMessage errorMessage;
         if (contentObj.getId() == null || contentObj.getName() == null) {
-            responseMessage = new ResponseMessage("Please fill required fields");
-            return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+            errorMessage = new ErrorMessage("Please fill required fields");
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         }
 
         Content existingContent = contents.stream()
@@ -52,8 +52,8 @@ public class HelloController {
                 .findFirst().orElse(null);
 
         if (existingContent != null) {
-            responseMessage = new ResponseMessage("Please Enter Different id");
-            return new ResponseEntity<>(responseMessage, HttpStatus.CONFLICT);
+            errorMessage = new ErrorMessage("Please Enter Different id");
+            return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
         }
 
         contents.add(contentObj);
