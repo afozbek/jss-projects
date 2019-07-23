@@ -24,6 +24,21 @@ public abstract class Content {
                 '}';
     }
 
+    public Content() {
+    }
+
+    public Content(Long id) {
+        this.id = id;
+    }
+
+    public Content(Long id, String name, String url, Date publishDate, Date endDate) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.publishDate = publishDate;
+        this.endDate = endDate;
+    }
+
     public String getUrl() {
         return url;
     }
