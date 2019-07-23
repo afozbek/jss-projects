@@ -12,7 +12,7 @@ public class AcademicCalcUtil implements IHesapla {
     private ICalculator calculator;
 
     @Autowired
-    public AcademicCalcUtil(@Qualifier("scientificCalculator") ICalculator calculator) {
+    public AcademicCalcUtil(@Qualifier("scientific") ICalculator calculator) {
         this.calculator = calculator;
     }
 

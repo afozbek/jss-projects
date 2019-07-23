@@ -3,7 +3,7 @@ package com.obss.week3.springdemo.calculator.component;
 import com.obss.week3.springdemo.calculator.ICalculator;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component(value = "scientific")
 public class ScientificCalculator implements ICalculator {
 
     public ScientificCalculator() {

@@ -12,7 +12,7 @@ public class PrimarySchoolCalcUtil implements IHesapla {
     private ICalculator calculator;
 
     @Autowired
-    public PrimarySchoolCalcUtil(@Qualifier("simpleCalculator") ICalculator calculator) {
+    public PrimarySchoolCalcUtil(@Qualifier("simple") ICalculator calculator) {
         this.calculator = calculator;
     }
 
