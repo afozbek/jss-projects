@@ -13,6 +13,10 @@ public class ElearningContent extends Content {
         super(id);
     }
 
+    public ElearningContent(Long id, String name, String url) {
+        super(id, name, url);
+    }
+
     public ElearningContent(Long id, String name, String url, Date publishDate, Date endDate) {
         super(id, name, url, publishDate, endDate);
     }

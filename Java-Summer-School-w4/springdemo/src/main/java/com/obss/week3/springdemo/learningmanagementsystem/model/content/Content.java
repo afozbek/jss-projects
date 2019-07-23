@@ -10,6 +10,27 @@ public abstract class Content {
     private Date endDate;
     private double successRatio;
 
+    public Content() {
+    }
+
+    public Content(Long id) {
+        this.id = id;
+    }
+
+    public Content(Long id, String name, String url) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+    }
+
+    public Content(Long id, String name, String url, Date publishDate, Date endDate) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.publishDate = publishDate;
+        this.endDate = endDate;
+    }
+
     public abstract void calculateSuccess();
 
     @Override
@@ -22,21 +43,6 @@ public abstract class Content {
                 ", endDate=" + endDate +
                 ", successRatio=" + successRatio +
                 '}';
-    }
-
-    public Content() {
-    }
-
-    public Content(Long id) {
-        this.id = id;
-    }
-
-    public Content(Long id, String name, String url, Date publishDate, Date endDate) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
-        this.publishDate = publishDate;
-        this.endDate = endDate;
     }
 
     public String getUrl() {
