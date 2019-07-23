@@ -19,26 +19,32 @@ public class HelloController {
     private List<Content> contents = new ArrayList<>();
 
     {
-        contents.add(new ElearningContent(1L, "Furkan", "furkansuper.com", new Date(), new Date()));
-        contents.add(new ElearningContent(2L, "Bilgehan", "bilgehan.com", new Date(), new Date()));
+        contents.add(new ElearningContent(1L, "Furkan", "https://furkansuper.super", new Date(), new Date()));
+        contents.add(new ElearningContent(2L, "Sena", "https://senagizli.vow", new Date(), new Date()));
+        contents.add(new ElearningContent(3L, "Yunus", "https://yemreak.ak", new Date(), new Date()));
+        contents.add(new ElearningContent(4L, "Silan", "https://silanerasmus.bilir", new Date(), new Date()));
     }
 
+    // GET http://localhost:8080/hello
     @GetMapping
     public List<Content> getContents() {
         return contents;
     }
 
+    // GET http://localhost:8080/hello/1
     @GetMapping("/{id}")
     public Content getContent(@PathVariable Long id) {
         return contents.stream().filter((content) -> id.equals(content.getId())).findFirst().orElse(null);
     }
 
+    // GET http://localhost:8080/hello/search
     @GetMapping("/search")
     public List<Content> findContents(@RequestParam String name) {
         return contents.stream().filter((content) -> content.getName()
                 .toLowerCase().contains(name)).collect(Collectors.toList());
     }
 
+    // POST http://localhost:8080/hello/add-content
     @PostMapping("/add-content")
     public ResponseEntity<?> addContent(@RequestBody ElearningContent contentObj) {
         ErrorMessage errorMessage;
