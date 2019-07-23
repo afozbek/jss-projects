@@ -1,9 +1,9 @@
-package com.obss.week3.springdemo.springmvc.Error;
+package com.obss.week3.springdemo.springmvc.Notifications.Messages;
 
-public class ErrorMessage {
+public class Message {
     private String message;
 
-    public ErrorMessage(String message) {
+    public Message(String message) {
         this.message = message;
     }
 
