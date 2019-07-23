@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PrimarySchoolCalcUtil implements IHesapla {
 
-    @Autowired
-    @Qualifier("simpleCalculator")
     private ICalculator calculator;
+
+    @Autowired
+    public PrimarySchoolCalcUtil(@Qualifier("simpleCalculator") ICalculator calculator) {
+        this.calculator = calculator;
+    }
 
     @Override
     public double operate() {

@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class AcademicCalcUtil implements IHesapla {
 
-    @Autowired
-    @Qualifier("scientificCalculator")
-    private ICalculator scientificCalculator;
+    private ICalculator calculator;
 
+    @Autowired
+    public AcademicCalcUtil(@Qualifier("scientificCalculator") ICalculator calculator) {
+        this.calculator = calculator;
+    }
 
     @Override
     public double operate() {
-        return scientificCalculator.sum(5, 6);
+        return calculator.sum(5, 6);
     }
 }
