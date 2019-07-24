@@ -1,4 +1,4 @@
-package com.obss.week3.springdemo.springmvc.DAO;
+package com.obss.week3.springdemo.springwebservice.DAO;
 
 import com.obss.week3.springdemo.learningmanagementsystem.model.content.ElearningContent;
 import org.springframework.data.repository.CrudRepository;

@@ -1,4 +1,4 @@
-package com.obss.week3.springdemo.springmvc.Notifications.Messages;
+package com.obss.week3.springdemo.springwebservice.Notifications.Messages;
 
 public class Message {
     private String message;

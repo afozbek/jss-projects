@@ -1,10 +1,10 @@
-package com.obss.week3.springdemo.springmvc.Controller;
+package com.obss.week3.springdemo.springwebservice.Controller;
 
-import com.obss.week3.springdemo.springmvc.Form.Input;
-import com.obss.week3.springdemo.springmvc.Model.UserEntity;
-import com.obss.week3.springdemo.springmvc.Notifications.Messages.ErrorMessage;
-import com.obss.week3.springdemo.springmvc.Notifications.Messages.InfoMessage;
-import com.obss.week3.springdemo.springmvc.Service.UserService;
+import com.obss.week3.springdemo.springwebservice.Form.Input;
+import com.obss.week3.springdemo.springwebservice.Model.UserEntity;
+import com.obss.week3.springdemo.springwebservice.Notifications.Messages.ErrorMessage;
+import com.obss.week3.springdemo.springwebservice.Notifications.Messages.InfoMessage;
+import com.obss.week3.springdemo.springwebservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

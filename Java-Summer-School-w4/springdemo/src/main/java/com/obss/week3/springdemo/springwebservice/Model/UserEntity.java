@@ -1,4 +1,4 @@
-package com.obss.week3.springdemo.springmvc.Model;
+package com.obss.week3.springdemo.springwebservice.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

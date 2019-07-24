@@ -1,6 +1,6 @@
-package com.obss.week3.springdemo.springmvc.DAO;
+package com.obss.week3.springdemo.springwebservice.DAO;
 
-import com.obss.week3.springdemo.springmvc.Model.UserEntity;
+import com.obss.week3.springdemo.springwebservice.Model.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

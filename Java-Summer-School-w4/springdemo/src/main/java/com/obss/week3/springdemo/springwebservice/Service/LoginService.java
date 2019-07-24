@@ -1,4 +1,4 @@
-package com.obss.week3.springdemo.springmvc.Service;
+package com.obss.week3.springdemo.springwebservice.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

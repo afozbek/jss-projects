@@ -1,4 +1,4 @@
-package com.obss.week3.springdemo.springmvc.Form;
+package com.obss.week3.springdemo.springwebservice.Form;
 
 public class Input {
     private String username;

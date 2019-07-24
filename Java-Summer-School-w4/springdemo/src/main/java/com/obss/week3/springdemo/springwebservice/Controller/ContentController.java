@@ -1,11 +1,11 @@
-package com.obss.week3.springdemo.springmvc.Controller;
+package com.obss.week3.springdemo.springwebservice.Controller;
 
 import com.obss.week3.springdemo.learningmanagementsystem.model.content.Content;
 import com.obss.week3.springdemo.learningmanagementsystem.model.content.ElearningContent;
-import com.obss.week3.springdemo.springmvc.DAO.ContentRepository;
-import com.obss.week3.springdemo.springmvc.Notifications.Messages.ErrorMessage;
-import com.obss.week3.springdemo.springmvc.Notifications.Messages.InfoMessage;
-import com.obss.week3.springdemo.springmvc.Notifications.Messages.Message;
+import com.obss.week3.springdemo.springwebservice.DAO.ContentRepository;
+import com.obss.week3.springdemo.springwebservice.Notifications.Messages.ErrorMessage;
+import com.obss.week3.springdemo.springwebservice.Notifications.Messages.InfoMessage;
+import com.obss.week3.springdemo.springwebservice.Notifications.Messages.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
