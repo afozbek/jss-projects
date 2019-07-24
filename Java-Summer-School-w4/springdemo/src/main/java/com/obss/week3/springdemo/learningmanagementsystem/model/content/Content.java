@@ -31,6 +31,14 @@ public abstract class Content {
         this.endDate = endDate;
     }
 
+    public Content(Long id, String name, String url, Date publishDate, Date endDate, Double ratio) {
+        this.id = id;
+        this.name = name;
+        this.publishDate = publishDate;
+        this.endDate = endDate;
+        this.successRatio = ratio;
+    }
+
     public abstract void calculateSuccess();
 
     @Override
