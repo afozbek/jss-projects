@@ -1,7 +1,7 @@
-package com.obss.movietracker.movietracker.springwebservice.DAO.List;
+package com.obss.movietracker.springwebservice.DAO.List;
 
-import com.obss.movietracker.movietracker.springwebservice.Model.List.FavListEntity;
-import com.obss.movietracker.movietracker.springwebservice.Model.UserEntity;
+import com.obss.movietracker.springwebservice.Model.List.FavListEntity;
+import com.obss.movietracker.springwebservice.Model.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

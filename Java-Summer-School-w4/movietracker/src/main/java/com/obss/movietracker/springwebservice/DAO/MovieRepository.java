@@ -1,6 +1,6 @@
-package com.obss.movietracker.movietracker.springwebservice.DAO;
+package com.obss.movietracker.springwebservice.DAO;
 
-import com.obss.movietracker.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

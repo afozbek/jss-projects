@@ -1,4 +1,4 @@
-package com.obss.movietracker.movietracker.springwebservice.Notifications.Messages;
+package com.obss.movietracker.springwebservice.Notifications.Messages;
 
 public class Message {
     private String message;
