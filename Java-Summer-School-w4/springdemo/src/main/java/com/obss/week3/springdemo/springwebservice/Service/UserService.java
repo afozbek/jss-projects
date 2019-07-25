@@ -9,9 +9,11 @@ import java.util.List;
 
 @Service
 public class UserService {
-
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordService passwordService;
 
     // Get All Users
     public List<UserEntity> getAllUsers() {
@@ -33,6 +35,11 @@ public class UserService {
 
     // Register new userEntity
     public boolean registerUser(UserEntity userEntity) {
+
+        String hashedPassword = passwordService.hashPassword(userEntity.getPassword());
+
+        userEntity.setPassword(hashedPassword);
+
         UserEntity savedUserEntity = userRepository.save(userEntity);
 
         return savedUserEntity != null;

@@ -8,7 +8,12 @@ public class LoginService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordService passwordService;
+
     public boolean login(String username, String password) {
-        return userService.findExistingUser(username, password);
+        String hashedPassword = passwordService.hashPassword(password);
+
+        return userService.findExistingUser(username, hashedPassword);
     }
 }

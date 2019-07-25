@@ -25,6 +25,7 @@ public class LoginController {
         }
 
         if (loginService.login(username, password)) {
+            System.out.println("You can login now");
             return new ResponseEntity<>(new InfoMessage("A big welcome 😊 " + username), HttpStatus.OK);
         }
 
