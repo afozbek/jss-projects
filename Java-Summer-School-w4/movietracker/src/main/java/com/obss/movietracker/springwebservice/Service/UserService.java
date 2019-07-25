@@ -1,11 +1,14 @@
-package com.obss.movietracker.movietracker.springwebservice.Service;
+package com.obss.movietracker.springwebservice.Service;
 
-import com.obss.movietracker.movietracker.springwebservice.DAO.UserRepository;
-import com.obss.movietracker.movietracker.springwebservice.Model.UserEntity;
+import com.obss.movietracker.springwebservice.DAO.MovieRepository;
+import com.obss.movietracker.springwebservice.DAO.UserRepository;
+import com.obss.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -14,6 +17,9 @@ public class UserService {
 
     @Autowired
     private PasswordService passwordService;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     public UserEntity getUserById(Long id) {
         UserEntity user = userRepository.findById(id).get();
@@ -64,4 +70,39 @@ public class UserService {
         return savedUserEntity != null;
     }
 
+    public Map<Long, MovieEntity> addMovieToFavList(Long userId, Long movieId) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        MovieEntity movie = movieRepository.findById(movieId).orElse(null);
+
+        if (user == null || movie == null) {
+            return null;
+        }
+
+        Map<Long, MovieEntity> favList = user.getFavList();
+        favList.put(movieId, movie);
+
+        user.setFavList(favList);
+
+        UserEntity savedUser = userRepository.save(user);
+
+        return favList;
+    }
+
+    public Map<Long, MovieEntity> addMovieToWatchList(Long userId, Long movieId) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        MovieEntity movie = movieRepository.findById(movieId).orElse(null);
+
+        if (user == null || movie == null) {
+            return null;
+        }
+
+        Map<Long, MovieEntity> watchList = user.getWatchList();
+        watchList.put(movieId, movie);
+
+        user.setWatchList(watchList);
+
+        UserEntity savedUser = userRepository.save(user);
+
+        return watchList;
+    }
 }

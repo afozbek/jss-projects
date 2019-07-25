@@ -1,7 +1,7 @@
-package com.obss.movietracker.movietracker.springwebservice.Service;
+package com.obss.movietracker.springwebservice.Service;
 
-import com.obss.movietracker.movietracker.springwebservice.DAO.MovieRepository;
-import com.obss.movietracker.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.DAO.MovieRepository;
+import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

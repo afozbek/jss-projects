@@ -1,4 +1,4 @@
-package com.obss.movietracker.movietracker.springwebservice.Service;
+package com.obss.movietracker.springwebservice.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +11,9 @@ public class LoginService {
     @Autowired
     private PasswordService passwordService;
 
-    public boolean login(String username, String password) {
+    public boolean login(String email, String password) {
         String hashedPassword = passwordService.hashPassword(password);
 
-        return adminService.findExistingUser(username, hashedPassword);
+        return adminService.findExistingUser(email, hashedPassword);
     }
 }
