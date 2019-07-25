@@ -1,13 +1,13 @@
-package com.obss.movietracker.movietracker.springwebservice.Model.List;
+package com.obss.movietracker.springwebservice.Model.List;
 
-import com.obss.movietracker.movietracker.springwebservice.Model.MovieEntity;
-import com.obss.movietracker.movietracker.springwebservice.Model.UserEntity;
+import com.obss.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.UserEntity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "watchList")
-public class WatchListEntity {
+@Table(name = "favList")
+public class FavListEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,7 @@ public class WatchListEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
+
 
     public Long getId() {
         return id;

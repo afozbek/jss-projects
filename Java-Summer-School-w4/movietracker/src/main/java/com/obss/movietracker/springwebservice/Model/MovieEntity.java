@@ -1,4 +1,4 @@
-package com.obss.movietracker.movietracker.springwebservice.Model;
+package com.obss.movietracker.springwebservice.Model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

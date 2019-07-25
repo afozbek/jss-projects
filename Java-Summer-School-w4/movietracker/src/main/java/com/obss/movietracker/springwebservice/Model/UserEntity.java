@@ -1,6 +1,7 @@
-package com.obss.movietracker.movietracker.springwebservice.Model;
+package com.obss.movietracker.springwebservice.Model;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Table(name = "users")
@@ -24,8 +25,15 @@ public class UserEntity {
     @Column
     private boolean status;
 
+    @ElementCollection
+    private Map<Long, MovieEntity> favList;
+
+    @ElementCollection
+    private Map<Long, MovieEntity> watchList;
+
     @Column
     private boolean isAdmin;
+
 
     @Override
     public String toString() {
@@ -36,8 +44,26 @@ public class UserEntity {
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
                 ", status=" + status +
+                ", favList=" + favList +
+                ", watchList=" + watchList +
                 ", isAdmin=" + isAdmin +
                 '}';
+    }
+
+    public Map<Long, MovieEntity> getFavList() {
+        return favList;
+    }
+
+    public void setFavList(Map<Long, MovieEntity> favList) {
+        this.favList = favList;
+    }
+
+    public Map<Long, MovieEntity> getWatchList() {
+        return watchList;
+    }
+
+    public void setWatchList(Map<Long, MovieEntity> watchList) {
+        this.watchList = watchList;
     }
 
     public Long getId() {

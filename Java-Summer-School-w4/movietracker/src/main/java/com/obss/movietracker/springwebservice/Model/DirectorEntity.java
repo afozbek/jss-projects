@@ -1,4 +1,4 @@
-package com.obss.movietracker.movietracker.springwebservice.Model;
+package com.obss.movietracker.springwebservice.Model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,8 +26,16 @@ public class DirectorEntity {
     @Column
     private String birthPlace;
 
-    //    @OneToMany(cascade = CascadeType.ALL)
-    //    private Set<MovieEntity> movies;
+    @Override
+    public String toString() {
+        return "DirectorEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", birthPlace='" + birthPlace + '\'' +
+                '}';
+    }
 
     public Long getId() {
         return id;
