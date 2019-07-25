@@ -1,4 +1,4 @@
-package com.obss.movietracker.movietracker;
+package com.obss.movietracker;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
