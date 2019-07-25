@@ -1,10 +1,10 @@
-package com.obss.movietracker.movietracker.springwebservice.Controller;
+package com.obss.movietracker.springwebservice.Controller.Auth;
 
-import com.obss.movietracker.movietracker.springwebservice.Form.PasswordChangeForm;
-import com.obss.movietracker.movietracker.springwebservice.Model.UserEntity;
-import com.obss.movietracker.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
-import com.obss.movietracker.movietracker.springwebservice.Notifications.Messages.InfoMessage;
-import com.obss.movietracker.movietracker.springwebservice.Service.UserService;
+import com.obss.movietracker.springwebservice.Form.PasswordChangeForm;
+import com.obss.movietracker.springwebservice.Model.UserEntity;
+import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
+import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
+import com.obss.movietracker.springwebservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/password")
+@RequestMapping("/auth/password")
 public class PasswordController {
 
     @Autowired
     private UserService adminService;
-
 
     // UPDATING PASSWORD ✔
     @PutMapping
@@ -34,7 +33,7 @@ public class PasswordController {
         UserEntity user = adminService.findUserByEmail(email);
 
         if (user == null) {
-            return new ResponseEntity<>(new ErrorMessage("User not found"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorMessage("Public not found"), HttpStatus.BAD_REQUEST);
         }
 
         String newPassword = passwordChangeForm.getNewPassword();
