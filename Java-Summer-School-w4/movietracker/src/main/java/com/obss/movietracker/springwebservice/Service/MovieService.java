@@ -1,7 +1,9 @@
 package com.obss.movietracker.springwebservice.Service;
 
 import com.obss.movietracker.springwebservice.DAO.MovieRepository;
+import com.obss.movietracker.springwebservice.Model.DirectorEntity;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.Types.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,8 @@ public class MovieService {
         return movieRepository.findByDirectorDirectorId(directorId);
     }
 
-    public boolean updateMovie(MovieEntity movieEntity) {
+    public boolean updateMovie(MovieEntity movieEntity, DirectorEntity director) {
+        movieEntity.setDirector(director);
 
         MovieEntity savedMovie = movieRepository.save(movieEntity);
 
@@ -46,5 +49,13 @@ public class MovieService {
 
     public MovieEntity getMovieById(Long movieId) {
         return movieRepository.findById(movieId).orElse(null);
+    }
+
+    public List<MovieEntity> getMovieByNameAndGenre(String movieName, Genre genre) {
+        return movieRepository.findByNameAndGenre(movieName, genre);
+    }
+
+    public List<MovieEntity> getMovieByGenre(Genre genre) {
+        return movieRepository.findByGenre(genre);
     }
 }

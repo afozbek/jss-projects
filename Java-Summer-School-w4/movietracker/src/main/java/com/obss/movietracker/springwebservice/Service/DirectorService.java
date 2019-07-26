@@ -17,6 +17,9 @@ public class DirectorService {
     }
 
     public DirectorEntity getDirectorById(Long directorId) {
+        if (directorId == null) {
+            return null;
+        }
         return directorRepository.findById(directorId).orElse(null);
     }
 
