@@ -2,7 +2,7 @@ package com.obss.movietracker.springwebservice.Controller.Auth;
 
 import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
 import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
-import com.obss.movietracker.springwebservice.Service.LoginService;
+import com.obss.movietracker.springwebservice.Service.Auth.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

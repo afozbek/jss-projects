@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/")
@@ -37,7 +37,7 @@ public class IndexController {
 
     @PostMapping("/favList")
     public ResponseEntity<?> addToFavList(Long userId, Long movieId) {
-        Map<Long, MovieEntity> favList = userService.addMovieToFavList(userId, movieId);
+        Set<MovieEntity> favList = userService.addMovieToFavList(userId, movieId);
 
         if (favList == null) {
             return new ResponseEntity<>(new ErrorMessage("Posting to favList failed 😢"), HttpStatus.BAD_REQUEST);
@@ -48,7 +48,7 @@ public class IndexController {
 
     @PostMapping("/watchList")
     public ResponseEntity<?> addToWatchList(Long userId, Long movieId) {
-        Map<Long, MovieEntity> watchList = userService.addMovieToWatchList(userId, movieId);
+        Set<MovieEntity> watchList = userService.addMovieToWatchList(userId, movieId);
 
         if (watchList == null) {
             return new ResponseEntity<>(new ErrorMessage("Posting to watchList failed 😢"), HttpStatus.BAD_REQUEST);

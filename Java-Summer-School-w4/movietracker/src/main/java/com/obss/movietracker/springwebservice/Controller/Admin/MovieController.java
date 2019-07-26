@@ -4,6 +4,7 @@ import com.obss.movietracker.springwebservice.Model.DirectorEntity;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
 import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
+import com.obss.movietracker.springwebservice.Service.DirectorService;
 import com.obss.movietracker.springwebservice.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private DirectorService directorService;
 
     // GET MOVIE OR MOVIES
     @GetMapping
@@ -35,33 +38,43 @@ public class MovieController {
 
     // POST MOVIE
     @PostMapping
-    public ResponseEntity<?> createMovie(@RequestBody MovieEntity movieEntity) {
-        if (movieEntity.getName() == null || movieEntity.getDirector() == null) {
+    public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
+        if (movie.getName() == null || movie.getDirector() == null) {
             return new ResponseEntity<>(new ErrorMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 
-        if (!movieService.updateMovie(movieEntity)) {
+        Long directorId = movie.getDirector().getDirectorId();
+
+        DirectorEntity director = directorService.getDirectorById(directorId);
+
+        if (director == null) {
+            return new ResponseEntity<>("Director was not found", HttpStatus.NOT_FOUND);
+        }
+
+        directorService.updateDirector(director);
+
+        if (!movieService.updateMovie(movie)) {
             return new ResponseEntity<>(new ErrorMessage("Movie Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new ResponseEntity<>(movieService.getMovieByName(movieEntity.getName()), HttpStatus.CREATED);
+        return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
 
     // UPDATE MOVIE
-    @PutMapping
-    public ResponseEntity<?> updateMovie(@RequestBody MovieEntity movie) {
-        String movieName = movie.getName();
-        String genre = movie.getGenre();
-        DirectorEntity director = movie.getDirector();
+    @PutMapping("/{movieId}")
+    public ResponseEntity<?> updateMovie(@PathVariable Long movieId, @RequestBody MovieEntity movieObj) {
+        String movieName = movieObj.getName();
+        String genre = movieObj.getGenre();
+        DirectorEntity director = movieObj.getDirector();
 
         if (movieName == null || genre == null || director == null) {
             return new ResponseEntity<>(new ErrorMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
-        List<MovieEntity> movies = movieService.getMovieByName(movieName);
+        MovieEntity movie = movieService.getMovieById(movieId);
 
-        if (movies == null) {
-            return new ResponseEntity<>(new InfoMessage("Movies not found"), HttpStatus.NOT_FOUND);
+        if (movie == null) {
+            return new ResponseEntity<>(new InfoMessage("Movie was not found"), HttpStatus.NOT_FOUND);
         }
 
         movie.setName(movieName);
@@ -72,7 +85,7 @@ public class MovieController {
             return new ResponseEntity<>(new ErrorMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new ResponseEntity<>(new InfoMessage("Update successfull 😊"), HttpStatus.OK);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
     // DELETE MOVIE
