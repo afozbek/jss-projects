@@ -2,6 +2,7 @@ package com.obss.movietracker.springwebservice.Controller.Admin;
 
 import com.obss.movietracker.springwebservice.Model.DirectorEntity;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.Types.Genre;
 import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
 import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Service.DirectorService;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/movie")
@@ -24,26 +23,18 @@ public class MovieController {
     private DirectorService directorService;
 
     // GET MOVIE OR MOVIES
-    @GetMapping
-    public ResponseEntity<?> getMovies(@RequestParam(required = false, name = "movie") String movieName) {
-
-        List<MovieEntity> movies = movieService.getMovieByName(movieName);
-
-        if (movies.size() == 0) {
-            return new ResponseEntity<>(movieService.getMovies(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(movies, HttpStatus.OK);
-    }
 
     // POST MOVIE
     @PostMapping
     public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
-        if (movie.getName() == null || movie.getDirector() == null) {
+        String movieName = movie.getName();
+        DirectorEntity newDirector = movie.getDirector();
+
+        if (movieName == null || newDirector == null) {
             return new ResponseEntity<>(new ErrorMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 
-        Long directorId = movie.getDirector().getDirectorId();
+        Long directorId = newDirector.getDirectorId();
 
         DirectorEntity director = directorService.getDirectorById(directorId);
 
@@ -53,18 +44,18 @@ public class MovieController {
 
         directorService.updateDirector(director);
 
-        if (!movieService.updateMovie(movie)) {
+        if (!movieService.updateMovie(movie, director)) {
             return new ResponseEntity<>(new ErrorMessage("Movie Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new ResponseEntity<>(movie, HttpStatus.CREATED);
+        return new ResponseEntity<>(movieService.getMovieByName(movie.getName()), HttpStatus.CREATED);
     }
 
     // UPDATE MOVIE
     @PutMapping("/{movieId}")
     public ResponseEntity<?> updateMovie(@PathVariable Long movieId, @RequestBody MovieEntity movieObj) {
         String movieName = movieObj.getName();
-        String genre = movieObj.getGenre();
+        Genre genre = movieObj.getGenreType();
         DirectorEntity director = movieObj.getDirector();
 
         if (movieName == null || genre == null || director == null) {
@@ -78,10 +69,10 @@ public class MovieController {
         }
 
         movie.setName(movieName);
-        movie.setGenre(genre);
+        movie.setGenreType(genre);
         movie.setDirector(director);
 
-        if (!movieService.updateMovie(movie)) {
+        if (!movieService.updateMovie(movie, director)) {
             return new ResponseEntity<>(new ErrorMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
         }
 

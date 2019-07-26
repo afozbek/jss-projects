@@ -1,6 +1,7 @@
 package com.obss.movietracker.springwebservice.Controller.Public;
 
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.Types.Genre;
 import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
 import com.obss.movietracker.springwebservice.Service.MovieService;
 import com.obss.movietracker.springwebservice.Service.UserService;
@@ -23,16 +24,28 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
+    // GET MOVIE OR MOVIES
     @GetMapping("/movies")
-    public ResponseEntity<?> getMovies(@RequestParam(required = false, name = "movie") String movieName) {
+    public ResponseEntity<?> getMovies(@RequestParam(required = false, name = "movie") String movieName,
+                                       @RequestParam(required = false, name = "genre") Genre genre) {
+        List<MovieEntity> movieList;
 
-        List<MovieEntity> movies = movieService.getMovieByName(movieName);
+        if (movieName != null && genre != null) {
+            movieList = movieService.getMovieByNameAndGenre(movieName, genre);
 
-        if (movies.size() == 0) {
-            return new ResponseEntity<>(movieService.getMovies(), HttpStatus.OK);
+        } else if (movieName != null) {
+            movieList = movieService.getMovieByName(movieName);
+
+        } else if (genre != null) {
+            movieList = movieService.getMovieByGenre(genre);
+
+        } else {
+            movieList = movieService.getMovies();
         }
-
-        return new ResponseEntity<>(movies, HttpStatus.OK);
+        if (movieList == null) {
+            return new ResponseEntity<>(new ErrorMessage("Can not retrieve movieList"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 
     @PostMapping("/favList")
