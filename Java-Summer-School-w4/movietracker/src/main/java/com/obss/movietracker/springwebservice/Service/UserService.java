@@ -4,11 +4,12 @@ import com.obss.movietracker.springwebservice.DAO.MovieRepository;
 import com.obss.movietracker.springwebservice.DAO.UserRepository;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
+import com.obss.movietracker.springwebservice.Service.Auth.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -70,7 +71,7 @@ public class UserService {
         return savedUserEntity != null;
     }
 
-    public Map<Long, MovieEntity> addMovieToFavList(Long userId, Long movieId) {
+    public Set<MovieEntity> addMovieToFavList(Long userId, Long movieId) {
         UserEntity user = userRepository.findById(userId).orElse(null);
         MovieEntity movie = movieRepository.findById(movieId).orElse(null);
 
@@ -78,8 +79,8 @@ public class UserService {
             return null;
         }
 
-        Map<Long, MovieEntity> favList = user.getFavList();
-        favList.put(movieId, movie);
+        Set<MovieEntity> favList = user.getFavList();
+        favList.add(movie);
 
         user.setFavList(favList);
 
@@ -88,7 +89,7 @@ public class UserService {
         return favList;
     }
 
-    public Map<Long, MovieEntity> addMovieToWatchList(Long userId, Long movieId) {
+    public Set<MovieEntity> addMovieToWatchList(Long userId, Long movieId) {
         UserEntity user = userRepository.findById(userId).orElse(null);
         MovieEntity movie = movieRepository.findById(movieId).orElse(null);
 
@@ -96,8 +97,8 @@ public class UserService {
             return null;
         }
 
-        Map<Long, MovieEntity> watchList = user.getWatchList();
-        watchList.put(movieId, movie);
+        Set<MovieEntity> watchList = user.getWatchList();
+        watchList.add(movie);
 
         user.setWatchList(watchList);
 

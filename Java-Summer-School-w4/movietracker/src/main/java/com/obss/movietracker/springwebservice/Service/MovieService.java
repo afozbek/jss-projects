@@ -21,6 +21,10 @@ public class MovieService {
         return movieRepository.findByName(movieName);
     }
 
+    public List<MovieEntity> getDirectorsMovies(Long directorId) {
+        return movieRepository.findByDirectorDirectorId(directorId);
+    }
+
     public boolean updateMovie(MovieEntity movieEntity) {
 
         MovieEntity savedMovie = movieRepository.save(movieEntity);
@@ -29,7 +33,7 @@ public class MovieService {
     }
 
     public boolean deleteMovie(Long id) {
-        MovieEntity movie = movieRepository.findById(id).get();
+        MovieEntity movie = movieRepository.findById(id).orElse(null);
 
         if (movie == null) {
             return false;
@@ -40,4 +44,7 @@ public class MovieService {
         return true;
     }
 
+    public MovieEntity getMovieById(Long movieId) {
+        return movieRepository.findById(movieId).orElse(null);
+    }
 }

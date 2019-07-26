@@ -16,6 +16,10 @@ public class DirectorService {
         return directorRepository.findAll();
     }
 
+    public DirectorEntity getDirectorById(Long directorId) {
+        return directorRepository.findById(directorId).orElse(null);
+    }
+
     public List<DirectorEntity> getDirectorByName(String directorName) {
         return directorRepository.findByName(directorName);
     }
@@ -28,7 +32,7 @@ public class DirectorService {
     }
 
     public boolean deleteDirector(Long id) {
-        DirectorEntity director = directorRepository.findById(id).get();
+        DirectorEntity director = directorRepository.findById(id).orElse(null);
 
         if (director == null) {
             return false;

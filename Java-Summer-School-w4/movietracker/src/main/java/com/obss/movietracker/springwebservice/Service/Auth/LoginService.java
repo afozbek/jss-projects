@@ -1,5 +1,6 @@
-package com.obss.movietracker.springwebservice.Service;
+package com.obss.movietracker.springwebservice.Service.Auth;
 
+import com.obss.movietracker.springwebservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
