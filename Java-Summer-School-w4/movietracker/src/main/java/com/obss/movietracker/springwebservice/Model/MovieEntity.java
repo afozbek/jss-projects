@@ -11,7 +11,7 @@ public class MovieEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long movieId;
 
     @Column
     private String name;
@@ -26,14 +26,14 @@ public class MovieEntity {
     @Column
     private String genre;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "directorId")
     private DirectorEntity director;
 
     @Override
     public String toString() {
         return "MovieEntity{" +
-                "id=" + id +
+                "id=" + movieId +
                 ", name='" + name + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", rating=" + rating +
@@ -50,12 +50,12 @@ public class MovieEntity {
         this.director = director;
     }
 
-    public Long getId() {
-        return id;
+    public Long getMovieId() {
+        return movieId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 
     public String getName() {

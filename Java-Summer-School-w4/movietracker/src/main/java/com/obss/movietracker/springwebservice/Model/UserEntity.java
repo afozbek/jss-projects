@@ -1,14 +1,14 @@
 package com.obss.movietracker.springwebservice.Model;
 
 import javax.persistence.*;
-import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     @Column(unique = true)
     private String email;
@@ -26,19 +26,51 @@ public class UserEntity {
     private boolean status;
 
     @ElementCollection
-    private Map<Long, MovieEntity> favList;
+    private Set<MovieEntity> favList;
 
     @ElementCollection
-    private Map<Long, MovieEntity> watchList;
+    private Set<MovieEntity> watchList;
 
     @Column
     private boolean isAdmin;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public UserEntity(String email, String password, boolean isAdmin) {
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public UserEntity(String email, String firstName, String lastName, String password, boolean isAdmin) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public UserEntity(String email, String firstName, String lastName, String password, boolean status, Set<MovieEntity> favList, Set<MovieEntity> watchList, boolean isAdmin) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.status = status;
+        this.favList = favList;
+        this.watchList = watchList;
+        this.isAdmin = isAdmin;
+    }
 
     @Override
     public String toString() {
         return "UserEntity{" +
-                "id=" + id +
+                "id=" + userId +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -50,28 +82,28 @@ public class UserEntity {
                 '}';
     }
 
-    public Map<Long, MovieEntity> getFavList() {
-        return favList;
-    }
-
-    public void setFavList(Map<Long, MovieEntity> favList) {
-        this.favList = favList;
-    }
-
-    public Map<Long, MovieEntity> getWatchList() {
+    public Set<MovieEntity> getWatchList() {
         return watchList;
     }
 
-    public void setWatchList(Map<Long, MovieEntity> watchList) {
+    public void setWatchList(Set<MovieEntity> watchList) {
         this.watchList = watchList;
     }
 
-    public Long getId() {
-        return id;
+    public Set<MovieEntity> getFavList() {
+        return favList;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFavList(Set<MovieEntity> favList) {
+        this.favList = favList;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public boolean isStatus() {
