@@ -13,4 +13,6 @@ public interface MovieRepository extends CrudRepository<MovieEntity, Long> {
     List<MovieEntity> findAll();
 
     List<MovieEntity> findByName(String movieName);
+
+    List<MovieEntity> findByDirectorDirectorId(Long directorId);
 }
