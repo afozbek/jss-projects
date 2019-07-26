@@ -1,5 +1,6 @@
 package com.obss.movietracker.springwebservice.Model;
 
+import com.obss.movietracker.springwebservice.Model.Types.Genre;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,8 +24,9 @@ public class MovieEntity {
     @Column
     private double rating;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private String genre;
+    private Genre genre;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "directorId")
@@ -40,6 +42,14 @@ public class MovieEntity {
                 ", genre='" + genre + '\'' +
                 ", director=" + director +
                 '}';
+    }
+
+    public Genre getGenreType() {
+        return genre;
+    }
+
+    public void setGenreType(Genre genreType) {
+        this.genre = genreType;
     }
 
     public DirectorEntity getDirector() {
@@ -80,13 +90,5 @@ public class MovieEntity {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 }

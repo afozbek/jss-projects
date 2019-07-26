@@ -1,11 +1,9 @@
 package com.obss.movietracker.springwebservice.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "directors")
@@ -28,21 +26,11 @@ public class DirectorEntity {
     @Column
     private String birthPlace;
 
-    @OneToMany(mappedBy = "director", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonIgnore
-    private List<MovieEntity> movies;
+//    @OneToMany(mappedBy = "director", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    @JsonIgnore
+//    private List<MovieEntity> movies;
 
-    @Override
-    public String toString() {
-        return "DirectorEntity{" +
-                "directorId=" + directorId +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", birthDate=" + birthDate +
-                ", birthPlace='" + birthPlace + '\'' +
-                ", movies=" + movies +
-                '}';
-    }
+
 
     public Long getDirectorId() {
         return directorId;
@@ -50,14 +38,6 @@ public class DirectorEntity {
 
     public void setDirectorId(Long directorId) {
         this.directorId = directorId;
-    }
-
-    public List<MovieEntity> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(List<MovieEntity> movies) {
-        this.movies = movies;
     }
 
     public String getName() {
