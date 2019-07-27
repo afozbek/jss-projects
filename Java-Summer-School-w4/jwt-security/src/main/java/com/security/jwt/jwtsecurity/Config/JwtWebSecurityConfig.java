@@ -1,6 +1,5 @@
 package com.security.jwt.jwtsecurity.Config;
 
-import com.security.jwt.jwtsecurity.Security.JwtAuthenticationEntryPoint;
 import com.security.jwt.jwtsecurity.Security.JwtAuthenticationProvider;
 import com.security.jwt.jwtsecurity.Security.JwtAuthenticationTokenFilter;
 import com.security.jwt.jwtsecurity.Security.JwtSuccessHandler;
@@ -21,7 +20,7 @@ import java.util.Collections;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
-public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
+public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationProvider authenticationProvider;
@@ -33,7 +32,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManager() {
         return new ProviderManager(Collections.singletonList(authenticationProvider));
     }
-
 
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilter() {

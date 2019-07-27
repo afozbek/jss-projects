@@ -1,6 +1,7 @@
 package com.security.jwt.jwtsecurity.Model;
 
 public class JwtUser {
+
     private String userName;
     private long id;
     private String role;
