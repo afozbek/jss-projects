@@ -30,8 +30,6 @@ public class DirectorEntity {
 //    @JsonIgnore
 //    private List<MovieEntity> movies;
 
-
-
     public Long getDirectorId() {
         return directorId;
     }

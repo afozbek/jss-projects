@@ -22,8 +22,6 @@ public class MovieController {
     @Autowired
     private DirectorService directorService;
 
-    // GET MOVIE OR MOVIES
-
     // POST MOVIE
     @PostMapping
     public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
