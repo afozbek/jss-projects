@@ -3,6 +3,7 @@ package com.security.jwt.jwtsecurity.Security;
 import com.security.jwt.jwtsecurity.Model.JwtAuthenticationToken;
 import com.security.jwt.jwtsecurity.Model.JwtUser;
 import com.security.jwt.jwtsecurity.Model.JwtUserDetails;
+import com.security.jwt.jwtsecurity.Service.JwtTokenUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -18,7 +19,7 @@ import java.util.List;
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Autowired
-    private JwtValidator jwtValidator;
+    private JwtTokenUtilService jwtTokenUtilService;
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
@@ -29,12 +30,14 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
 
         JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) usernamePasswordAuthenticationToken;
+
         String token = jwtAuthenticationToken.getToken();
 
-        JwtUser jwtUser = jwtValidator.validate(token);
+        JwtUser jwtUser = jwtTokenUtilService.getJwtUserWithToken(token);
 
         if (jwtUser == null) {
             throw new RuntimeException("JWT TOKEN is incorrect");
+
         }
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
