@@ -1,6 +1,7 @@
 package com.security.jwt.jwtsecurity.Model.Jwt;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -38,13 +39,20 @@ public class JwtUserDetails implements UserDetails {
         this.authorities = authorities;
     }
 
-    public JwtUserDetails(String userName, Long id, String token, List<GrantedAuthority> grantedAuthorities) {
+    public JwtUserDetails(String userName, Long id, String token, List<? extends GrantedAuthority> grantedAuthorities) {
 
-        this.userName = userName;
         this.id = id;
+        this.userName = userName;
         this.token = token;
         this.authorities = grantedAuthorities;
 
+    }
+
+    public JwtUserDetails(Long id, String username, String password, List<SimpleGrantedAuthority> authorities) {
+        this.id = id;
+        this.userName = username;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     @Override

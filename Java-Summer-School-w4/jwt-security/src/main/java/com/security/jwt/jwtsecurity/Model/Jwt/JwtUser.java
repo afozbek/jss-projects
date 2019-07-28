@@ -1,6 +1,10 @@
 package com.security.jwt.jwtsecurity.Model.Jwt;
 
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
+
 public class JwtUser {
 
     private Long id;
@@ -9,7 +13,15 @@ public class JwtUser {
 
     private String password;
 
-    private String role;
+    private List<SimpleGrantedAuthority> authorities;
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
     public Long getId() {
         return id;
@@ -17,14 +29,6 @@ public class JwtUser {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getUsername() {

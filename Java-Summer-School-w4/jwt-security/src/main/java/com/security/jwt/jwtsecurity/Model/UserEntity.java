@@ -1,9 +1,11 @@
 package com.security.jwt.jwtsecurity.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -20,8 +22,16 @@ public class UserEntity {
     @JsonIgnore
     private String password;
 
-//    @Enumerated(EnumType.STRING)
-//    private List<Authorities> authorities;
+    @ElementCollection
+    private List<SimpleGrantedAuthority> authorities;
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
     public Long getId() {
         return id;
@@ -46,5 +56,4 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }
