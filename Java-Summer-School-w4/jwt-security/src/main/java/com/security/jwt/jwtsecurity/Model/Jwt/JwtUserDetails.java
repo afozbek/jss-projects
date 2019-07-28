@@ -1,4 +1,4 @@
-package com.security.jwt.jwtsecurity.Model;
+package com.security.jwt.jwtsecurity.Model.Jwt;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,16 +8,34 @@ import java.util.List;
 
 public class JwtUserDetails implements UserDetails {
 
-    private String userName;
-    private String token;
     private Long id;
+
+    private String userName;
+
+    private String password;
+
+    private String token;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtUserDetails() {
     }
 
-    public JwtUserDetails(String userName) {
+    public JwtUserDetails(String userName, String password) {
         this.userName = userName;
+        this.password = password;
+    }
+
+    public JwtUserDetails(String userName, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.userName = userName;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
+    public JwtUserDetails(Long id, String userName, Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.userName = userName;
+        this.authorities = authorities;
     }
 
     public JwtUserDetails(String userName, Long id, String token, List<GrantedAuthority> grantedAuthorities) {
@@ -36,7 +54,7 @@ public class JwtUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override

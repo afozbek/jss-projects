@@ -1,4 +1,4 @@
-package com.security.jwt.jwtsecurity.Model;
+package com.security.jwt.jwtsecurity.Model.Jwt;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

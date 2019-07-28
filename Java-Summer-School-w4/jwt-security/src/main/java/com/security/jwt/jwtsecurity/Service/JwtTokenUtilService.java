@@ -1,6 +1,7 @@
 package com.security.jwt.jwtsecurity.Service;
 
-import com.security.jwt.jwtsecurity.Model.JwtUser;
+import com.security.jwt.jwtsecurity.Model.Jwt.JwtUser;
+import com.security.jwt.jwtsecurity.Model.Jwt.JwtUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -49,12 +50,12 @@ public class JwtTokenUtilService {
         return false;
     }
 
-    public String generateToken(JwtUser jwtUser) {
-        String userName = jwtUser.getUserName();
+    public String generateToken(JwtUserDetails jwtUserDetails) {
+        String userName = jwtUserDetails.getUserName();
         Claims claims = Jwts.claims().setSubject(userName);
 
-        claims.put("userId", String.valueOf(jwtUser.getId()));
-        claims.put("role", jwtUser.getRole());
+        claims.put("userId", String.valueOf(jwtUserDetails.getId()));
+        claims.put("role", String.valueOf(jwtUserDetails.getAuthorities()));
 
         return doGenerateToken(claims);
     }
@@ -72,10 +73,10 @@ public class JwtTokenUtilService {
         return (!isTokenExpired(token) || ignoreTokenExpiration(token));
     }
 
-    public Boolean validateToken(String token, JwtUser jwtUser) {
+    public Boolean validateToken(String token, JwtUserDetails jwtUserDetails) {
         final String username = getUserNameFromToken(token);
 
-        return (username.equals(jwtUser.getUserName()) && !isTokenExpired(token));
+        return (username.equals(jwtUserDetails.getUserName()) && !isTokenExpired(token));
     }
 
     public JwtUser getJwtUserWithToken(String token) {
@@ -90,7 +91,7 @@ public class JwtTokenUtilService {
 
             jwtUser = new JwtUser();
 
-            jwtUser.setUserName(body.getSubject());
+            jwtUser.setUsername(body.getSubject());
             jwtUser.setId(Long.parseLong((String) body.get("userId")));
             jwtUser.setRole((String) body.get("role"));
 
