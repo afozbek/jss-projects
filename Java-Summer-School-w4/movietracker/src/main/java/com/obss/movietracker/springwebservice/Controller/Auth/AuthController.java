@@ -1,20 +1,19 @@
 package com.obss.movietracker.springwebservice.Controller.Auth;
 
-import com.obss.movietracker.springwebservice.Form.PasswordChangeForm;
+import com.obss.movietracker.springwebservice.Exceptions.PasswordWrongException;
+import com.obss.movietracker.springwebservice.Messages.InfoMessage;
+import com.obss.movietracker.springwebservice.Model.Form.PasswordChangeForm;
 import com.obss.movietracker.springwebservice.Model.Jwt.JwtAuthenticationToken;
 import com.obss.movietracker.springwebservice.Model.Jwt.JwtUser;
 import com.obss.movietracker.springwebservice.Model.Jwt.JwtUserDetails;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
-import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
-import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
+import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
+import com.obss.movietracker.springwebservice.Service.Impl.Util.PasswordServiceImpl;
 import com.obss.movietracker.springwebservice.Service.Jwt.JwtTokenUtilService;
-import com.obss.movietracker.springwebservice.Service.Jwt.JwtUserDetailsService;
-import com.obss.movietracker.springwebservice.Service.UserService;
-import com.obss.movietracker.springwebservice.Service.Util.PasswordService;
-import com.obss.movietracker.springwebservice.Service.Util.PasswordWrongException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,35 +21,44 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    private PasswordService passwordService;
+    private PasswordServiceImpl passwordService;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private UserServiceImpl userService;
 
     @Autowired
     private JwtTokenUtilService jwtTokenUtilService;
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping("/protected")
+    public String protectedMethod() {
+        return "HELLO PROTECTED";
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/private")
+    public String privateMethod() {
+        return "HELLO PRIVATE";
+    }
 
     // LOGIN USER ✔
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody JwtUser jwtUser) {
 
         if (jwtUser.getUsername() == null || jwtUser.getPassword() == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
         JwtUserDetails jwtUserDetails;
 
         try {
-            jwtUserDetails = (JwtUserDetails) jwtUserDetailsService
-                    .loadUserByUsernameAndPassword(jwtUser.getUsername(), jwtUser.getPassword());
+            jwtUserDetails = (JwtUserDetails) userService.loadUserByUsernameAndPassword(jwtUser.getUsername(), jwtUser.getPassword());
 
         } catch (UsernameNotFoundException | PasswordWrongException ex) {
             System.out.println(ex.getMessage());
-            return new ResponseEntity<>(new ErrorMessage("Username or password wrong"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Username or password wrong"), HttpStatus.BAD_REQUEST);
         }
 
         String token = jwtTokenUtilService.generateToken(jwtUserDetails);
@@ -62,13 +70,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody JwtUser jwtUser) {
         if (jwtUser.getUsername() == null || jwtUser.getPassword() == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please enter your username and password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please enter your username and password"), HttpStatus.BAD_REQUEST);
         }
 
-        UserEntity user = jwtUserDetailsService.saveUser(jwtUser);
+        UserEntity user = userService.saveUser(jwtUser);
 
         if (user == null) {
-            return new ResponseEntity<>(new ErrorMessage("User Creation failed"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new InfoMessage("User Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
@@ -81,13 +89,13 @@ public class AuthController {
         String password = passwordChangeForm.getPassword();
 
         if (username == null || password == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please enter your username & password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please enter your username & password"), HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = userService.findUserByUsernameAndPassword(username, password);
 
         if (user == null) {
-            return new ResponseEntity<>(new ErrorMessage("User is not found"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("User is not found"), HttpStatus.BAD_REQUEST);
         }
 
         String newPassword = passwordChangeForm.getNewPassword();
@@ -95,8 +103,8 @@ public class AuthController {
 
         user.setPassword(hashedNewPassword);
 
-        userService.saveUser(user);
+        UserEntity updatedUser = userService.saveUser(user);
 
-        return new ResponseEntity<>(new InfoMessage("Successfully updated"), HttpStatus.OK);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 }

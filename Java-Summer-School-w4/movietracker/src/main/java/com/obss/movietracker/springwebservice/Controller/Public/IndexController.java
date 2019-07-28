@@ -1,11 +1,10 @@
 package com.obss.movietracker.springwebservice.Controller.Public;
 
+import com.obss.movietracker.springwebservice.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.Types.Genre;
-import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
-import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
-import com.obss.movietracker.springwebservice.Service.MovieService;
-import com.obss.movietracker.springwebservice.Service.UserService;
+import com.obss.movietracker.springwebservice.Service.Impl.MovieServiceImpl;
+import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +19,10 @@ public class IndexController {
     // GET MOVIE OR MOVIES
 
     @Autowired
-    private MovieService movieService;
+    private MovieServiceImpl movieService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping
     public ResponseEntity<?> hello() {
@@ -49,7 +48,7 @@ public class IndexController {
             movieList = movieService.getMovies();
         }
         if (movieList == null) {
-            return new ResponseEntity<>(new ErrorMessage("Can not retrieve movieList"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Can not retrieve movieList"), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
@@ -59,7 +58,7 @@ public class IndexController {
         Set<MovieEntity> favList = userService.addMovieToFavList(userId, movieId);
 
         if (favList == null) {
-            return new ResponseEntity<>(new ErrorMessage("Posting to favList failed 😢"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Posting to favList failed 😢"), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(favList, HttpStatus.CREATED);
@@ -70,7 +69,7 @@ public class IndexController {
         Set<MovieEntity> watchList = userService.addMovieToWatchList(userId, movieId);
 
         if (watchList == null) {
-            return new ResponseEntity<>(new ErrorMessage("Posting to watchList failed 😢"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Posting to watchList failed 😢"), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(watchList, HttpStatus.CREATED);

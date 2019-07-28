@@ -1,10 +1,9 @@
 package com.obss.movietracker.springwebservice.Controller.Admin;
 
+import com.obss.movietracker.springwebservice.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
-import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
-import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
-import com.obss.movietracker.springwebservice.Service.UserService;
-import com.obss.movietracker.springwebservice.Service.Util.PasswordService;
+import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
+import com.obss.movietracker.springwebservice.Service.Impl.Util.PasswordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private PasswordService passwordService;
+    private PasswordServiceImpl passwordService;
 
     // GET USER OR USERS ✔
     @GetMapping
@@ -37,11 +36,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUsername() == null || userEntity.getPassword() == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please enter your email and password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please enter your email and password"), HttpStatus.BAD_REQUEST);
         }
 
         if (!userService.registerUser(userEntity)) {
-            return new ResponseEntity<>(new ErrorMessage("UserEntity Creation failed"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new InfoMessage("UserEntity Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(userEntity, HttpStatus.CREATED);
@@ -62,7 +61,7 @@ public class UserController {
         }
 
         if (newUsername == null || newPassword == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
         String newHashedPassword = passwordService.hashPassword(newPassword);
@@ -87,6 +86,6 @@ public class UserController {
             return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(new ErrorMessage("Public was not deleted"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new InfoMessage("Public was not deleted"), HttpStatus.BAD_REQUEST);
     }
 }

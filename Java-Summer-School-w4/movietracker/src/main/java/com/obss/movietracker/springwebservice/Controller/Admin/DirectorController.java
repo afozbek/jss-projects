@@ -1,11 +1,10 @@
 package com.obss.movietracker.springwebservice.Controller.Admin;
 
+import com.obss.movietracker.springwebservice.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Model.DirectorEntity;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
-import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
-import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
-import com.obss.movietracker.springwebservice.Service.DirectorService;
-import com.obss.movietracker.springwebservice.Service.MovieService;
+import com.obss.movietracker.springwebservice.Service.Impl.DirectorServiceImpl;
+import com.obss.movietracker.springwebservice.Service.Impl.MovieServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,10 @@ import java.util.List;
 public class DirectorController {
 
     @Autowired
-    private DirectorService directorService;
+    private DirectorServiceImpl directorService;
 
     @Autowired
-    private MovieService movieService;
+    private MovieServiceImpl movieService;
 
     // GET DIRECTOR OR DIRECTORS
     @GetMapping
@@ -42,11 +41,11 @@ public class DirectorController {
     public ResponseEntity<?> createDirector(@RequestBody DirectorEntity director) {
 
         if (director.getName() == null || director.getSurname() == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please fill fields"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please fill fields"), HttpStatus.BAD_REQUEST);
         }
 
         if (!directorService.updateDirector(director)) {
-            return new ResponseEntity<>(new ErrorMessage("Director Creation failed"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new InfoMessage("Director Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(director, HttpStatus.CREATED);
@@ -61,7 +60,7 @@ public class DirectorController {
         Date birthDate = directorObj.getBirthDate();
 
         if (directorName == null || surname == null || birthDate == null) {
-            return new ResponseEntity<>(new ErrorMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
         DirectorEntity director = directorService.getDirectorById(directorId);
@@ -75,7 +74,7 @@ public class DirectorController {
         director.setBirthDate(birthDate);
 
         if (!directorService.updateDirector(directorObj)) {
-            return new ResponseEntity<>(new ErrorMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new InfoMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(director, HttpStatus.OK);
@@ -88,7 +87,7 @@ public class DirectorController {
             return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(new ErrorMessage("Director was not deleted"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new InfoMessage("Director was not deleted"), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/{directorId}/movies")
@@ -96,7 +95,7 @@ public class DirectorController {
         List<MovieEntity> directorMovies = movieService.getDirectorsMovies(directorId);
 
         if (directorMovies == null) {
-            return new ResponseEntity<>(new ErrorMessage("Director or movies not found"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Director or movies not found"), HttpStatus.BAD_REQUEST);
         }
 
         if (directorMovies.size() == 0) {
