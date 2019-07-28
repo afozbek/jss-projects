@@ -46,7 +46,7 @@ public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/auth/**").permitAll()
+                .authorizeRequests().antMatchers("**/auth/**").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("**/rest/**").authenticated()
                 .and()
