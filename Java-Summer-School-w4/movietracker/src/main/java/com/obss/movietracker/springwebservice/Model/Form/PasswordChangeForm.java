@@ -1,4 +1,4 @@
-package com.obss.movietracker.springwebservice.Form;
+package com.obss.movietracker.springwebservice.Model.Form;
 
 public class PasswordChangeForm {
     private String username;

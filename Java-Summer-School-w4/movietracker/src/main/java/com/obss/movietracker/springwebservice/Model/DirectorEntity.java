@@ -26,9 +26,21 @@ public class DirectorEntity {
     @Column
     private String birthPlace;
 
-//    @OneToMany(mappedBy = "director", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JsonIgnore
-//    private List<MovieEntity> movies;
+    public DirectorEntity() {
+    }
+
+    public DirectorEntity(String name, String surname, Date birthDate) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+    }
+
+    public DirectorEntity(String name, String surname, Date birthDate, String birthPlace) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.birthPlace = birthPlace;
+    }
 
     public Long getDirectorId() {
         return directorId;

@@ -63,6 +63,7 @@ public class UserEntity {
         this.watchList = watchList;
     }
 
+
     public String getUsername() {
         return username;
     }

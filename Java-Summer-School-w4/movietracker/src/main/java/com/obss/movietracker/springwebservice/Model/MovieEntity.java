@@ -32,6 +32,18 @@ public class MovieEntity {
     @JoinColumn(name = "directorId")
     private DirectorEntity director;
 
+    public MovieEntity() {
+    }
+
+
+    public MovieEntity(String name, Date releaseDate, double rating, Genre genre, DirectorEntity director) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+        this.genre = genre;
+        this.director = director;
+    }
+
     @Override
     public String toString() {
         return "MovieEntity{" +
