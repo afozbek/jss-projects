@@ -10,7 +10,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
     @Override
     List<UserEntity> findAll();
 
-    UserEntity findByEmail(String email);
+    UserEntity findByUsername(String username);
 
-    UserEntity findByEmailAndPassword(String email, String password);
+    UserEntity findByUsernameAndPassword(String username, String password);
 }
