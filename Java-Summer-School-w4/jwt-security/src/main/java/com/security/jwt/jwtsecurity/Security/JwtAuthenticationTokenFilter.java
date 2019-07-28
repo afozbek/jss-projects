@@ -1,6 +1,6 @@
 package com.security.jwt.jwtsecurity.Security;
 
-import com.security.jwt.jwtsecurity.Model.JwtAuthenticationToken;
+import com.security.jwt.jwtsecurity.Model.Jwt.JwtAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
