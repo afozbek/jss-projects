@@ -4,7 +4,7 @@ import com.obss.movietracker.springwebservice.DAO.MovieRepository;
 import com.obss.movietracker.springwebservice.DAO.UserRepository;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
-import com.obss.movietracker.springwebservice.Service.Auth.PasswordService;
+import com.obss.movietracker.springwebservice.Service.Util.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,12 +51,16 @@ public class UserService {
     }
 
     // Search DB for existing user
-    public boolean findExistingUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password) != null;
+    public boolean findExistingUser(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password) != null;
     }
 
-    public UserEntity findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserEntity findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public UserEntity findUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
     // Register new userEntity

@@ -1,4 +1,4 @@
-package com.obss.movietracker.springwebservice.Service.Auth;
+package com.obss.movietracker.springwebservice.Service.Util;
 
 import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Service;
