@@ -1,6 +1,10 @@
 package com.obss.movietracker.springwebservice.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,7 +15,7 @@ public class UserEntity {
     private Long userId;
 
     @Column(unique = true)
-    private String email;
+    private String username;
 
     @Column
     private String firstName;
@@ -20,6 +24,7 @@ public class UserEntity {
     private String lastName;
 
     @Column
+    @JsonIgnore
     private String password;
 
     @Column
@@ -31,55 +36,47 @@ public class UserEntity {
     @ElementCollection
     private Set<MovieEntity> watchList;
 
-    @Column
-    private boolean isAdmin;
+    @ElementCollection
+    private List<SimpleGrantedAuthority> authorities;
 
     public UserEntity() {
     }
 
-    public UserEntity(String email, String password) {
-        this.email = email;
+    public UserEntity(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public UserEntity(String email, String password, boolean isAdmin) {
-        this.email = email;
+    public UserEntity(String username, String password, List<SimpleGrantedAuthority> authorities) {
+        this.username = username;
         this.password = password;
-        this.isAdmin = isAdmin;
+        this.authorities = authorities;
     }
 
-    public UserEntity(String email, String firstName, String lastName, String password, boolean isAdmin) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
-
-    public UserEntity(String email, String firstName, String lastName, String password, boolean status, Set<MovieEntity> favList, Set<MovieEntity> watchList, boolean isAdmin) {
-        this.email = email;
+    public UserEntity(String username, String firstName, String lastName, String password, boolean status, Set<MovieEntity> favList, Set<MovieEntity> watchList) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.status = status;
         this.favList = favList;
         this.watchList = watchList;
-        this.isAdmin = isAdmin;
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + userId +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", status=" + status +
-                ", favList=" + favList +
-                ", watchList=" + watchList +
-                ", isAdmin=" + isAdmin +
-                '}';
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     public Set<MovieEntity> getWatchList() {
@@ -110,28 +107,12 @@ public class UserEntity {
         return status;
     }
 
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
     public boolean getStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {
