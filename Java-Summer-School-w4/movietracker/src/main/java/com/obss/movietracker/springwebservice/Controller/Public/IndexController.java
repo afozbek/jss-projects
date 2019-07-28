@@ -3,6 +3,7 @@ package com.obss.movietracker.springwebservice.Controller.Public;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.Types.Genre;
 import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
+import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Service.MovieService;
 import com.obss.movietracker.springwebservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class IndexController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public ResponseEntity<?> hello() {
+        return new ResponseEntity<>(new InfoMessage("Hello World"), HttpStatus.OK);
+    }
 
     // GET MOVIE OR MOVIES
     @GetMapping("/movies")

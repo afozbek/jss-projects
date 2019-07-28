@@ -1,16 +1,14 @@
 package com.obss.movietracker.springwebservice.Controller.Admin;
 
-import com.google.common.hash.Hashing;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
 import com.obss.movietracker.springwebservice.Notifications.Messages.ErrorMessage;
 import com.obss.movietracker.springwebservice.Notifications.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Service.UserService;
+import com.obss.movietracker.springwebservice.Service.Util.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -19,11 +17,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordService passwordService;
+
     // GET USER OR USERS ✔
     @GetMapping
-    public ResponseEntity<?> getUsers(@RequestParam(required = false, name = "email") String email) {
+    public ResponseEntity<?> getUsers(@RequestParam(required = false, name = "username") String username) {
 
-        UserEntity userEntity = userService.findUserByEmail(email);
+        UserEntity userEntity = userService.findUserByUsername(username);
 
         if (userEntity == null) {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
@@ -35,7 +36,7 @@ public class UserController {
     // CREATE USER ✔
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
-        if (userEntity.getEmail() == null || userEntity.getPassword() == null) {
+        if (userEntity.getUsername() == null || userEntity.getPassword() == null) {
             return new ResponseEntity<>(new ErrorMessage("Please enter your email and password"), HttpStatus.BAD_REQUEST);
         }
 
@@ -47,27 +48,27 @@ public class UserController {
     }
 
     // UPDATE USER
-    @PutMapping("/{email}")
-    public ResponseEntity<?> updateUser(@PathVariable String email, @RequestBody UserEntity userEntity) {
-        String newEmail = userEntity.getEmail();
+    @PutMapping("/{username}")
+    public ResponseEntity<?> updateUser(@PathVariable String username, @RequestBody UserEntity userEntity) {
+        String newUsername = userEntity.getUsername();
         String newPassword = userEntity.getPassword();
         String newFirstName = userEntity.getFirstName();
         String newLastName = userEntity.getLastName();
 
-        UserEntity user = userService.findUserByEmail(email);
+        UserEntity user = userService.findUserByUsername(username);
 
         if (user == null) {
             return new ResponseEntity<>(new InfoMessage("User was not found"), HttpStatus.NOT_FOUND);
         }
 
-        if (newEmail == null || newPassword == null) {
+        if (newUsername == null || newPassword == null) {
             return new ResponseEntity<>(new ErrorMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
-        String hashedPassword = Hashing.sha256().hashString(newPassword, StandardCharsets.UTF_8).toString();
+        String newHashedPassword = passwordService.hashPassword(newPassword);
 
-        user.setEmail(newEmail);
-        user.setPassword(hashedPassword);
+        user.setUsername(newUsername);
+        user.setPassword(newHashedPassword);
 
         if (newFirstName != null || newLastName != null) {
             user.setFirstName(newFirstName);
@@ -88,5 +89,4 @@ public class UserController {
 
         return new ResponseEntity<>(new ErrorMessage("Public was not deleted"), HttpStatus.BAD_REQUEST);
     }
-
 }
