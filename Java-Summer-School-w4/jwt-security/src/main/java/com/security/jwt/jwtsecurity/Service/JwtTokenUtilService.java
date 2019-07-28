@@ -6,10 +6,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtTokenUtilService {
@@ -54,8 +57,10 @@ public class JwtTokenUtilService {
         String userName = jwtUserDetails.getUserName();
         Claims claims = Jwts.claims().setSubject(userName);
 
-        claims.put("userId", String.valueOf(jwtUserDetails.getId()));
-        claims.put("role", String.valueOf(jwtUserDetails.getAuthorities()));
+        claims.put("userId", jwtUserDetails.getId());
+        claims.put("authorities", jwtUserDetails.getAuthorities().stream()
+                .map(s -> s.toString())
+                .collect(Collectors.toList()));
 
         return doGenerateToken(claims);
     }
@@ -91,9 +96,14 @@ public class JwtTokenUtilService {
 
             jwtUser = new JwtUser();
 
+            @SuppressWarnings("unchecked") final List<String> authorities = (List<String>) body.get("authorities", List.class);
+            final List<SimpleGrantedAuthority> auths = authorities.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+
+            jwtUser.setId(body.get("userId", Long.class));
             jwtUser.setUsername(body.getSubject());
-            jwtUser.setId(Long.parseLong((String) body.get("userId")));
-            jwtUser.setRole((String) body.get("role"));
+            jwtUser.setAuthorities(auths);
 
         } catch (Exception ex) {
             System.out.println(ex);

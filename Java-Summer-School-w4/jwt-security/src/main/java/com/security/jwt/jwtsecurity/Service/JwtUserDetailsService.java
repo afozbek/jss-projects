@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -30,7 +28,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with this username: " + username);
         }
 
-        return new JwtUserDetails(username, user.getPassword(), new ArrayList<>());
+        return new JwtUserDetails(user.getId(), username, user.getPassword(), user.getAuthorities());
     }
 
     public UserEntity save(JwtUser user) {
@@ -38,6 +36,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordService.hashPassword(user.getPassword()));
+        newUser.setAuthorities(user.getAuthorities());
 
         return userRepository.save(newUser);
     }
