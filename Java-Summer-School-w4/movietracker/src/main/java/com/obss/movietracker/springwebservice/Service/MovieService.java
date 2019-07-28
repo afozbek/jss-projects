@@ -1,61 +1,26 @@
 package com.obss.movietracker.springwebservice.Service;
 
-import com.obss.movietracker.springwebservice.DAO.MovieRepository;
 import com.obss.movietracker.springwebservice.Model.DirectorEntity;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.Types.Genre;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class MovieService {
+public interface MovieService {
 
-    @Autowired
-    private MovieRepository movieRepository;
+    List<MovieEntity> getMovies();
 
-    public List<MovieEntity> getMovies() {
-        return movieRepository.findAll();
-    }
+    List<MovieEntity> getMovieByName(String movieName);
 
-    public List<MovieEntity> getMovieByName(String movieName) {
-        return movieRepository.findByName(movieName);
-    }
+    List<MovieEntity> getDirectorsMovies(Long directorId);
 
-    public List<MovieEntity> getDirectorsMovies(Long directorId) {
-        return movieRepository.findByDirectorDirectorId(directorId);
-    }
+    boolean updateMovie(MovieEntity movieEntity, DirectorEntity director);
 
-    public boolean updateMovie(MovieEntity movieEntity, DirectorEntity director) {
-        movieEntity.setDirector(director);
+    boolean deleteMovie(Long id);
 
-        MovieEntity savedMovie = movieRepository.save(movieEntity);
+    MovieEntity getMovieById(Long movieId);
 
-        return savedMovie != null;
-    }
+    List<MovieEntity> getMovieByNameAndGenre(String movieName, Genre genre);
 
-    public boolean deleteMovie(Long id) {
-        MovieEntity movie = movieRepository.findById(id).orElse(null);
-
-        if (movie == null) {
-            return false;
-        }
-
-        movieRepository.deleteById(id);
-
-        return true;
-    }
-
-    public MovieEntity getMovieById(Long movieId) {
-        return movieRepository.findById(movieId).orElse(null);
-    }
-
-    public List<MovieEntity> getMovieByNameAndGenre(String movieName, Genre genre) {
-        return movieRepository.findByNameAndGenre(movieName, genre);
-    }
-
-    public List<MovieEntity> getMovieByGenre(Genre genre) {
-        return movieRepository.findByGenre(genre);
-    }
+    List<MovieEntity> getMovieByGenre(Genre genre);
 }
