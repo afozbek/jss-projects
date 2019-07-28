@@ -1,14 +1,20 @@
 package com.obss.movietracker;
 
+import com.obss.movietracker.springwebservice.DAO.DirectorRepository;
+import com.obss.movietracker.springwebservice.DAO.MovieRepository;
 import com.obss.movietracker.springwebservice.DAO.UserRepository;
+import com.obss.movietracker.springwebservice.Model.DirectorEntity;
+import com.obss.movietracker.springwebservice.Model.MovieEntity;
+import com.obss.movietracker.springwebservice.Model.Types.Genre;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
-import com.obss.movietracker.springwebservice.Service.Util.PasswordService;
+import com.obss.movietracker.springwebservice.Service.Impl.Util.PasswordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @SpringBootApplication
 public class MovietrackerApplication implements CommandLineRunner {
@@ -17,7 +23,13 @@ public class MovietrackerApplication implements CommandLineRunner {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordService passwordService;
+    private DirectorRepository directorRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private PasswordServiceImpl passwordService;
 
     public static void main(String[] args) {
 
@@ -29,9 +41,10 @@ public class MovietrackerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        userRepository.save(new UserEntity(
-                "afozbek",
-                passwordService.hashPassword("test"), new ArrayList<>()));
+        userRepository.save(new UserEntity("afozbek", passwordService.hashPassword("test"), new ArrayList<>()));
+        DirectorEntity director = new DirectorEntity("Furkan", "ozbek", new Date(), "Usküdar");
+        directorRepository.save(director);
+        movieRepository.save(new MovieEntity("Interstellar", new Date(), 3.5, Genre.ACTION, director));
     }
 
 }
