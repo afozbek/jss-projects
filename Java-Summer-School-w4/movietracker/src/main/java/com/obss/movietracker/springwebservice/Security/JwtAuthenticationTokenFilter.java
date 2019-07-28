@@ -43,6 +43,8 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
             throws IOException, ServletException {
 
         super.successfulAuthentication(request, response, chain, authResult);
+
+        System.out.println("SUCCESSFULLY AUTHENTICATED");
         chain.doFilter(request, response);
     }
 }

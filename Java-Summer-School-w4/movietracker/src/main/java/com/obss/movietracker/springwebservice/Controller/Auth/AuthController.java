@@ -11,6 +11,7 @@ import com.obss.movietracker.springwebservice.Service.Jwt.JwtTokenUtilService;
 import com.obss.movietracker.springwebservice.Service.Jwt.JwtUserDetailsService;
 import com.obss.movietracker.springwebservice.Service.UserService;
 import com.obss.movietracker.springwebservice.Service.Util.PasswordService;
+import com.obss.movietracker.springwebservice.Service.Util.PasswordWrongException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,8 @@ public class AuthController {
             jwtUserDetails = (JwtUserDetails) jwtUserDetailsService
                     .loadUserByUsernameAndPassword(jwtUser.getUsername(), jwtUser.getPassword());
 
-        } catch (UsernameNotFoundException ex) {
+        } catch (UsernameNotFoundException | PasswordWrongException ex) {
+            System.out.println(ex.getMessage());
             return new ResponseEntity<>(new ErrorMessage("Username or password wrong"), HttpStatus.BAD_REQUEST);
         }
 
