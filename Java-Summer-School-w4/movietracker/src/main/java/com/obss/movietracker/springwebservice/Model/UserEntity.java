@@ -53,6 +53,14 @@ public class UserEntity {
         this.authorities = authorities;
     }
 
+    public UserEntity(String username, String firstName, String lastName, String password, List<SimpleGrantedAuthority> authorities) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     public UserEntity(String username, String firstName, String lastName, String password, boolean status, Set<MovieEntity> favList, Set<MovieEntity> watchList) {
         this.username = username;
         this.firstName = firstName;
