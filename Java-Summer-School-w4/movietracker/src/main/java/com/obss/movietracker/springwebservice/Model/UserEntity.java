@@ -30,6 +30,7 @@ public class UserEntity {
     @Column
     private boolean status;
 
+    // MANY TO MANY
     @ElementCollection
     private Set<MovieEntity> favList;
 

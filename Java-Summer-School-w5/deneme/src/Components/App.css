@@ -1,0 +1,134 @@
+body {
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000ed;
+    color: #f13273;
+    text-align: center;
+    height: 96vh;
+}
+
+a {
+    color: inherit;
+    display: block;
+}
+
+.form {
+    width: 100%;
+}
+
+.form-label {
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
+
+.form-text {
+    width: 70%;
+    border: 2px solid #f13273;
+    text-underline: #f13273;
+    color: #ef0555;
+    height: 27px;
+    outline: none;
+    border-radius: 3px;
+    padding: 0 5px;
+    margin: 5px 0;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.inline-label {
+    width: 30%;
+    justify-content: space-around;
+    display: flex;
+}
+
+.sex-wrapper {
+    width: 100%;
+    padding: 3px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.table-ops {
+    display: flex;
+}
+
+.table-ops-item {
+    margin: 10px;
+}
+
+.table-ops-item a {
+    text-decoration: none;
+}
+
+.inner-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #6b1835a3;
+    border-radius: 50px;
+    padding: 25px;
+}
+
+.header {
+    margin: 25px;
+}
+
+.button {
+    min-width: 40%;
+    height: 30px;
+    border-radius: 4px;
+    outline: none;
+    color: inherit;
+    background: none;
+    border: 1px solid;
+    cursor: pointer;
+    margin: 25px 0;
+}
+
+.button:hover {
+    border: none;
+    background-color: #f13273;
+    color: black;
+    font-weight: 600;
+}
+
+.link-button {
+    background: none;
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+/*
+Table.css
+*/
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f13273;
+    color: black;
+}
