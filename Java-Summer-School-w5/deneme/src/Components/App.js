@@ -1,14 +1,12 @@
 import React from "react";
 
 import "./App.css";
-import TransportContainer from "./TransportApp/TransportContainer";
-import TransportWelcome from "./TransportApp/TransportWelcome";
+import Counter from "./Counter";
 
 const App = props => {
     return (
         <div className="table-app">
-            <TransportWelcome />
-            <TransportContainer />
+            <Counter />
         </div>
     );
 };
