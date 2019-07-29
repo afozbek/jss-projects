@@ -1,12 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000000ed;
+    background-color: black;
     color: #f13273;
     text-align: center;
-    height: 96vh;
 }
 
 a {
@@ -86,6 +87,7 @@ a {
     min-width: 40%;
     height: 30px;
     border-radius: 4px;
+    width: 75px;
     outline: none;
     color: inherit;
     background: none;
@@ -109,7 +111,6 @@ a {
 .container {
     display: flex;
     flex-direction: column;
-    width: 400px;
 }
 
 /*
@@ -124,11 +125,27 @@ table {
 td,
 th {
     border: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 
 tr:nth-child(even) {
     background-color: #f13273;
     color: black;
+}
+
+button:nth-child(odd):hover {
+    background-color: black;
+    color: #f13273;
+}
+
+.table-app {
+    margin: 30px auto;
+    width: 70%;
+}
+.transportWelcome {
+    text-align: start;
+}
+.message-item {
+    margin: 10px;
 }
