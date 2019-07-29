@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 @SpringBootApplication
@@ -41,7 +43,16 @@ public class MovietrackerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        userRepository.save(new UserEntity("afozbek", passwordService.hashPassword("test"), new ArrayList<>()));
+
+        userRepository.save(new UserEntity(
+                "afozbek",
+                "Furkan",
+                "Ozbek",
+                passwordService.hashPassword("test"),
+                new ArrayList<>(
+                        Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"),
+                                new SimpleGrantedAuthority("ROLE_USER"))
+                )));
         DirectorEntity director = new DirectorEntity("Furkan", "ozbek", new Date(), "Usküdar");
         directorRepository.save(director);
         movieRepository.save(new MovieEntity("Interstellar", new Date(), 3.5, Genre.ACTION, director));
