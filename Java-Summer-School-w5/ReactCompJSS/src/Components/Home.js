@@ -16,6 +16,9 @@ const Home = props => {
             <li>
                 <Link to="/counter/5">Count with Counter: 5</Link>
             </li>
+            <li>
+                <Link to="/quiz">To Quiz</Link>
+            </li>
         </ul>
     );
 };
