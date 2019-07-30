@@ -140,11 +140,6 @@ tr:nth-child(even) {
     color: black;
 }
 
-button:nth-child(odd):hover {
-    background-color: black;
-    color: #f13273;
-}
-
 .table-app {
     margin: 30px auto;
     width: 70%;
