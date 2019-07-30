@@ -1,12 +1,12 @@
 import React from "react";
 
 import "./App.css";
-import Counter from "./Counter";
+import AppRouter from "../AppRouter";
 
 const App = props => {
     return (
         <div className="table-app">
-            <Counter />
+            <AppRouter />
         </div>
     );
 };
