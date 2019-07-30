@@ -52,11 +52,6 @@
                     <input class="form-text" id="password" type="password" name="password" required/>
                 </label>
             </div>
-
-            <%--            <label for="password-confirm" class="form-label">--%>
-            <%--                <span class="form-label-text">Confirm Your Password: </span>--%>
-            <%--                <input class="form-text" id="password-confirm" type="password" name="password-confirm" required/>--%>
-            <%--            </label>--%>
             <input class="button" type="submit" value="POST CONTACT">
         </div>
     </form>
