@@ -140,9 +140,12 @@ tr:nth-child(even) {
     color: black;
 }
 
+.sex-util {
+    width: 100%;
+}
 .table-app {
     margin: 30px auto;
-    width: 70%;
+    min-width: 500px;
 }
 .transportWelcome {
     text-align: start;
