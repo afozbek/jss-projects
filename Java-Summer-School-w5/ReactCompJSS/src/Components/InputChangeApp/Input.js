@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Input = props => {
-    const [input, setInput] = useState("Please Type something below");
+    const [input, setInput] = useState("Please Type something below 😉");
     const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -25,6 +25,7 @@ const Input = props => {
             <h1>Window inner width: {width}</h1>
             <p style={{ marginTop: 25 }}>{input}</p>
             <input
+                placeholder="Type something-anything😊"
                 className="form-text"
                 type="text"
                 onChange={inputChangeHandler}
