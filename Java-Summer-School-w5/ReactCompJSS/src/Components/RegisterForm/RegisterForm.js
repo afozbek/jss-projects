@@ -8,6 +8,7 @@ export default class RegisterForm extends Component {
             lastname: "",
             username: "",
             password: "",
+            passwordAgain: "",
             sehir: "istanbul",
             sex: "male",
             confirm: false
@@ -59,13 +60,14 @@ export default class RegisterForm extends Component {
 
     formSubmitHandler = e => {
         e.preventDefault();
-
-        const { password, confirm } = this.state.input;
+        const { password, passwordAgain, confirm } = this.state.input;
 
         if (!confirm) {
             this.setState({ message: "You must confirm the form 😢" });
         } else if (password.length < 4) {
             this.setState({ message: "Please enter longer password" });
+        } else if (password !== passwordAgain) {
+            this.setState({ message: "Your passwords must match" });
         } else {
             this.setState({
                 message: "Successfully registered to the system 😊"
@@ -140,6 +142,21 @@ export default class RegisterForm extends Component {
                                 id="password"
                                 type="password"
                                 name="password"
+                                required
+                            />
+                        </label>
+                    </div>
+                    <div className="form-input">
+                        <label htmlFor="passwordAgain" className="form-label">
+                            <span className="form-label-text">
+                                Password-Ag:
+                            </span>
+                            <input
+                                onChange={this.inputChangeHandler}
+                                className="form-text"
+                                id="passwordAgain"
+                                type="password"
+                                name="passwordAgain"
                                 required
                             />
                         </label>
