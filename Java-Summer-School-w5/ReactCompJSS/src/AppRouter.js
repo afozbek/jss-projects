@@ -12,7 +12,7 @@ const AppRouter = props => {
             <Switch>
                 <Route path="/counter/:count" exact component={Counter} />
                 <Route path="/counter" exact component={Counter} />
-                <Route path="/quiz" exact component={Quiz} />
+                <Route path="/quiz/:page" exact component={Quiz} />
                 <Route path="/register" exact component={RegisterForm} />
                 <Route path="/" exact component={Home} />
             </Switch>
