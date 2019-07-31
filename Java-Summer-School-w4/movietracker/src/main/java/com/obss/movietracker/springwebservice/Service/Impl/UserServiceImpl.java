@@ -78,9 +78,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         try {
             userEntity.setUsername(jwtUser.getUsername());
             userEntity.setPassword(passwordService.hashPassword(jwtUser.getPassword()));
+            userEntity.setFirstName(jwtUser.getFirstName());
+            userEntity.setLastName(jwtUser.getLastName());
             userEntity.setAuthorities(jwtUser.getAuthorities());
 
-            System.out.println("Your login password" + userEntity.getPassword());
         } catch (NullPointerException ex) {
             return null;
         }

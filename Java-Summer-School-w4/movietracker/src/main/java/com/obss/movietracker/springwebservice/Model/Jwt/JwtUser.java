@@ -11,12 +11,33 @@ public class JwtUser {
 
     private String username;
 
+    private String firstName;
+
+    private String lastName;
+
     private String password;
 
     private List<SimpleGrantedAuthority> authorities;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setAuthorities(List<SimpleGrantedAuthority> authorities) {

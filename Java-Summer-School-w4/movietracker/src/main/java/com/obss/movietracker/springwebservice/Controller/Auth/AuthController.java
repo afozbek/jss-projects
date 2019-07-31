@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -32,22 +32,6 @@ public class AuthController {
     @Autowired
     private JwtTokenUtilService jwtTokenUtilService;
 
-    @GetMapping("/deneme")
-    public String deneme(){
-        return "Merhabalar";
-    }
-
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @GetMapping("/protected")
-    public String protectedMethod() {
-        return "HELLO PROTECTED";
-    }
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping("/private")
-    public String privateMethod() {
-        return "HELLO PRIVATE";
-    }
 
     // LOGIN USER ✔
     @PostMapping("/login")
