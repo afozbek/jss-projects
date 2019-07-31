@@ -13,6 +13,15 @@ const Home = props => {
             <li>
                 <Link to="/login">Login</Link>
             </li>
+            <li>
+                <Link to="/users">Users</Link>
+            </li>
+            <li>
+                <Link to="/movies">Movies</Link>
+            </li>
+            <li>
+                <Link to="/directors">Directors</Link>
+            </li>
         </ul>
     );
 };
