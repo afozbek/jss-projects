@@ -1,46 +1,65 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../axios-instance";
 
 import User from "./User";
+import Loading from "../../Util/Loading";
 
 export default class Users extends Component {
     state = {
-        users: []
+        users: [],
+        loading: true
     };
 
     componentDidMount() {
+        const jwttoken = localStorage.getItem("jwttoken");
+
         axios
-            .get("http://localhost:8080/admin/user")
+            .get("/admin/user", {
+                headers: { Authorization: "Bearer " + jwttoken }
+            })
             .then(res => {
                 console.log(res.data);
+
+                this.setState({ users: res.data, loading: false });
             })
             .catch(err => {
                 console.log(err);
+                this.setState({
+                    err,
+                    loading: false
+                });
             });
     }
 
     render() {
+        const users = this.state.users.map(user => {
+            return <User key={user.userId} userData={user} />;
+        });
+
+        const usersTable = (
+            <table>
+                <thead>
+                    <tr>
+                        <th style={{ textAlign: "center" }}>ID</th>
+                        <th style={{ textAlign: "center" }}>Username</th>
+                        <th style={{ textAlign: "center" }}>Name</th>
+                        <th style={{ textAlign: "center" }}>Operation</th>
+                    </tr>
+                </thead>
+
+                <tbody>{users}</tbody>
+            </table>
+        );
+
+        const content = this.state.loading ? <Loading /> : usersTable;
+
         return (
             <div>
                 <h1>Your Users</h1>
-                <div>
-                    <table>
-                        <thead>
-                            <th style={{ textAlign: "center" }}>ID</th>
-                            <th style={{ textAlign: "center" }}>Name</th>
-                            <th style={{ textAlign: "center" }}>Email</th>
-                            <th style={{ textAlign: "center" }}>Phone</th>
-                            <th style={{ textAlign: "center" }}>Operation</th>
-                        </thead>
-
-                        <tbody>
-                            <User />
-                        </tbody>
-                    </table>
-                </div>
-                <Link to="/register" style={{ marginTop: 30 }}>
-                    To add user
+                <div>{content}</div>
+                <Link to="/" style={{ marginTop: 30 }}>
+                    Home Page
                 </Link>
             </div>
         );
