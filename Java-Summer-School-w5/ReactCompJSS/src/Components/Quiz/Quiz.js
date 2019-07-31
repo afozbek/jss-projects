@@ -6,25 +6,56 @@ import Answer from "./Answer";
 
 export default class Quiz extends Component {
     state = {
+        questions: [1, 2, 1, 3, 2, 3, 1, 4],
         message: "",
-        answer: Math.floor(1 + Math.random() * 3),
-        answered: false
+        answer: 0,
+        isNewQuestion: true,
+        answered: false,
+        correctAnswerCount: 0
     };
 
     radioButtonChangeHandler = e => {
-        let checked = e.target.checked;
         let element = e.target;
-
-        console.log(checked, element.value);
 
         if (this.state.answer === +element.value) {
             console.log("DOGRU");
-            this.setState({ message: "DOGRU", answered: true });
+            this.setState(prevState => ({
+                message: "DOGRU",
+                answered: true,
+                correctAnswerCount: prevState.correctAnswerCount + 1
+            }));
         } else {
             console.log("YANLIS");
             this.setState({ message: "YANLIS", answered: true });
         }
     };
+
+    handleLinkClick = () => {
+        const page = this.props.match.params.page;
+
+        if (+page === 8) {
+            this.setState({
+                message:
+                    "YOU FINISHED THE QUIZ. Correct Answers: " +
+                    this.state.correctAnswerCount
+            });
+        } else {
+            this.setState(prevState => ({
+                answer: this.state.questions[+page - 1],
+                answered: false,
+                message: ""
+            }));
+        }
+    };
+
+    componentDidMount() {
+        console.log("CDD called");
+        const page = this.props.match.params.page;
+
+        this.setState(prevState => ({
+            answer: this.state.questions[+page - 1]
+        }));
+    }
 
     render() {
         return (
@@ -69,6 +100,16 @@ export default class Quiz extends Component {
                         </label>
                     </label>
                 </div>
+                {this.props.match.params.page < 9 ? (
+                    <Link
+                        onClick={this.handleLinkClick}
+                        to={"/quiz/" + (+this.props.match.params.page + 1)}
+                    >
+                        Next Question
+                    </Link>
+                ) : (
+                    <Link to="/quiz/1">To start over</Link>
+                )}
             </Fragment>
         );
     }
