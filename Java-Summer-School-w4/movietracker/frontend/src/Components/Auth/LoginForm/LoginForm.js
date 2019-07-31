@@ -1,7 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class LoginForm extends Component {
     state = {
+        userData: {},
         message: "",
         input: {
             username: "",
@@ -24,53 +27,67 @@ class LoginForm extends Component {
 
     formSubmitHandler = e => {
         e.preventDefault();
+
         const { username, password } = this.state.input;
 
-        if (username === "admin" && password === "admin") {
-            this.setState(prevState => ({
-                message: "WELCOME " + prevState.input.username + " 😊"
-            }));
-        } else {
-            this.setState({ message: "Username or Password Wrong 😢" });
-        }
+        axios
+            .post("http://localhost:8080/auth/login", { username, password })
+            .then(res => {
+                console.log(res.data);
+                localStorage.setItem("jwttoken", res.data.token);
+
+                this.setState({
+                    userData: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
     render() {
         return (
-            <form onSubmit={this.formSubmitHandler}>
-                <div className="inner-container">
-                    <h1 className="header">Login Form</h1>
-                    <div className="form-input">
-                        <label htmlFor="username" className="form-label">
-                            <span className="form-label-text">Username: </span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Your username"
-                                id="username"
-                                type="text"
-                                name="username"
-                                required
-                            />
-                        </label>
+            <Fragment>
+                <Link to="/register">To Register</Link>
+                <form onSubmit={this.formSubmitHandler}>
+                    <div className="inner-container">
+                        <h1 className="header">Login Form</h1>
+                        <div className="form-input">
+                            <label htmlFor="username" className="form-label">
+                                <span className="form-label-text">
+                                    Username:{" "}
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Your username"
+                                    id="username"
+                                    type="text"
+                                    name="username"
+                                    required
+                                />
+                            </label>
+                        </div>
+                        <div className="form-input">
+                            <label htmlFor="password" className="form-label">
+                                <span className="form-label-text">
+                                    Password:{" "}
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    placeholder="Enter your password"
+                                    className="form-text"
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    required
+                                />
+                            </label>
+                        </div>
+                        <h3>{this.state.message}</h3>
+                        <input className="button" type="submit" value="LOGIN" />
                     </div>
-                    <div className="form-input">
-                        <label htmlFor="password" className="form-label">
-                            <span className="form-label-text">Password: </span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                placeholder="Enter your password"
-                                className="form-text"
-                                id="password"
-                                type="password"
-                                name="password"
-                                required
-                            />
-                        </label>
-                    </div>
-                    <h3>{this.state.message}</h3>
-                    <input className="button" type="submit" value="LOGIN" />
-                </div>
-            </form>
+                </form>
+            </Fragment>
         );
     }
 }

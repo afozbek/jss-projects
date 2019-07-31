@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default class RegisterForm extends Component {
     state = {
@@ -9,9 +10,7 @@ export default class RegisterForm extends Component {
             lastname: "",
             username: "",
             password: "",
-            passwordAgain: "",
-            sehir: "istanbul",
-            sex: "male",
+            message: "",
             confirm: false
         }
     };
@@ -42,57 +41,42 @@ export default class RegisterForm extends Component {
         }));
     };
 
-    radioButtonChangeHandler = e => {
-        let checked = e.target.checked;
-        let element = e.target;
-
-        console.log(checked, element.value);
-
-        if (checked) {
-            this.setState(prevState => ({
-                ...prevState,
-                input: {
-                    ...prevState.input,
-                    sex: element.value
-                }
-            }));
-        }
-    };
-
     formSubmitHandler = e => {
         e.preventDefault();
-        const { password, passwordAgain, confirm } = this.state.input;
+        const {
+            firstname,
+            lastname,
+            username,
+            password,
+            confirm
+        } = this.state.input;
 
-        if (!confirm) {
-            this.setState({ message: "You must confirm the form 😢" });
-        } else if (password.length < 4) {
-            this.setState({ message: "Please enter longer password" });
-        } else if (password !== passwordAgain) {
-            this.setState({ message: "Your passwords must match" });
-        } else {
-            this.setState({
-                message: "Successfully registered to the system 😊"
+        const responseData = {
+            firstname,
+            lastname,
+            username,
+            password,
+            authorities: confirm ? ["ROLE_ADMIN", "ROLE_USER"] : ["ROLE_USER"]
+        };
+
+        axios
+            .post("http://localhost:8080/auth/register", responseData)
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    message: res.data.username + " successfully registered 😊"
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ message: err.message });
             });
-        }
-    };
-
-    dropDownChangeHandler = e => {
-        let value = e.target.value;
-        let name = e.target.name;
-
-        this.setState(prevState => ({
-            ...prevState,
-            input: {
-                ...prevState.input,
-                [name]: value
-            }
-        }));
     };
 
     render() {
         return (
             <Fragment>
-                <Link to="/">Home Page</Link>
+                <Link to="/login">To login</Link>
                 <form className="form" onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">Register Page</h1>
@@ -145,7 +129,7 @@ export default class RegisterForm extends Component {
                         <div className="form-input">
                             <label htmlFor="password" className="form-label">
                                 <span className="form-label-text">
-                                    Password:{" "}
+                                    Password:
                                 </span>
                                 <input
                                     onChange={this.inputChangeHandler}
@@ -157,85 +141,11 @@ export default class RegisterForm extends Component {
                                 />
                             </label>
                         </div>
-                        <div className="form-input">
-                            <label
-                                htmlFor="passwordAgain"
-                                className="form-label"
-                            >
-                                <span className="form-label-text">
-                                    Password-Ag:
-                                </span>
-                                <input
-                                    onChange={this.inputChangeHandler}
-                                    className="form-text"
-                                    id="passwordAgain"
-                                    type="password"
-                                    name="passwordAgain"
-                                    required
-                                />
-                            </label>
-                        </div>
-                        <div className="form-input">
-                            <label htmlFor="city" className="form-label">
-                                <span className="form-label-text">City: </span>
-                                <select
-                                    onChange={this.dropDownChangeHandler}
-                                    name="sehir"
-                                >
-                                    <option value="istanbul">Istanbul</option>
-                                    <option value="ankara">Ankara</option>
-                                    <option value="izmir">Izmir</option>
-                                </select>
-                            </label>
-                        </div>
 
-                        <div className="form-input sex-util">
-                            <label className="form-label">
-                                <span className="form-label-text">Sex: </span>
-                                <span className="sex-wrapper">
-                                    <label
-                                        htmlFor="male"
-                                        className="inline-label"
-                                    >
-                                        <span className="form-label-radio">
-                                            Male:{" "}
-                                        </span>
-                                        <input
-                                            onChange={
-                                                this.radioButtonChangeHandler
-                                            }
-                                            className="form-radio"
-                                            id="male"
-                                            type="radio"
-                                            name="sex"
-                                            value="male"
-                                        />
-                                    </label>
-                                    <label
-                                        htmlFor="female"
-                                        className="inline-label"
-                                    >
-                                        <span className="form-label-radio">
-                                            Female:
-                                        </span>
-                                        <input
-                                            onChange={
-                                                this.radioButtonChangeHandler
-                                            }
-                                            className="form-radio"
-                                            id="female"
-                                            type="radio"
-                                            value="female"
-                                            name="sex"
-                                        />
-                                    </label>
-                                </span>
-                            </label>
-                        </div>
                         <div className="form-input">
                             <label htmlFor="confirm" className="form-label">
                                 <span className="form-label-text">
-                                    Confirm:{" "}
+                                    Are you an admin:
                                 </span>
                                 <input
                                     onChange={this.confirmChangeHandler}

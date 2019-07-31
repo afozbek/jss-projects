@@ -17,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,6 +31,11 @@ public class AuthController {
 
     @Autowired
     private JwtTokenUtilService jwtTokenUtilService;
+
+    @GetMapping("/deneme")
+    public String deneme(){
+        return "Merhabalar";
+    }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/protected")
@@ -69,6 +75,7 @@ public class AuthController {
     // CREATE USER ✔
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody JwtUser jwtUser) {
+        System.out.println(jwtUser);
         if (jwtUser.getUsername() == null || jwtUser.getPassword() == null) {
             return new ResponseEntity<>(new InfoMessage("Please enter your username and password"), HttpStatus.BAD_REQUEST);
         }
