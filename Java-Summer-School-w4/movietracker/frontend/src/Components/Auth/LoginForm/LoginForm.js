@@ -39,15 +39,19 @@ class LoginForm extends Component {
                 this.setState({
                     userData: res.data
                 });
+
+                this.props.history.push("/users");
             })
             .catch(err => {
                 console.log(err);
             });
     };
+
     render() {
         return (
             <Fragment>
                 <Link to="/register">To Register</Link>
+                <Link to="/users">See Users</Link>
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">Login Form</h1>

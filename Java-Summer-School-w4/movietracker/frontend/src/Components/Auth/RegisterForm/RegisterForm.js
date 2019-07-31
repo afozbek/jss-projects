@@ -6,8 +6,8 @@ export default class RegisterForm extends Component {
     state = {
         message: "",
         input: {
-            firstname: "",
-            lastname: "",
+            firstName: "",
+            lastName: "",
             username: "",
             password: "",
             message: "",
@@ -44,16 +44,16 @@ export default class RegisterForm extends Component {
     formSubmitHandler = e => {
         e.preventDefault();
         const {
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             username,
             password,
             confirm
         } = this.state.input;
 
         const responseData = {
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             username,
             password,
             authorities: confirm ? ["ROLE_ADMIN", "ROLE_USER"] : ["ROLE_USER"]
@@ -77,35 +77,36 @@ export default class RegisterForm extends Component {
         return (
             <Fragment>
                 <Link to="/login">To login</Link>
+                <Link to="/users">See Users</Link>
                 <form className="form" onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">Register Page</h1>
                         <div className="form-input">
-                            <label htmlFor="username" className="form-label">
+                            <label htmlFor="firstName" className="form-label">
                                 <span className="form-label-text">
                                     Firstname :
                                 </span>
                                 <input
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
-                                    id="firstname"
+                                    id="firstName"
                                     type="text"
-                                    name="username"
+                                    name="firstName"
                                     required
                                 />
                             </label>
                         </div>
                         <div className="form-input">
-                            <label htmlFor="username" className="form-label">
+                            <label htmlFor="lastName" className="form-label">
                                 <span className="form-label-text">
                                     Lastname:
                                 </span>
                                 <input
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
-                                    id="lastname"
+                                    id="lastName"
                                     type="text"
-                                    name="username"
+                                    name="lastName"
                                     required
                                 />
                             </label>
