@@ -13,6 +13,7 @@ import UpdateDirector from "./Components/Directors/UpdateDirector";
 import Logout from "./Components/Auth/Logout/Logout";
 import AddMovie from "./Components/Movies/AddMovie";
 import AddUser from "./Components/Users/AddUser";
+import AddDirector from "./Components/Directors/AddDirector";
 import DeleteMovie from "./Components/Movies/DeleteMovie";
 import DeleteMovieConfirm from "./Components/Movies/DeleteMovieConfirm";
 import DeleteUser from "./Components/Users/DeleteUser";
@@ -81,6 +82,7 @@ const AppRouter = props => {
                     exact
                     component={DeleteDirectorConfirm}
                 />
+                <Route path="/add-director" exact component={AddDirector} />
                 <Route path="/" exact component={Home} />
             </Switch>
         </Router>
