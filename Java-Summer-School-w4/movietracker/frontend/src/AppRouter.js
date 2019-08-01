@@ -10,25 +10,32 @@ import Directors from "./Components/Directors/Directors";
 import UpdateUser from "./Components/Users/UpdateUser";
 import UpdateMovie from "./Components/Movies/UpdateMovie";
 import UpdateDirector from "./Components/Directors/UpdateDirector";
+import Logout from "./Components/Auth/Logout/Logout";
+import AddMovie from "./Components/Movies/AddMovie";
 
 const AppRouter = props => {
     return (
         <Router>
             <Switch>
                 <Route path="/login" exact component={LoginForm} />
+                <Route path="/logout" exact component={Logout} />
                 <Route path="/register" exact component={RegisterForm} />
+                {/* USERS */}
                 <Route path="/users" exact component={Users} />
                 <Route
                     path="/update-user/:username"
                     exact
                     component={UpdateUser}
                 />
+                {/* MOVIES */}
                 <Route path="/movies" exact component={Movies} />
                 <Route
                     path="/update-movie/:movieId"
                     exact
                     component={UpdateMovie}
                 />
+                <Route path="/add-movie" exact component={AddMovie} />
+                {/* DIRECTORS */}
                 <Route path="/directors" exact component={Directors} />
                 <Route
                     path="/update-director/:directorId"
