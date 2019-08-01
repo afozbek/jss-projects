@@ -1,16 +1,21 @@
 import React from "react";
 
-const Director = props => {
+import { Link } from "react-router-dom";
 
+const Director = props => {
     const { directorId, name, surname, birthPlace } = props.directorData;
 
-    return < tr >
-        <td>{directorId}</td>
-        <td>{name}</td>
-        <td>{surname}</td>
-        <td>{birthPlace}</td>
-        <td><button className="button">UPDATE</button></td>
-    </tr >
+    return (
+        <tr>
+            <td>{directorId}</td>
+            <td>{name}</td>
+            <td>{surname}</td>
+            <td>{birthPlace}</td>
+            <td>
+                <Link to={`/update-director/${directorId}`}>UPDATE</Link>
+            </td>
+        </tr>
+    );
 };
 
 export default Director;
