@@ -14,6 +14,11 @@ const Director = props => {
             <td>
                 <Link to={`/update-director/${directorId}`}>UPDATE</Link>
             </td>
+            <td>
+                <Link to={`/delete-director-confirm/${directorId}`}>
+                    DELETE
+                </Link>
+            </td>
         </tr>
     );
 };
