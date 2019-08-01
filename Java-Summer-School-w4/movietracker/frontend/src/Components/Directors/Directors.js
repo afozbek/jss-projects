@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../axios-instance";
 
 import Director from "./Director";
 import Loading from "../../Util/Loading";
+import Logout from "../Auth/Logout/Logout";
 
 export default class Directors extends Component {
     state = {
@@ -62,14 +63,17 @@ export default class Directors extends Component {
         const content = this.state.loading ? <Loading /> : directorTable;
 
         return (
-            <div>
-                <h1>Your Directors</h1>
-                <h2>{this.state.message}</h2>
-                <div>{content}</div>
-                <Link to="/" style={{ marginTop: 30 }}>
-                    Home Page
-                </Link>
-            </div>
+            <Fragment>
+                <Logout {...this.props} />
+                <div>
+                    <h1>Your Directors</h1>
+                    <h2>{this.state.message}</h2>
+                    <div>{content}</div>
+                    <Link to="/" style={{ marginTop: 30 }}>
+                        Home Page
+                    </Link>
+                </div>
+            </Fragment>
         );
     }
 }
