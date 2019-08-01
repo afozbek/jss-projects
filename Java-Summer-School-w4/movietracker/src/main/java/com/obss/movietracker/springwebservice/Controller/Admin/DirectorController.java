@@ -55,6 +55,7 @@ public class DirectorController {
         }
 
         DirectorEntity newDirector = directorService.updateDirector(director);
+
         if (newDirector == null) {
             return new ResponseEntity<>(new InfoMessage("Director Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }

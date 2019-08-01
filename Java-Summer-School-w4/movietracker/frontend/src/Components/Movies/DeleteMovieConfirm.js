@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import axios from "../../axios-instance";
+import Loading from "../../Util/Loading";
 
 export default class DeleteMovieConfirm extends Component {
     state = { movieData: {} };
@@ -36,12 +38,14 @@ export default class DeleteMovieConfirm extends Component {
     }
 
     render() {
+        const content = this.state.loading ? (
+            <Loading />
+        ) : (
+            <span>{this.state.directorData.name}</span>
+        );
         return (
             <React.Fragment>
-                <h1>
-                    Are you sure you want to delete movie:{" "}
-                    {this.state.movieData.name}
-                </h1>
+                <h1>Are you sure you want to delete movie: {content}</h1>
                 <button className="button" onClick={this.confirmButtonHandler}>
                     HELL YEAH!
                 </button>
