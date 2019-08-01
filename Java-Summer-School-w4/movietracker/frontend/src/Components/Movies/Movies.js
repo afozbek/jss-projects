@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../axios-instance";
 
 import Movie from "./Movie";
 import Loading from "../../Util/Loading";
+import Logout from "../Auth/Logout/Logout";
 
 export default class Movies extends Component {
     state = {
@@ -61,13 +62,17 @@ export default class Movies extends Component {
         const content = this.state.loading ? <Loading /> : movieTable;
 
         return (
-            <div>
-                <h1>Your Movies</h1>
-                <div>{content}</div>
-                <Link to="/" style={{ marginTop: 30 }}>
-                    Home Page
-                </Link>
-            </div>
+            <Fragment>
+                <Logout {...this.props} />
+                <Link to="/add-movie">ADD A MOVIE</Link>
+                <div>
+                    <h1>Your Movies</h1>
+                    <div>{content}</div>
+                    <Link to="/" style={{ marginTop: 30 }}>
+                        Home Page
+                    </Link>
+                </div>
+            </Fragment>
         );
     }
 }
