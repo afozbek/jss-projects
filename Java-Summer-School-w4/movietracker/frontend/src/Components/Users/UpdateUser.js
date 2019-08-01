@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
+import Logout from "../Auth/Logout/Logout";
 
 export default class UpdateUser extends Component {
     state = {
@@ -90,6 +91,7 @@ export default class UpdateUser extends Component {
     render() {
         return (
             <Fragment>
+                <Logout {...this.props} />
                 <Link to="/register">To Register</Link>
                 <Link to="/users">See Users</Link>
 

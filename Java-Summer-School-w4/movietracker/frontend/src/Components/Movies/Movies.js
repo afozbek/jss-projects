@@ -62,7 +62,7 @@ export default class Movies extends Component {
 
         const body =
             this.state.movies.length < 1 ? (
-                <h1>You don't have any directors</h1>
+                <h1>You don't have any Movies</h1>
             ) : (
                 content
             );

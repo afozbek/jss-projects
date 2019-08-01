@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import axios from "../../axios-instance";
 import Loading from "../../Util/Loading";
+import Logout from "../Auth/Logout/Logout";
 
 export default class DeleteMovieConfirm extends Component {
     state = { movieData: {}, loading: true };
@@ -47,6 +48,7 @@ export default class DeleteMovieConfirm extends Component {
         );
         return (
             <React.Fragment>
+                <Logout {...this.props} />
                 <h1>Are you sure you want to delete movie: {content}</h1>
                 <button className="button" onClick={this.confirmButtonHandler}>
                     HELL YEAH!

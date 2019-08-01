@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
+import Logout from "../Auth/Logout/Logout";
 
 export default class UpdateMovie extends Component {
     state = {
@@ -98,6 +99,7 @@ export default class UpdateMovie extends Component {
     render() {
         return (
             <Fragment>
+                <Logout {...this.props} />
                 <Link to="/movies">To Movies</Link>
                 <Link to="/">Home Page</Link>
 

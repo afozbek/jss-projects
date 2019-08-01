@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
+import Logout from "../Auth/Logout/Logout";
 
 export default class AddMovie extends Component {
     state = {
@@ -61,7 +62,6 @@ export default class AddMovie extends Component {
                 }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     directorData: res.data
                 });
@@ -109,6 +109,10 @@ export default class AddMovie extends Component {
     };
 
     render() {
+        if (this.state.directorData.length < 1) {
+            this.props.history.push("/must-add-director");
+        }
+
         const directors = this.state.directorData.map(director => (
             <option key={director.directorId} value={director.directorId}>
                 {director.name}
@@ -123,6 +127,7 @@ export default class AddMovie extends Component {
 
         return (
             <Fragment>
+                <Logout {...this.props} />
                 <Link to="/movies">To Movies</Link>
                 <Link to="/">Home Page</Link>
 

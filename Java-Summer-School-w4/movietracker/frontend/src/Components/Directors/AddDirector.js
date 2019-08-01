@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
+import Logout from "../Auth/Logout/Logout";
 
 export default class AddMovie extends Component {
     state = {
@@ -117,6 +118,7 @@ export default class AddMovie extends Component {
 
         return (
             <Fragment>
+                <Logout {...this.props} />
                 <Link to="/directors">To Directors</Link>
                 <Link to="/">Home Page</Link>
 

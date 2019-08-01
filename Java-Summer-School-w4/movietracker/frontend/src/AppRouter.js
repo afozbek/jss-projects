@@ -20,6 +20,7 @@ import DeleteUser from "./Components/Users/DeleteUser";
 import DeleteUserConfirm from "./Components/Users/DeleteUserConfirm";
 import DeleteDirector from "./Components/Directors/DeleteDirector";
 import DeleteDirectorConfirm from "./Components/Directors/DeleteDirectorConfirm";
+import MustAddDirector from "./Components/Movies/MustAddDirector";
 
 const AppRouter = props => {
     return (
@@ -65,6 +66,12 @@ const AppRouter = props => {
                     component={DeleteMovie}
                 />
                 <Route path="/add-movie" exact component={AddMovie} />
+                <Route
+                    path="/must-add-director"
+                    exact
+                    component={MustAddDirector}
+                />
+
                 {/* DIRECTORS */}
                 <Route path="/directors" exact component={Directors} />
                 <Route

@@ -60,7 +60,7 @@ export default class Users extends Component {
 
         const body =
             this.state.users.length < 1 ? (
-                <h1>You don't have any directors</h1>
+                <h1>You don't have any Users</h1>
             ) : (
                 content
             );
