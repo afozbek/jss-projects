@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,29 @@ public class IndexController {
 
         return new ResponseEntity<>(favLists, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{username}/favList/{movieId}")
+    public ResponseEntity<?> deleteFromFavList(@PathVariable String username, @PathVariable Long movieId){
+        UserEntity user = userService.getUserByUsername(username);
+
+        Set<MovieEntity> favLists = user.getFavList();
+
+        Set<MovieEntity> newFavList = new HashSet<>();
+
+        for(MovieEntity movie: favLists){
+            if(movie.getMovieId().equals(movieId)){
+                continue;
+            }
+            newFavList.add(movie);
+        }
+
+        user.setFavList(newFavList);
+
+        UserEntity updatedUser = userService.saveUser(user);
+
+        return new ResponseEntity<>(updatedUser.getFavList(), HttpStatus.OK);
+    }
+
 
     @PostMapping("/{userId}/favList/{movieId}")
     public ResponseEntity<?> addToFavList(@PathVariable Long userId,@PathVariable Long movieId) {
