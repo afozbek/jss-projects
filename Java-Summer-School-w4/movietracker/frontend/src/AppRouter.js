@@ -21,7 +21,7 @@ import DeleteUserConfirm from "./Components/Users/DeleteUserConfirm";
 import DeleteDirector from "./Components/Directors/DeleteDirector";
 import DeleteDirectorConfirm from "./Components/Directors/DeleteDirectorConfirm";
 import MustAddDirector from "./Components/Movies/MustAddDirector";
-import FavList from "./Components/Users/FavList/FavList";
+import FavList from "./Components/Users/FavLists/FavLists";
 
 const AppRouter = props => {
     return (
