@@ -85,8 +85,6 @@ export default class AddMovie extends Component {
     formSubmitHandler = e => {
         e.preventDefault();
 
-        this.setState({ loading: true });
-
         const jwttoken = localStorage.getItem("jwttoken");
 
         if (!jwttoken) {
