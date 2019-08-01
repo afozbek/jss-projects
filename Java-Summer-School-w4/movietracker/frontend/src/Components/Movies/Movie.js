@@ -9,6 +9,7 @@ class Movie extends Component {
     state = {
         userId: "",
         movieId: "",
+        favList: {},
         name: "",
         genreType: "",
         rating: "",
@@ -27,9 +28,6 @@ class Movie extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
-                localStorage.setItem("favlist", res.data);
-
                 this.setState({
                     favList: res.data
                 });
@@ -93,7 +91,14 @@ class Movie extends Component {
                 <td>
                     <span
                         style={{ cursor: "pointer" }}
-                        onClick={this.favButtonClickHandler}
+                        onClick={
+                            this.props.isFav
+                                ? () =>
+                                      this.props.favRemoveButtonHandler(
+                                          this.state.movieId
+                                      )
+                                : this.favButtonClickHandler
+                        }
                     >
                         <FontAwesomeIcon icon={faStar} />
                     </span>
