@@ -10,7 +10,8 @@ export default class UpdateUser extends Component {
         message: "",
         input: {
             username: "",
-            name: "",
+            firstName: "",
+            lastName: "",
             password: ""
         }
     };
@@ -44,6 +45,7 @@ export default class UpdateUser extends Component {
                 }
             })
             .then(res => {
+                console.log(res.data);
                 this.setState({
                     userData: res.data
                 });
@@ -64,12 +66,12 @@ export default class UpdateUser extends Component {
 
         const paramUsername = this.props.match.params.username;
 
-        const { username, password, firstName } = this.state.input;
+        const { username, password, firstName, lastName } = this.state.input;
 
         axios
             .put(
                 `/admin/user/${paramUsername}`,
-                { username, password, firstName },
+                { username, password, firstName, lastName },
                 {
                     headers: {
                         Authorization: `Bearer ${jwttoken}`
@@ -78,6 +80,9 @@ export default class UpdateUser extends Component {
             )
             .then(res => {
                 console.log(res.data);
+                this.setState({ userData: res.data });
+
+                this.props.history.push("/users");
             })
             .catch(err => {
                 console.log(err);
@@ -112,15 +117,30 @@ export default class UpdateUser extends Component {
                             </label>
                         </div>
                         <div className="form-input">
-                            <label htmlFor="name" className="form-label">
+                            <label htmlFor="firstName" className="form-label">
                                 <span className="form-label-text">Name:</span>
                                 <input
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     placeholder="Enter Your Name"
-                                    id="name"
+                                    id="firstName"
                                     type="text"
-                                    name="name"
+                                    name="firstName"
+                                />
+                            </label>
+                        </div>
+                        <div className="form-input">
+                            <label htmlFor="lastName" className="form-label">
+                                <span className="form-label-text">
+                                    Last Name:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Your Last Name"
+                                    id="lastName"
+                                    type="text"
+                                    name="lastName"
                                 />
                             </label>
                         </div>
@@ -134,7 +154,7 @@ export default class UpdateUser extends Component {
                                     placeholder="Enter your Password"
                                     className="form-text"
                                     id="password"
-                                    type="text"
+                                    type="password"
                                     name="password"
                                     required
                                 />
