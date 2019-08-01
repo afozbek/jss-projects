@@ -80,14 +80,14 @@ public class UserController {
         user.setUsername(newUsername);
         user.setPassword(newHashedPassword);
 
-        if (newFirstName != null || newLastName != null) {
+        if (newFirstName != null && newLastName != null) {
             user.setFirstName(newFirstName);
             user.setLastName(newLastName);
         }
 
-        userService.saveUser(user);
+        UserEntity updatedUser = userService.saveUser(user);
 
-        return new ResponseEntity<>(new InfoMessage("Update success 😊"), HttpStatus.OK);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     // DELETE USER
