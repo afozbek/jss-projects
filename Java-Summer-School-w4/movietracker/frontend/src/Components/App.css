@@ -55,6 +55,12 @@ a {
     display: flex;
 }
 
+.abs-button {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
 .sex-wrapper {
     width: 100%;
     padding: 3px;
@@ -90,7 +96,7 @@ a {
 }
 
 .button {
-    min-width: 40%;
+    min-width: 100px;
     height: 30px;
     border-radius: 4px;
     width: 75px;
