@@ -41,10 +41,13 @@ export default class DeleteMovieConfirm extends Component {
     }
 
     render() {
+        console.log(this.state.directorData);
         const content = this.state.loading ? (
             <Loading />
         ) : (
-            <span>{this.state.directorData.name}</span>
+            <span>
+                {this.state.directorData ? this.state.directorData.name : null}
+            </span>
         );
         return (
             <React.Fragment>
