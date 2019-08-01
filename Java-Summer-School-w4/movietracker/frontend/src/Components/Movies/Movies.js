@@ -58,26 +58,25 @@ export default class Movies extends Component {
             </table>
         );
 
-        const content = this.state.loading ? <Loading /> : movieTable;
+        const content = this.state.loading ? (
+            <Loading />
+        ) : (
+            <div>
+                <h1>Your Movies</h1>
+                <div>{movieTable}</div>
+                <Link to="/" style={{ marginTop: 30 }}>
+                    Home Page
+                </Link>
+            </div>
+        );
 
-        const body =
-            this.state.movies.length < 1 ? (
-                <h1>You don't have any Movies</h1>
-            ) : (
-                content
-            );
+        // MOVIE YOKSA MESAJ VER
 
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <Link to="/add-movie">ADD A MOVIE</Link>
-                <div>
-                    <h1>Your Movies</h1>
-                    <div>{body}</div>
-                    <Link to="/" style={{ marginTop: 30 }}>
-                        Home Page
-                    </Link>
-                </div>
+                {content}
             </Fragment>
         );
     }
