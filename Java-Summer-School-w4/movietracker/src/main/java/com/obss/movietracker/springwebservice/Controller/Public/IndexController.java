@@ -3,6 +3,7 @@ package com.obss.movietracker.springwebservice.Controller.Public;
 import com.obss.movietracker.springwebservice.Messages.InfoMessage;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.Types.Genre;
+import com.obss.movietracker.springwebservice.Model.UserEntity;
 import com.obss.movietracker.springwebservice.Service.Impl.MovieServiceImpl;
 import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping("/")
 public class IndexController {
@@ -54,8 +56,40 @@ public class IndexController {
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 
-    @PostMapping("/favList")
-    public ResponseEntity<?> addToFavList(Long userId, Long movieId) {
+    @GetMapping("/{username}/favList")
+    public ResponseEntity<?> getFavList(@PathVariable String username){
+        UserEntity user = userService.getUserByUsername(username);
+
+        Set<MovieEntity> favLists = user.getFavList();
+
+        return new ResponseEntity<>(favLists, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{username}/favList/{movieId}")
+    public ResponseEntity<?> deleteFromFavList(@PathVariable String username, @PathVariable Long movieId){
+        UserEntity user = userService.getUserByUsername(username);
+
+        Set<MovieEntity> favLists = user.getFavList();
+
+        Set<MovieEntity> newFavList = new HashSet<>();
+
+        for(MovieEntity movie: favLists){
+            if(movie.getMovieId().equals(movieId)){
+                continue;
+            }
+            newFavList.add(movie);
+        }
+
+        user.setFavList(newFavList);
+
+        UserEntity updatedUser = userService.saveUser(user);
+
+        return new ResponseEntity<>(updatedUser.getFavList(), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/{userId}/favList/{movieId}")
+    public ResponseEntity<?> addToFavList(@PathVariable Long userId,@PathVariable Long movieId) {
         Set<MovieEntity> favList = userService.addMovieToFavList(userId, movieId);
 
         if (favList == null) {
@@ -63,6 +97,15 @@ public class IndexController {
         }
 
         return new ResponseEntity<>(favList, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{username}/watchList")
+    public ResponseEntity<?> getWatchList(@PathVariable String username){
+        UserEntity user = userService.getUserByUsername(username);
+
+        Set<MovieEntity> watchList = user.getWatchList();
+
+        return new ResponseEntity<>(watchList, HttpStatus.OK);
     }
 
     @PostMapping("/watchList")

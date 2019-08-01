@@ -1,6 +1,8 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Director = props => {
     const { directorId, name, surname, birthPlace } = props.directorData;
@@ -12,11 +14,13 @@ const Director = props => {
             <td>{surname}</td>
             <td>{birthPlace}</td>
             <td>
-                <Link to={`/update-director/${directorId}`}>UPDATE</Link>
+                <Link to={`/update-director/${directorId}`}>
+                    <FontAwesomeIcon icon={faEdit} />
+                </Link>
             </td>
             <td>
                 <Link to={`/delete-director-confirm/${directorId}`}>
-                    DELETE
+                    <FontAwesomeIcon icon={faTrash} />
                 </Link>
             </td>
         </tr>

@@ -9,7 +9,6 @@ class Movie extends Component {
     state = {
         userId: "",
         movieId: "",
-        favList: {},
         name: "",
         genreType: "",
         rating: "",
@@ -23,11 +22,15 @@ class Movie extends Component {
             this.props.history.push("/login");
         }
 
+        const username = localStorage.getItem("username");
+
         axios
-            .post(`/${this.state.userId}/favList/${this.state.movieId}`, null, {
+            .delete(`/${username}/favList/${this.state.movieId}`, {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
+                console.log(res.data);
+
                 this.setState({
                     favList: res.data
                 });
@@ -91,16 +94,9 @@ class Movie extends Component {
                 <td>
                     <span
                         style={{ cursor: "pointer" }}
-                        onClick={
-                            this.props.isFav
-                                ? () =>
-                                      this.props.favRemoveButtonHandler(
-                                          this.state.movieId
-                                      )
-                                : this.favButtonClickHandler
-                        }
+                        onClick={this.favButtonClickHandler}
                     >
-                        <FontAwesomeIcon icon={faStar} />
+                        <FontAwesomeIcon icon={faTrash} />
                     </span>
                 </td>
                 <td>{movieId}</td>

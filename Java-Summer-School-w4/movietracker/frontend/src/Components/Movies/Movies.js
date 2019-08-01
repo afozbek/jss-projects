@@ -9,7 +9,42 @@ import Logout from "../Auth/Logout/Logout";
 export default class Movies extends Component {
     state = {
         movies: [],
-        loading: true
+        loading: true,
+        input: {
+            search: ""
+        }
+    };
+
+    inputChangeHandler = e => {
+        let inputName = e.target.name;
+        let value = e.target.value;
+
+        this.setState(prevState => ({
+            ...prevState,
+            input: {
+                ...prevState.input,
+                [inputName]: value
+            }
+        }));
+    };
+
+    searchButtonHandler = e => {
+        const jwttoken = localStorage.getItem("jwttoken");
+
+        axios
+            .get("/movies", {
+                params: { movie: this.state.input.search },
+                headers: { Authorization: "Bearer " + jwttoken }
+            })
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    movies: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     componentDidMount() {
@@ -37,13 +72,16 @@ export default class Movies extends Component {
 
     render() {
         const movies = this.state.movies.map(movie => {
-            return <Movie key={movie.movieId} movieData={movie} />;
+            return (
+                <Movie {...this.props} key={movie.movieId} movieData={movie} />
+            );
         });
 
         const movieTable = (
             <table>
                 <thead>
                     <tr>
+                        <th style={{ textAlign: "center" }}>ADD TO FAV LIST</th>
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Movie Name</th>
                         <th style={{ textAlign: "center" }}>Genre</th>
@@ -75,6 +113,26 @@ export default class Movies extends Component {
         return (
             <Fragment>
                 <Logout {...this.props} />
+                <div className="search">
+                    <div className="form-input">
+                        <label htmlFor="search" className="form-label">
+                            <input
+                                onChange={this.inputChangeHandler}
+                                placeholder="Search..."
+                                className="form-text"
+                                id="search"
+                                type="text"
+                                name="search"
+                            />
+                        </label>
+                    </div>
+                    <button
+                        className="button"
+                        onClick={this.searchButtonHandler}
+                    >
+                        SEARCH
+                    </button>
+                </div>
                 <Link to="/add-movie">ADD A MOVIE</Link>
                 {content}
             </Fragment>
