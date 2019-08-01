@@ -62,13 +62,20 @@ export default class Movies extends Component {
 
         const content = this.state.loading ? <Loading /> : movieTable;
 
+        const body =
+            this.state.movies.length < 1 ? (
+                <h1>You don't have any directors</h1>
+            ) : (
+                content
+            );
+
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <Link to="/add-movie">ADD A MOVIE</Link>
                 <div>
                     <h1>Your Movies</h1>
-                    <div>{content}</div>
+                    <div>{body}</div>
                     <Link to="/" style={{ marginTop: 30 }}>
                         Home Page
                     </Link>

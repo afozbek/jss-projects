@@ -63,13 +63,21 @@ export default class Directors extends Component {
 
         const content = this.state.loading ? <Loading /> : directorTable;
 
+        const body =
+            this.state.directors.length < 1 ? (
+                <h1>You don't have any directors</h1>
+            ) : (
+                content
+            );
+
         return (
             <Fragment>
                 <Logout {...this.props} />
+                <Link to="/add-director">ADD A DIRECTOR</Link>
                 <div>
                     <h1>Your Directors</h1>
                     <h2>{this.state.message}</h2>
-                    <div>{content}</div>
+                    <div>{body}</div>
                     <Link to="/" style={{ marginTop: 30 }}>
                         Home Page
                     </Link>

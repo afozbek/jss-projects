@@ -60,13 +60,20 @@ export default class Users extends Component {
 
         const content = this.state.loading ? <Loading /> : usersTable;
 
+        const body =
+            this.state.users.length < 1 ? (
+                <h1>You don't have any directors</h1>
+            ) : (
+                content
+            );
+
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <Link to="/add-user">ADD A USER</Link>
                 <div>
                     <h1>Your Users</h1>
-                    <div>{content}</div>
+                    <div>{body}</div>
                     <Link to="/" style={{ marginTop: 30 }}>
                         Home Page
                     </Link>
