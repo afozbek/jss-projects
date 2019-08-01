@@ -59,27 +59,32 @@ export default class Directors extends Component {
             </table>
         );
 
-        const content = this.state.loading ? <Loading /> : directorTable;
+        const content = this.state.loading ? (
+            <Loading />
+        ) : (
+            <div>
+                <h1>Your Directors</h1>
+                <h2>{this.state.message}</h2>
+                <div>{directorTable}</div>
+                <Link to="/" style={{ marginTop: 30 }}>
+                    Home Page
+                </Link>
+            </div>
+        );
 
-        const body =
-            this.state.directors.length < 1 ? (
-                <h1>You don't have any directors</h1>
-            ) : (
-                content
-            );
+        // TODO
+        // const body =
+        //     this.state.directors.length === 0 ? (
+        //         <h2>You don't have any directors</h2>
+        //     ) : (
+        //         content
+        //     );
 
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <Link to="/add-director">ADD A DIRECTOR</Link>
-                <div>
-                    <h1>Your Directors</h1>
-                    <h2>{this.state.message}</h2>
-                    <div>{body}</div>
-                    <Link to="/" style={{ marginTop: 30 }}>
-                        Home Page
-                    </Link>
-                </div>
+                {content}
             </Fragment>
         );
     }

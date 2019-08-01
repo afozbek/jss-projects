@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
 import Logout from "../Auth/Logout/Logout";
+import Loading from "../../Util/Loading";
 
 export default class AddMovie extends Component {
     state = {
         directorData: [],
+        loading: true,
         message: "",
         genreTypes: [
             { id: 1, value: "COMEDY" },
@@ -62,17 +64,28 @@ export default class AddMovie extends Component {
                 }
             })
             .then(res => {
-                this.setState({
-                    directorData: res.data
-                });
+                console.log(res.data);
+                if (res.data.length < 1) {
+                    this.props.history.push("/must-add-director");
+                } else {
+                    this.setState({
+                        directorData: res.data,
+                        loading: false
+                    });
+                }
             })
             .catch(err => {
                 console.log(err);
+                this.setState({
+                    loading: false
+                });
             });
     }
 
     formSubmitHandler = e => {
         e.preventDefault();
+
+        this.setState({ loading: true });
 
         const jwttoken = localStorage.getItem("jwttoken");
 
@@ -98,21 +111,21 @@ export default class AddMovie extends Component {
             )
             .then(res => {
                 this.setState({
-                    movieData: res.data
+                    movieData: res.data,
+                    loading: false
                 });
 
                 this.props.history.push("/movies");
             })
             .catch(err => {
                 console.log(err);
+                this.setState({
+                    loading: false
+                });
             });
     };
 
     render() {
-        if (this.state.directorData.length < 1) {
-            this.props.history.push("/must-add-director");
-        }
-
         const directors = this.state.directorData.map(director => (
             <option key={director.directorId} value={director.directorId}>
                 {director.name}
@@ -125,67 +138,64 @@ export default class AddMovie extends Component {
             </option>
         ));
 
+        const form = (
+            <form onSubmit={this.formSubmitHandler}>
+                <div className="inner-container">
+                    <div className="form-input">
+                        <label htmlFor="name" className="form-label">
+                            <span className="form-label-text">Movie Name:</span>
+                            <input
+                                onChange={this.inputChangeHandler}
+                                className="form-text form-label-input"
+                                placeholder="Enter Movie Name"
+                                id="name"
+                                type="text"
+                                name="name"
+                                required
+                            />
+                        </label>
+                    </div>
+
+                    <div className="form-input">
+                        <label htmlFor="genreType" className="form-label">
+                            <span className="form-label-text">
+                                Movie Genre:
+                            </span>
+                            <select
+                                onChange={this.dropDownChangeHandler}
+                                name="genreType"
+                            >
+                                {genreTypes}
+                            </select>
+                        </label>
+                    </div>
+
+                    <div className="form-input">
+                        <label htmlFor="director" className="form-label">
+                            <span className="form-label-text">Director:</span>
+                            <select
+                                onChange={this.dropDownChangeHandler}
+                                name="directorId"
+                            >
+                                {directors}
+                            </select>
+                        </label>
+                    </div>
+
+                    <h3>{this.state.message}</h3>
+                    <input className="button" type="submit" value="ADD MOVIE" />
+                </div>
+            </form>
+        );
+
+        const content = this.state.loading ? <Loading /> : form;
+
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <Link to="/movies">To Movies</Link>
                 <Link to="/">Home Page</Link>
-
-                <form onSubmit={this.formSubmitHandler}>
-                    <div className="inner-container">
-                        <div className="form-input">
-                            <label htmlFor="name" className="form-label">
-                                <span className="form-label-text">
-                                    Movie Name:
-                                </span>
-                                <input
-                                    onChange={this.inputChangeHandler}
-                                    className="form-text form-label-input"
-                                    placeholder="Enter Movie Name"
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    required
-                                />
-                            </label>
-                        </div>
-
-                        <div className="form-input">
-                            <label htmlFor="genreType" className="form-label">
-                                <span className="form-label-text">
-                                    Movie Genre:
-                                </span>
-                                <select
-                                    onChange={this.dropDownChangeHandler}
-                                    name="genreType"
-                                >
-                                    {genreTypes}
-                                </select>
-                            </label>
-                        </div>
-
-                        <div className="form-input">
-                            <label htmlFor="director" className="form-label">
-                                <span className="form-label-text">
-                                    Director:
-                                </span>
-                                <select
-                                    onChange={this.dropDownChangeHandler}
-                                    name="directorId"
-                                >
-                                    {directors}
-                                </select>
-                            </label>
-                        </div>
-
-                        <h3>{this.state.message}</h3>
-                        <input
-                            className="button"
-                            type="submit"
-                            value="ADD MOVIE"
-                        />
-                    </div>
-                </form>
+                {content}
             </Fragment>
         );
     }
