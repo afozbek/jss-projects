@@ -54,8 +54,11 @@ public class MovietrackerApplication implements CommandLineRunner {
                                 new SimpleGrantedAuthority("ROLE_USER"))
                 )));
         DirectorEntity director = new DirectorEntity("Furkan", "ozbek", new Date(), "Usküdar");
+        DirectorEntity director1 = new DirectorEntity("Sena", "Modanlıoglu", new Date(), "Gaziosmanpaşa");
         directorRepository.save(director);
+        directorRepository.save(director1);
         movieRepository.save(new MovieEntity("Interstellar", new Date(), 3.5, Genre.ACTION, director));
+        movieRepository.save(new MovieEntity("Lord Of The Rings", new Date(), 3.5, Genre.DRAMA, director1));
     }
 
 }

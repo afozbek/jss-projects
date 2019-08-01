@@ -28,9 +28,10 @@ public class MovieController {
     @PostMapping
     public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
         String movieName = movie.getName();
+        Genre genre = movie.getGenreType();
         DirectorEntity newDirector = movie.getDirector();
 
-        if (movieName == null || newDirector == null) {
+        if (movieName == null || newDirector == null || genre==null) {
             return new ResponseEntity<>(new InfoMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 
