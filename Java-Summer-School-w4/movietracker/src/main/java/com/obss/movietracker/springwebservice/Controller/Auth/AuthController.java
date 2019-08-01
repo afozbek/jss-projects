@@ -53,7 +53,9 @@ public class AuthController {
 
         String token = jwtTokenUtilService.generateToken(jwtUserDetails);
 
-        return ResponseEntity.ok(new JwtAuthenticationToken(token, jwtUserDetails.getAuthorities()));
+        // new JwtAuthenticationToken(token, jwtUserDetails.getAuthorities())
+
+        return ResponseEntity.ok(new JwtAuthenticationToken(token, jwtUserDetails.getAuthorities(), jwtUserDetails.getUserName()));
     }
 
     // CREATE USER ✔

@@ -34,6 +34,7 @@ class LoginForm extends Component {
             .post("http://localhost:8080/auth/login", { username, password })
             .then(res => {
                 localStorage.setItem("jwttoken", res.data.token);
+                localStorage.setItem("username", res.data.username);
 
                 this.setState({
                     userData: res.data

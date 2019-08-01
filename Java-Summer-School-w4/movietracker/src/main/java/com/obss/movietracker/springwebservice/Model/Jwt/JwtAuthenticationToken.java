@@ -10,6 +10,8 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken 
 
     private String token;
 
+    private String username;
+
 
     public JwtAuthenticationToken(String token) {
         super(null, null);
@@ -19,6 +21,19 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken 
     public JwtAuthenticationToken(String token, Collection<? extends GrantedAuthority> authorities) {
         super(null, null, authorities);
         this.token = token;
+    }
+    public JwtAuthenticationToken(String token, Collection<? extends GrantedAuthority> authorities, String username) {
+        super(null, null, authorities);
+        this.token = token;
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getToken() {
