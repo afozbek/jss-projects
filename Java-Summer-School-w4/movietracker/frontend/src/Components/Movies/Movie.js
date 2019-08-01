@@ -3,8 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Movie = props => {
-    console.log(props);
-
     const { movieId, name, genreType, rating, director } = props.movieData;
 
     return (
