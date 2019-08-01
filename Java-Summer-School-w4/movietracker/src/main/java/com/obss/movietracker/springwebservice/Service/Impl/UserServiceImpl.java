@@ -63,6 +63,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+    public UserEntity getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
     public UserEntity getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
