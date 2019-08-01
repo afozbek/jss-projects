@@ -14,7 +14,7 @@ public interface MovieService {
 
     List<MovieEntity> getDirectorsMovies(Long directorId);
 
-    boolean updateMovie(MovieEntity movieEntity, DirectorEntity director);
+    MovieEntity updateMovie(MovieEntity movieEntity);
 
     boolean deleteMovie(Long id);
 

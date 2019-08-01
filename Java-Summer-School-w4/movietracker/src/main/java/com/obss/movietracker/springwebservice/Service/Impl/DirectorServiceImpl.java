@@ -29,11 +29,8 @@ public class DirectorServiceImpl implements DirectorService {
         return directorRepository.findByName(directorName);
     }
 
-    public boolean updateDirector(DirectorEntity directorEntity) {
-
-        DirectorEntity saveDirector = directorRepository.save(directorEntity);
-
-        return saveDirector != null;
+    public DirectorEntity updateDirector(DirectorEntity directorEntity) {
+        return directorRepository.save(directorEntity);
     }
 
     public boolean deleteDirector(Long id) {
