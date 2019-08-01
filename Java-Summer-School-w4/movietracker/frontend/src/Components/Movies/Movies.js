@@ -14,6 +14,10 @@ export default class Movies extends Component {
     componentDidMount() {
         const jwttoken = localStorage.getItem("jwttoken");
 
+        if (!jwttoken) {
+            this.props.history.push("/login");
+        }
+
         axios
             .get("/movies", {
                 headers: { Authorization: "Bearer " + jwttoken }

@@ -14,6 +14,10 @@ export default class Directors extends Component {
     componentDidMount() {
         const jwttoken = localStorage.getItem("jwttoken");
 
+        if (!jwttoken) {
+            this.props.history.push("/login");
+        }
+
         axios
             .get("/admin/director", {
                 headers: { Authorization: "Bearer " + jwttoken }
