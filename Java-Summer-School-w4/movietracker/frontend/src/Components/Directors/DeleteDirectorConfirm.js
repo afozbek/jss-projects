@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import axios from "../../axios-instance";
 
 export default class DeleteMovieConfirm extends Component {
-    state = { movieData: {} };
+    state = { directorData: {} };
 
     confirmButtonHandler = e => {
-        const movieId = this.props.match.params.movieId;
-        this.props.history.push(`/delete-movie/${movieId}`);
+        const directorId = this.props.match.params.directorId;
+        this.props.history.push(`/delete-director/${directorId}`);
     };
 
     cancelButtonHandler = e => {
@@ -19,15 +19,15 @@ export default class DeleteMovieConfirm extends Component {
             this.props.history.push("/login");
         }
 
-        const movieId = this.props.match.params.movieId;
+        const directorId = this.props.match.params.directorId;
         axios
-            .get("/admin/movie/" + movieId, {
+            .get("/admin/director/" + directorId, {
                 headers: { Authorization: "Bearer " + jwtToken }
             })
             .then(res => {
                 console.log(res.data);
                 this.setState({
-                    movieData: res.data
+                    directorData: res.data
                 });
             })
             .catch(err => {
@@ -39,8 +39,8 @@ export default class DeleteMovieConfirm extends Component {
         return (
             <React.Fragment>
                 <h1>
-                    Are you sure you want to delete movie:{" "}
-                    {this.state.movieData.name}
+                    Are you sure you want to delete director:
+                    {this.state.directorData.name}
                 </h1>
                 <button className="button" onClick={this.confirmButtonHandler}>
                     HELL YEAH!

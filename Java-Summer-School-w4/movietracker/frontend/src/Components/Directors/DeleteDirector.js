@@ -16,10 +16,10 @@ export default class DeleteMovie extends Component {
             this.props.history.push("/login");
         }
 
-        const movieId = this.props.match.params.movieId;
+        const directorId = this.props.match.params.directorId;
 
         axios
-            .delete(`/admin/movie/${movieId}`, {
+            .delete(`/admin/director/${directorId}`, {
                 headers: {
                     Authorization: `Bearer ${jwttoken}`
                 }
@@ -28,7 +28,7 @@ export default class DeleteMovie extends Component {
                 console.log(res.data);
                 this.setState({ message: res.data });
 
-                this.props.history.push("/movies");
+                this.props.history.push("/directors");
             })
             .catch(err => {
                 console.log(err);
@@ -38,7 +38,7 @@ export default class DeleteMovie extends Component {
     render() {
         return (
             <Fragment>
-                <Link to="/movies">To Movies</Link>
+                <Link to="/directors">To Directors</Link>
                 <Link to="/">Home Page</Link>
 
                 <h1>Successfully deleted</h1>
