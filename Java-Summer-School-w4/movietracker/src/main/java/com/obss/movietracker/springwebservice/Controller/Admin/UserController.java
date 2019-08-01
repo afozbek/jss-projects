@@ -1,6 +1,7 @@
 package com.obss.movietracker.springwebservice.Controller.Admin;
 
 import com.obss.movietracker.springwebservice.Messages.InfoMessage;
+import com.obss.movietracker.springwebservice.Model.Jwt.JwtUser;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
 import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
 import com.obss.movietracker.springwebservice.Service.Impl.Util.PasswordServiceImpl;
@@ -31,6 +32,13 @@ public class UserController {
         if (userEntity == null) {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(userEntity, HttpStatus.OK);
+    }
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getUser(@PathVariable String username) {
+
+        UserEntity userEntity = userService.findUserByUsername(username);
 
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }

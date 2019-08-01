@@ -59,7 +59,6 @@ public class AuthController {
     // CREATE USER ✔
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody JwtUser jwtUser) {
-        System.out.println(jwtUser);
         if (jwtUser.getUsername() == null || jwtUser.getPassword() == null) {
             return new ResponseEntity<>(new InfoMessage("Please enter your username and password"), HttpStatus.BAD_REQUEST);
         }
