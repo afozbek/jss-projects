@@ -49,7 +49,8 @@ export default class Users extends Component {
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Username</th>
                         <th style={{ textAlign: "center" }}>Name</th>
-                        <th style={{ textAlign: "center" }}>Operation</th>
+                        <th style={{ textAlign: "center" }}>UPDATE</th>
+                        <th style={{ textAlign: "center" }}>DELETE</th>
                     </tr>
                 </thead>
 
@@ -62,6 +63,7 @@ export default class Users extends Component {
         return (
             <Fragment>
                 <Logout {...this.props} />
+                <Link to="/add-user">ADD A USER</Link>
                 <div>
                     <h1>Your Users</h1>
                     <div>{content}</div>

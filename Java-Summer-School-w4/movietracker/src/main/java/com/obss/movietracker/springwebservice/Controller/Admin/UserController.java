@@ -35,6 +35,7 @@ public class UserController {
 
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
+
     @GetMapping("/{username}")
     public ResponseEntity<?> getUser(@PathVariable String username) {
 
@@ -91,12 +92,18 @@ public class UserController {
     }
 
     // DELETE USER
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        if (userService.deleteUser(id)) {
-            return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+        UserEntity user = userService.findById(userId);
+
+        if(user==null){
+            return new ResponseEntity<>(new InfoMessage("User was not found"), HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(new InfoMessage("Public was not deleted"), HttpStatus.BAD_REQUEST);
+        userService.deleteUserById(userId);
+
+        return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
     }
+
+
 }

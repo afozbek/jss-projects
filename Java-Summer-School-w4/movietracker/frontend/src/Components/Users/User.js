@@ -11,7 +11,10 @@ const User = props => {
             <td>{username}</td>
             <td>{firstName}</td>
             <td>
-                <Link to={`/update-user/${username}`}>UPDATE</Link>
+                <Link to={`/update-user/${userId}`}>UPDATE</Link>
+            </td>
+            <td>
+                <Link to={`/delete-user-confirm/${username}`}>DELETE</Link>
             </td>
         </tr>
     );

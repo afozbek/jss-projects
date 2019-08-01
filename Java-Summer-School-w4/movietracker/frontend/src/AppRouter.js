@@ -12,6 +12,11 @@ import UpdateMovie from "./Components/Movies/UpdateMovie";
 import UpdateDirector from "./Components/Directors/UpdateDirector";
 import Logout from "./Components/Auth/Logout/Logout";
 import AddMovie from "./Components/Movies/AddMovie";
+import AddUser from "./Components/Users/AddUser";
+import DeleteMovie from "./Components/Movies/DeleteMovie";
+import DeleteMovieConfirm from "./Components/Movies/DeleteMovieConfirm";
+import DeleteUser from "./Components/Users/DeleteUser";
+import DeleteUserConfirm from "./Components/Users/DeleteUserConfirm";
 
 const AppRouter = props => {
     return (
@@ -27,12 +32,34 @@ const AppRouter = props => {
                     exact
                     component={UpdateUser}
                 />
+                <Route
+                    path="/delete-user/:userId"
+                    exact
+                    component={DeleteUser}
+                />
+                <Route
+                    path="/delete-user-confirm/:username"
+                    exact
+                    component={DeleteUserConfirm}
+                />
+                <Route path="/add-user" exact component={AddUser} />
+
                 {/* MOVIES */}
                 <Route path="/movies" exact component={Movies} />
                 <Route
                     path="/update-movie/:movieId"
                     exact
                     component={UpdateMovie}
+                />
+                <Route
+                    path="/delete-movie-confirm/:movieId"
+                    exact
+                    component={DeleteMovieConfirm}
+                />
+                <Route
+                    path="/delete-movie/:movieId"
+                    exact
+                    component={DeleteMovie}
                 />
                 <Route path="/add-movie" exact component={AddMovie} />
                 {/* DIRECTORS */}

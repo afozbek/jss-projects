@@ -16,6 +16,8 @@ public interface UserService {
 
     boolean deleteUser(Long id);
 
+    UserEntity deleteUserByUsername(String username);
+
     boolean findExistingUser(String username, String password);
 
     UserEntity findUserByUsername(String username);

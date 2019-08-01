@@ -105,6 +105,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return true;
     }
 
+    public UserEntity findById(Long userId){
+        return userRepository.findById(userId).orElse(null);
+    }
+
     // Search DB for existing user
     public boolean findExistingUser(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password) != null;
@@ -164,5 +168,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserEntity savedUser = userRepository.save(user);
 
         return watchList;
+    }
+
+    public UserEntity deleteUserByUsername(String username) {
+        return userRepository.deleteByUsername(username);
+    }
+
+    public void deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
     }
 }
