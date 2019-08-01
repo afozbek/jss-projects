@@ -51,7 +51,8 @@ export default class Movies extends Component {
                         <th style={{ textAlign: "center" }}>Genre</th>
                         <th style={{ textAlign: "center" }}>IMDB Rating</th>
                         <th style={{ textAlign: "center" }}>Director</th>
-                        <th style={{ textAlign: "center" }}>Operation</th>
+                        <th style={{ textAlign: "center" }}>Update</th>
+                        <th style={{ textAlign: "center" }}>Delete</th>
                     </tr>
                 </thead>
 

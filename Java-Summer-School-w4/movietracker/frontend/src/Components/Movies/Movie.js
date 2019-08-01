@@ -17,6 +17,9 @@ const Movie = props => {
             <td>
                 <Link to={`/update-movie/${movieId}`}>UPDATE</Link>
             </td>
+            <td>
+                <Link to={`/delete-movie-confirm/${movieId}`}>DELETE</Link>
+            </td>
         </tr>
     );
 };
