@@ -51,7 +51,7 @@ class LoginForm extends Component {
         return (
             <Fragment>
                 <Link to="/register">To Register</Link>
-                <Link to="/users">See Users</Link>
+                <Link to="/">Home Page</Link>
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">Login Form</h1>
