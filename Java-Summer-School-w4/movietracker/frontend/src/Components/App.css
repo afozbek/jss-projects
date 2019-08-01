@@ -97,9 +97,9 @@ a {
 
 .button {
     min-width: 100px;
-    height: 30px;
+    padding: 3px;
+    min-height: 40px;
     border-radius: 4px;
-    width: 75px;
     outline: none;
     color: inherit;
     background: none;
