@@ -4,7 +4,7 @@ import axios from "../../axios-instance";
 import Loading from "../../Util/Loading";
 
 export default class DeleteMovieConfirm extends Component {
-    state = { directorData: {} };
+    state = { directorData: {}, loading: true };
 
     confirmButtonHandler = e => {
         const directorId = this.props.match.params.directorId;
@@ -29,11 +29,15 @@ export default class DeleteMovieConfirm extends Component {
             .then(res => {
                 console.log(res.data);
                 this.setState({
-                    directorData: res.data
+                    directorData: res.data,
+                    loading: false
                 });
             })
             .catch(err => {
                 console.log(err);
+                this.setState({
+                    loading: false
+                });
             });
     }
 
