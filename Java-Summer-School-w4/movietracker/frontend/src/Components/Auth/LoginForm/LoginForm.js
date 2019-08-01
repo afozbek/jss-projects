@@ -33,7 +33,6 @@ class LoginForm extends Component {
         axios
             .post("http://localhost:8080/auth/login", { username, password })
             .then(res => {
-                console.log(res.data);
                 localStorage.setItem("jwttoken", res.data.token);
 
                 this.setState({

@@ -78,7 +78,6 @@ export default class RegisterForm extends Component {
                 headers: { Authorization: "Bearer " + this.state.jwttoken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     message: res.data.username + " successfully registered 😊"
                 });

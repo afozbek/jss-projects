@@ -62,7 +62,6 @@ export default class RegisterForm extends Component {
         axios
             .post("http://localhost:8080/auth/register", responseData)
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     message: res.data.username + " successfully registered 😊"
                 });

@@ -45,7 +45,6 @@ export default class UpdateUser extends Component {
                 }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     userData: res.data
                 });
@@ -79,7 +78,6 @@ export default class UpdateUser extends Component {
                 }
             )
             .then(res => {
-                console.log(res.data);
                 this.setState({ userData: res.data });
 
                 this.props.history.push("/users");

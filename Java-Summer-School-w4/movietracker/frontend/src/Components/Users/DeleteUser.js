@@ -25,8 +25,6 @@ export default class DeleteUser extends Component {
                 }
             })
             .then(res => {
-                console.log(res.data);
-
                 this.setState({
                     message: res.data.message
                 });

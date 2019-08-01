@@ -45,7 +45,6 @@ export default class UpdateMovie extends Component {
                 }
             })
             .then(res => {
-                console.table(res.data);
                 this.setState({
                     movieData: res.data,
                     directorId: res.data.director.directorId

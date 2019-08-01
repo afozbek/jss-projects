@@ -24,8 +24,6 @@ export default class Directors extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
-
                 this.setState({ directors: res.data, loading: false });
             })
             .catch(err => {

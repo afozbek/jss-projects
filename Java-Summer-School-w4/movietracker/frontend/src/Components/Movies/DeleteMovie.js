@@ -25,7 +25,6 @@ export default class DeleteMovie extends Component {
                 }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({ message: res.data });
 
                 this.props.history.push("/movies");

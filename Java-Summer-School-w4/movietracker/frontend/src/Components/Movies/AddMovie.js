@@ -97,8 +97,6 @@ export default class AddMovie extends Component {
                 }
             )
             .then(res => {
-                console.log(res.data);
-
                 this.setState({
                     movieData: res.data
                 });

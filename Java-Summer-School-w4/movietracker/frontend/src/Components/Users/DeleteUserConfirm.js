@@ -28,7 +28,6 @@ export default class DeleteUserConfirm extends Component {
                 headers: { Authorization: "Bearer " + jwtToken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     userData: res.data,
                     loading: false

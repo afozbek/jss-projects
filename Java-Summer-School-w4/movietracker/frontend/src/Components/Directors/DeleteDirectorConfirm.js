@@ -27,14 +27,12 @@ export default class DeleteMovieConfirm extends Component {
                 headers: { Authorization: "Bearer " + jwtToken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     directorData: res.data,
                     loading: false
                 });
             })
             .catch(err => {
-                console.log(err);
                 this.setState({
                     loading: false
                 });
