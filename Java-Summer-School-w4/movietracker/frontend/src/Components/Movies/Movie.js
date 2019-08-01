@@ -1,19 +1,24 @@
 import React from "react";
 
-const Movie = props => {
+import { Link } from "react-router-dom";
 
-    console.log(props)
+const Movie = props => {
+    console.log(props);
 
     const { movieId, name, genreType, rating, director } = props.movieData;
 
-    return < tr >
-        <td>{movieId}</td>
-        <td>{name}</td>
-        <td>{genreType}</td>
-        <td>{rating}</td>
-        <td>{director.name}</td>
-        <td><button className="button">UPDATE</button></td>
-    </tr >
+    return (
+        <tr>
+            <td>{movieId}</td>
+            <td>{name}</td>
+            <td>{genreType}</td>
+            <td>{rating}</td>
+            <td>{director.name}</td>
+            <td>
+                <Link to={`/update-movie/${movieId}`}>UPDATE</Link>
+            </td>
+        </tr>
+    );
 };
 
 export default Movie;
