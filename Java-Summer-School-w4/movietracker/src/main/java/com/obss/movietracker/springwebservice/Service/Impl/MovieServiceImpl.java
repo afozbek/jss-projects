@@ -27,12 +27,9 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findByDirectorDirectorId(directorId);
     }
 
-    public boolean updateMovie(MovieEntity movieEntity, DirectorEntity director) {
-        movieEntity.setDirector(director);
+    public MovieEntity updateMovie(MovieEntity movieEntity) {
 
-        MovieEntity savedMovie = movieRepository.save(movieEntity);
-
-        return savedMovie != null;
+        return movieRepository.save(movieEntity);
     }
 
     public boolean deleteMovie(Long id) {

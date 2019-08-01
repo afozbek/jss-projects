@@ -24,7 +24,7 @@ public class UserEntity {
     private String lastName;
 
     @Column
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 
     @Column

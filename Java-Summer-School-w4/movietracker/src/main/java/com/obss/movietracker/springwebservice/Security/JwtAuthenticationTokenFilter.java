@@ -7,6 +7,8 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,17 +20,17 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req,
-                                                HttpServletResponse resp)
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
 
-        String header = req.getHeader("Authorization");
+        String header = request.getHeader("Authorization");
 
-        if (header == null || !header.startsWith("Token ")) {
+        if (header == null || !header.startsWith("Bearer ")) {
             throw new RuntimeException("JWT Token is missing");
         }
 
-        String authenticationToken = header.substring(6);
+        String authenticationToken = header.substring(7);
 
         JwtAuthenticationToken token = new JwtAuthenticationToken(authenticationToken);
 
@@ -45,6 +47,19 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
         super.successfulAuthentication(request, response, chain, authResult);
 
         System.out.println("SUCCESSFULLY AUTHENTICATED");
+
+
+
         chain.doFilter(request, response);
     }
+
+//    @Override
+//    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+//        HttpServletRequest request = (HttpServletRequest) req;
+//        HttpServletResponse response = (HttpServletResponse) res;
+//
+//
+//
+//        chain.doFilter(req, res);
+//    }
 }

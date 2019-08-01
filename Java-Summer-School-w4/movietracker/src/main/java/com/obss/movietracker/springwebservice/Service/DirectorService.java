@@ -12,7 +12,7 @@ public interface DirectorService {
 
     List<DirectorEntity> getDirectorByName(String directorName);
 
-    boolean updateDirector(DirectorEntity directorEntity);
+    DirectorEntity updateDirector(DirectorEntity directorEntity);
 
     boolean deleteDirector(Long id);
 }

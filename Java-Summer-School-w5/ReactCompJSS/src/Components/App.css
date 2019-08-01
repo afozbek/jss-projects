@@ -36,7 +36,7 @@ a {
 .form-text {
     width: 70%;
     border: 2px solid #f13273;
-    text-underline: #f13273;
+    text-decoration: #f13273;
     color: #ef0555;
     height: 27px;
     outline: none;
@@ -140,14 +140,12 @@ tr:nth-child(even) {
     color: black;
 }
 
-button:nth-child(odd):hover {
-    background-color: black;
-    color: #f13273;
+.sex-util {
+    width: 100%;
 }
-
 .table-app {
     margin: 30px auto;
-    width: 70%;
+    min-width: 500px;
 }
 .transportWelcome {
     text-align: start;

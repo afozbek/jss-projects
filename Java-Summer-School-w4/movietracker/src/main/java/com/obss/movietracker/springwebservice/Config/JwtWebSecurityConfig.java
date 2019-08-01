@@ -46,6 +46,7 @@ public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
@@ -60,10 +61,14 @@ public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("USER", "ADMIN");
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        http.cors()
+                .and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/**", "/auth/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")

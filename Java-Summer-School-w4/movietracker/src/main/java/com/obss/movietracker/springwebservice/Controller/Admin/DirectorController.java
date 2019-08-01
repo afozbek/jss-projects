@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/admin/director")
@@ -38,6 +39,13 @@ public class DirectorController {
         return new ResponseEntity<>(directors, HttpStatus.OK);
     }
 
+    // GET MOVIE
+    @GetMapping("/{directorId}")
+    public ResponseEntity<?> getDirector(@PathVariable Long directorId) {
+        DirectorEntity director = directorService.getDirectorById(directorId);
+        return new ResponseEntity<>(director, HttpStatus.OK);
+    }
+
     // POST DIRECTOR
     @PostMapping
     public ResponseEntity<?> createDirector(@RequestBody DirectorEntity director) {
@@ -46,11 +54,13 @@ public class DirectorController {
             return new ResponseEntity<>(new InfoMessage("Please fill fields"), HttpStatus.BAD_REQUEST);
         }
 
-        if (!directorService.updateDirector(director)) {
+        DirectorEntity newDirector = directorService.updateDirector(director);
+
+        if (newDirector == null) {
             return new ResponseEntity<>(new InfoMessage("Director Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new ResponseEntity<>(director, HttpStatus.CREATED);
+        return new ResponseEntity<>(newDirector, HttpStatus.CREATED);
     }
 
     // UPDATE DIRECTOR
@@ -59,27 +69,32 @@ public class DirectorController {
 
         String directorName = directorObj.getName();
         String surname = directorObj.getSurname();
-        Date birthDate = directorObj.getBirthDate();
+        String birthPlace = directorObj.getBirthPlace();
+//        Date birthDate = directorObj.getBirthDate();
 
-        if (directorName == null || surname == null || birthDate == null) {
+        if (directorName == null || surname == null || birthPlace == null) {
             return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
-        DirectorEntity director = directorService.getDirectorById(directorId);
+        DirectorEntity newDirector = directorService.getDirectorById(directorId);
 
-        if (director == null) {
+        if (newDirector == null) {
             return new ResponseEntity<>(new InfoMessage("Director was not found"), HttpStatus.NOT_FOUND);
         }
 
-        director.setName(directorName);
-        director.setSurname(surname);
-        director.setBirthDate(birthDate);
+        newDirector.setDirectorId(directorId);
+        newDirector.setName(directorName);
+        newDirector.setSurname(surname);
+        newDirector.setBirthPlace(birthPlace);
 
-        if (!directorService.updateDirector(directorObj)) {
+        DirectorEntity updatedDirector = directorService.updateDirector(newDirector);
+
+
+        if (updatedDirector == null) {
             return new ResponseEntity<>(new InfoMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new ResponseEntity<>(director, HttpStatus.OK);
+        return new ResponseEntity<>(updatedDirector, HttpStatus.OK);
     }
 
     // DELETE DIRECTOR

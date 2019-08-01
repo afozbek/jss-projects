@@ -78,9 +78,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         try {
             userEntity.setUsername(jwtUser.getUsername());
             userEntity.setPassword(passwordService.hashPassword(jwtUser.getPassword()));
+            userEntity.setFirstName(jwtUser.getFirstName());
+            userEntity.setLastName(jwtUser.getLastName());
             userEntity.setAuthorities(jwtUser.getAuthorities());
 
-            System.out.println("Your login password" + userEntity.getPassword());
         } catch (NullPointerException ex) {
             return null;
         }
@@ -102,6 +103,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.deleteById(id);
 
         return true;
+    }
+
+    public UserEntity findById(Long userId){
+        return userRepository.findById(userId).orElse(null);
     }
 
     // Search DB for existing user
@@ -163,5 +168,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserEntity savedUser = userRepository.save(user);
 
         return watchList;
+    }
+
+    public UserEntity deleteUserByUsername(String username) {
+        return userRepository.deleteByUsername(username);
+    }
+
+    public void deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/admin/movie")
@@ -27,9 +28,10 @@ public class MovieController {
     @PostMapping
     public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
         String movieName = movie.getName();
+        Genre genre = movie.getGenreType();
         DirectorEntity newDirector = movie.getDirector();
 
-        if (movieName == null || newDirector == null) {
+        if (movieName == null || newDirector == null || genre==null) {
             return new ResponseEntity<>(new InfoMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 
@@ -43,11 +45,22 @@ public class MovieController {
 
         directorService.updateDirector(director);
 
-        if (movieService.updateMovie(movie, director)) {
+        movie.setDirector(director);
+
+        MovieEntity movieEntity = movieService.updateMovie(movie);
+
+        if (movieEntity == null) {
             return new ResponseEntity<>(new InfoMessage("Movie Creation failed"), HttpStatus.EXPECTATION_FAILED);
         }
 
         return new ResponseEntity<>(movieService.getMovieByName(movie.getName()), HttpStatus.CREATED);
+    }
+
+    // GET MOVIE
+    @GetMapping("/{movieId}")
+    public ResponseEntity<?> getMovie(@PathVariable Long movieId) {
+        MovieEntity movie = movieService.getMovieById(movieId);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
     // UPDATE MOVIE
@@ -61,6 +74,12 @@ public class MovieController {
             return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
+        DirectorEntity newDirector = directorService.getDirectorById(director.getDirectorId());
+
+        if (newDirector == null) {
+            return new ResponseEntity<>(new InfoMessage("Director was not found"), HttpStatus.BAD_REQUEST);
+        }
+
         MovieEntity movie = movieService.getMovieById(movieId);
 
         if (movie == null) {
@@ -69,13 +88,15 @@ public class MovieController {
 
         movie.setName(movieName);
         movie.setGenreType(genre);
-        movie.setDirector(director);
+        movie.setDirector(newDirector);
 
-        if (movieService.updateMovie(movie, director)) {
+        MovieEntity updatedMovie = movieService.updateMovie(movie);
+
+        if (updatedMovie == null) {
             return new ResponseEntity<>(new InfoMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
         }
 
-        return new ResponseEntity<>(movie, HttpStatus.OK);
+        return new ResponseEntity<>(updatedMovie, HttpStatus.OK);
     }
 
     // DELETE MOVIE

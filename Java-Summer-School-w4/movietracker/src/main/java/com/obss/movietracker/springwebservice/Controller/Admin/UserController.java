@@ -1,6 +1,7 @@
 package com.obss.movietracker.springwebservice.Controller.Admin;
 
 import com.obss.movietracker.springwebservice.Messages.InfoMessage;
+import com.obss.movietracker.springwebservice.Model.Jwt.JwtUser;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
 import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
 import com.obss.movietracker.springwebservice.Service.Impl.Util.PasswordServiceImpl;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
 @RequestMapping("/admin/user")
@@ -30,6 +32,14 @@ public class UserController {
         if (userEntity == null) {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(userEntity, HttpStatus.OK);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getUser(@PathVariable String username) {
+
+        UserEntity userEntity = userService.findUserByUsername(username);
 
         return new ResponseEntity<>(userEntity, HttpStatus.OK);
     }
@@ -71,23 +81,29 @@ public class UserController {
         user.setUsername(newUsername);
         user.setPassword(newHashedPassword);
 
-        if (newFirstName != null || newLastName != null) {
+        if (newFirstName != null && newLastName != null) {
             user.setFirstName(newFirstName);
             user.setLastName(newLastName);
         }
 
-        userService.saveUser(user);
+        UserEntity updatedUser = userService.saveUser(user);
 
-        return new ResponseEntity<>(new InfoMessage("Update success 😊"), HttpStatus.OK);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     // DELETE USER
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        if (userService.deleteUser(id)) {
-            return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+        UserEntity user = userService.findById(userId);
+
+        if(user==null){
+            return new ResponseEntity<>(new InfoMessage("User was not found"), HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(new InfoMessage("Public was not deleted"), HttpStatus.BAD_REQUEST);
+        userService.deleteUserById(userId);
+
+        return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
     }
+
+
 }
