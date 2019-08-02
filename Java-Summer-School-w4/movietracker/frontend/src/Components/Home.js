@@ -19,6 +19,9 @@ const Home = props => {
             <li>
                 <Link to="/favlist">Your FavList</Link>
             </li>
+            <li>
+                <Link to="/watchlist">Your WatchList</Link>
+            </li>
 
             <li>
                 <Link to="/register">Register</Link>
