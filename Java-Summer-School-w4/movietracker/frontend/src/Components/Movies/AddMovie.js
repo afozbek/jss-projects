@@ -117,6 +117,8 @@ export default class AddMovie extends Component {
                     loading: false
                 });
 
+                alert("Successfully created movie 😊");
+
                 this.props.history.push("/movies");
             })
             .catch(err => {

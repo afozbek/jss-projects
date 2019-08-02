@@ -110,6 +110,8 @@ export default class AddMovie extends Component {
                     loading: false
                 });
 
+                alert("Successfully created 😊");
+
                 this.props.history.push("/directors");
             })
             .catch(err => {

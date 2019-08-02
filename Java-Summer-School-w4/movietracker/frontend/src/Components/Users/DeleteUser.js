@@ -30,6 +30,8 @@ export default class DeleteUser extends Component {
                     message: res.data.message
                 });
 
+                alert("Successfully deleted user 😊");
+
                 this.props.history.push("/users");
             })
             .catch(err => {

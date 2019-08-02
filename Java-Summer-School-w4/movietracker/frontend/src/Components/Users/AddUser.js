@@ -83,6 +83,8 @@ export default class RegisterForm extends Component {
                     message: res.data.username + " successfully registered 😊"
                 });
 
+                alert("Successfully created user 😊");
+
                 this.props.history.push("/users");
             })
             .catch(err => {
