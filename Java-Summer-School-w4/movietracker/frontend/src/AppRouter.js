@@ -22,6 +22,7 @@ import DeleteDirector from "./Components/Directors/DeleteDirector";
 import DeleteDirectorConfirm from "./Components/Directors/DeleteDirectorConfirm";
 import MustAddDirector from "./Components/Movies/MustAddDirector";
 import FavList from "./Components/Users/FavLists/FavLists";
+import WatchList from "./Components/Users/WatchList/WatchList";
 
 const AppRouter = props => {
     return (
@@ -92,6 +93,7 @@ const AppRouter = props => {
                 />
                 <Route path="/add-director" exact component={AddDirector} />
                 <Route path="/favlist" exact component={FavList} />
+                <Route path="/watchlist" exact component={WatchList} />
                 <Route path="/" exact component={Home} />
             </Switch>
         </Router>
