@@ -88,8 +88,6 @@ class Movie extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
-
                 this.setState({
                     movieId,
                     name,
@@ -115,36 +113,40 @@ class Movie extends Component {
 
         return (
             <tr>
-                <td>
-                    <span
-                        style={{ cursor: "pointer" }}
-                        onClick={
-                            this.props.isFav
-                                ? () =>
-                                      this.props.favRemoveButtonHandler(
-                                          this.state.movieId
-                                      )
-                                : this.favButtonClickHandler
-                        }
-                    >
-                        <FontAwesomeIcon icon={faStar} />
-                    </span>
-                </td>
-                <td>
-                    <span
-                        style={{ cursor: "pointer" }}
-                        onClick={
-                            this.props.isWatch
-                                ? () =>
-                                      this.props.watchRemoveButtonHandler(
-                                          this.state.movieId
-                                      )
-                                : this.watchButtonClickHandler
-                        }
-                    >
-                        <FontAwesomeIcon icon={faStar} />
-                    </span>
-                </td>
+                {this.props.isWatch ? null : (
+                    <td>
+                        <span
+                            style={{ cursor: "pointer" }}
+                            onClick={
+                                this.props.isFav
+                                    ? () =>
+                                          this.props.favRemoveButtonHandler(
+                                              this.state.movieId
+                                          )
+                                    : this.favButtonClickHandler
+                            }
+                        >
+                            <FontAwesomeIcon icon={faStar} />
+                        </span>
+                    </td>
+                )}
+                {this.props.isFav ? null : (
+                    <td>
+                        <span
+                            style={{ cursor: "pointer" }}
+                            onClick={
+                                this.props.isWatch
+                                    ? () =>
+                                          this.props.watchRemoveButtonHandler(
+                                              this.state.movieId
+                                          )
+                                    : this.watchButtonClickHandler
+                            }
+                        >
+                            <FontAwesomeIcon icon={faStar} />
+                        </span>
+                    </td>
+                )}
                 <td>{movieId}</td>
                 <td>{name}</td>
                 <td>{genreType}</td>
