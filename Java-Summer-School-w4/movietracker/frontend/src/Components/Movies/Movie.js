@@ -10,10 +10,37 @@ class Movie extends Component {
         userId: "",
         movieId: "",
         favList: {},
+        watchList: {},
         name: "",
         genreType: "",
         rating: "",
         director: ""
+    };
+    watchButtonClickHandler = e => {
+        const jwttoken = localStorage.getItem("jwttoken");
+
+        if (!jwttoken) {
+            this.props.history.push("/login");
+        }
+
+        axios
+            .post(
+                `/${this.state.userId}/watchList/${this.state.movieId}`,
+                null,
+                {
+                    headers: { Authorization: "Bearer " + jwttoken }
+                }
+            )
+            .then(res => {
+                this.setState({
+                    watchList: res.data
+                });
+
+                this.props.history.push("/watchlist");
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     favButtonClickHandler = e => {
@@ -98,6 +125,21 @@ class Movie extends Component {
                                           this.state.movieId
                                       )
                                 : this.favButtonClickHandler
+                        }
+                    >
+                        <FontAwesomeIcon icon={faStar} />
+                    </span>
+                </td>
+                <td>
+                    <span
+                        style={{ cursor: "pointer" }}
+                        onClick={
+                            this.props.isWatch
+                                ? () =>
+                                      this.props.watchRemoveButtonHandler(
+                                          this.state.movieId
+                                      )
+                                : this.watchButtonClickHandler
                         }
                     >
                         <FontAwesomeIcon icon={faStar} />

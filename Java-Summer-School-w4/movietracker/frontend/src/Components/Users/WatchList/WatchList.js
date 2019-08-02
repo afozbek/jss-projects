@@ -1,19 +1,73 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+import Movie from "../../Movies/Movie";
+import Loading from "../../../Util/Loading";
+
 import { Link } from "react-router-dom";
-import axios from "../../axios-instance";
+import Logout from "../../Auth/Logout/Logout";
 
-import Movie from "./Movie";
-import Loading from "../../Util/Loading";
-import Logout from "../Auth/Logout/Logout";
+import axios from "../../../axios-instance";
 
-export default class Movies extends Component {
+export default class WatchList extends Component {
     state = {
+        watchlist: [],
         movies: [],
         loading: true,
         input: {
             search: ""
         }
     };
+
+    watchRemoveButtonHandler = movieId => {
+        const jwttoken = localStorage.getItem("jwttoken");
+
+        console.log("WATCH REMOVE HANDLER");
+
+        if (!jwttoken) {
+            this.props.history.push("/login");
+        }
+
+        const username = localStorage.getItem("username");
+
+        axios
+            .delete(`/${username}/watchList/${movieId}`, {
+                headers: { Authorization: "Bearer " + jwttoken }
+            })
+            .then(res => {
+                this.setState({
+                    watchlist: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    componentDidMount() {
+        const jwttoken = localStorage.getItem("jwttoken");
+
+        if (!jwttoken) {
+            this.props.history.push("/login");
+        }
+
+        const username = localStorage.getItem("username");
+
+        axios
+            .get(`/${username}/watchList`, {
+                headers: { Authorization: "Bearer " + jwttoken }
+            })
+            .then(res => {
+                this.setState({
+                    watchlist: res.data,
+                    loading: false
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    loading: false
+                });
+            });
+    }
 
     inputChangeHandler = e => {
         let inputName = e.target.name;
@@ -39,59 +93,52 @@ export default class Movies extends Component {
             .then(res => {
                 console.log(res.data);
                 this.setState({
-                    movies: res.data
+                    movies: res.data,
+                    loading: false
                 });
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    };
-
-    componentDidMount() {
-        const jwttoken = localStorage.getItem("jwttoken");
-
-        if (!jwttoken) {
-            this.props.history.push("/login");
-        }
-
-        axios
-            .get("/movies", {
-                headers: { Authorization: "Bearer " + jwttoken }
-            })
-            .then(res => {
-                this.setState({ movies: res.data, loading: false });
             })
             .catch(err => {
                 console.log(err);
                 this.setState({
-                    err,
                     loading: false
                 });
             });
-    }
+    };
 
     render() {
-        const movies = this.state.movies.map(movie => {
-            return (
-                <Movie {...this.props} key={movie.movieId} movieData={movie} />
-            );
-        });
+        const movies = this.state.watchlist ? (
+            this.state.watchlist.map(movie => {
+                return (
+                    <Movie
+                        {...this.props}
+                        watchRemoveButtonHandler={this.watchRemoveButtonHandler}
+                        isWatch={true}
+                        key={movie.movieId}
+                        movieData={movie}
+                    />
+                );
+            })
+        ) : (
+            <Loading />
+        );
 
         const movieTable = (
             <table>
                 <thead>
                     <tr>
-                        <th style={{ textAlign: "center" }}>ADD TO FAV LIST</th>
                         <th style={{ textAlign: "center" }}>
-                            ADD TO WATCH LIST
+                            REMOVE FROM FAV LIST
+                        </th>
+                        <th style={{ textAlign: "center" }}>
+                            REMOVE FROM WATCH LIST
                         </th>
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Movie Name</th>
                         <th style={{ textAlign: "center" }}>Genre</th>
                         <th style={{ textAlign: "center" }}>IMDB Rating</th>
                         <th style={{ textAlign: "center" }}>Director</th>
-                        <th style={{ textAlign: "center" }}>Update</th>
-                        <th style={{ textAlign: "center" }}>Delete</th>
+                        <th style={{ textAlign: "center" }}>UPDATE</th>
+                        <th style={{ textAlign: "center" }}>DELETE</th>
                     </tr>
                 </thead>
 
@@ -103,7 +150,7 @@ export default class Movies extends Component {
             <Loading />
         ) : (
             <div>
-                <h1>Your Movies</h1>
+                <h1>Your WatchList</h1>
                 <div>{movieTable}</div>
                 <Link to="/" style={{ marginTop: 30 }}>
                     Home Page
@@ -111,10 +158,8 @@ export default class Movies extends Component {
             </div>
         );
 
-        // MOVIE YOKSA MESAJ VER
-
         return (
-            <Fragment>
+            <>
                 <Logout {...this.props} />
                 <div className="search">
                     <div className="form-input">
@@ -136,9 +181,9 @@ export default class Movies extends Component {
                         SEARCH
                     </button>
                 </div>
-                <Link to="/add-movie">ADD A MOVIE</Link>
+                <Link to="/movies">MOVIES</Link>
                 {content}
-            </Fragment>
+            </>
         );
     }
 }

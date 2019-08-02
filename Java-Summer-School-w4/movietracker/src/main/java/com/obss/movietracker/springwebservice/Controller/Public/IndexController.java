@@ -108,15 +108,37 @@ public class IndexController {
         return new ResponseEntity<>(watchList, HttpStatus.OK);
     }
 
-    @PostMapping("/watchList")
-    public ResponseEntity<?> addToWatchList(Long userId, Long movieId) {
-        Set<MovieEntity> watchList = userService.addMovieToWatchList(userId, movieId);
+    @DeleteMapping("/{username}/watchList/{movieId}")
+    public ResponseEntity<?> deleteFromWatchList(@PathVariable String username, @PathVariable Long movieId){
+        UserEntity user = userService.getUserByUsername(username);
 
-        if (watchList == null) {
-            return new ResponseEntity<>(new InfoMessage("Posting to watchList failed 😢"), HttpStatus.BAD_REQUEST);
+        Set<MovieEntity> watchList = user.getWatchList();
+
+        Set<MovieEntity> newWatchList = new HashSet<>();
+
+        for(MovieEntity movie: watchList){
+            if(movie.getMovieId().equals(movieId)){
+                continue;
+            }
+            newWatchList.add(movie);
         }
 
-        return new ResponseEntity<>(watchList, HttpStatus.CREATED);
+        user.setWatchList(newWatchList);
+
+        UserEntity updatedUser = userService.saveUser(user);
+
+        return new ResponseEntity<>(updatedUser.getWatchList(), HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/watchList/{movieId}")
+    public ResponseEntity<?> addToWatchList(@PathVariable Long userId,@PathVariable Long movieId) {
+        Set<MovieEntity> wathcList = userService.addMovieToWatchList(userId, movieId);
+
+        if (wathcList == null) {
+            return new ResponseEntity<>(new InfoMessage("Posting to favList failed 😢"), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(wathcList, HttpStatus.CREATED);
     }
 
 }
