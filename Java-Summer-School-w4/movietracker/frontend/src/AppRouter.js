@@ -23,6 +23,7 @@ import DeleteDirectorConfirm from "./Components/Directors/DeleteDirectorConfirm"
 import MustAddDirector from "./Components/Movies/MustAddDirector";
 import FavList from "./Components/Users/FavLists/FavLists";
 import WatchList from "./Components/Users/WatchList/WatchList";
+import DirectorMovies from "./Components/Directors/DirectorMovies/DirectorMovies";
 
 const AppRouter = props => {
     return (
@@ -93,6 +94,12 @@ const AppRouter = props => {
                 />
                 <Route path="/add-director" exact component={AddDirector} />
                 <Route path="/favlist" exact component={FavList} />
+                <Route
+                    path="/directorMovies/:directorId"
+                    exact
+                    component={DirectorMovies}
+                />
+                {/* ----- */}
                 <Route path="/watchlist" exact component={WatchList} />
                 <Route path="/" exact component={Home} />
             </Switch>
