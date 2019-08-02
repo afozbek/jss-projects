@@ -57,7 +57,6 @@ export default class Movies extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     movies: res.data
                 });
@@ -76,7 +75,6 @@ export default class Movies extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     movies: res.data
                 });

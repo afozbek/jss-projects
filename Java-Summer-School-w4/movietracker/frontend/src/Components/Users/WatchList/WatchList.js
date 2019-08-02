@@ -88,7 +88,6 @@ export default class WatchList extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     movies: res.data,
                     loading: false
