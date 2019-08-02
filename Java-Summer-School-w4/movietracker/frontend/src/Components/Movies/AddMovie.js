@@ -19,7 +19,7 @@ export default class AddMovie extends Component {
         input: {
             name: "",
             genreType: "COMEDY",
-            directorId: "1"
+            directorId: ""
         }
     };
 
@@ -64,14 +64,18 @@ export default class AddMovie extends Component {
                 }
             })
             .then(res => {
-                console.log(res.data);
                 if (res.data.length < 1) {
                     this.props.history.push("/must-add-director");
                 } else {
-                    this.setState({
+                    this.setState(prevState => ({
+                        ...prevState,
                         directorData: res.data,
-                        loading: false
-                    });
+                        loading: false,
+                        input: {
+                            ...prevState.input,
+                            directorId: res.data[0].directorId
+                        }
+                    }));
                 }
             })
             .catch(err => {
