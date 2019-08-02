@@ -130,11 +130,15 @@ export default class AddMovie extends Component {
     };
 
     render() {
-        const directors = this.state.directorData.map(director => (
-            <option key={director.directorId} value={director.directorId}>
-                {director.name}
-            </option>
-        ));
+        const directors = this.state.loading ? (
+            <Loading />
+        ) : this.state.directorData ? (
+            this.state.directorData.map(director => (
+                <option key={director.directorId} value={director.directorId}>
+                    {director.name}
+                </option>
+            ))
+        ) : null;
 
         const genreTypes = this.state.genreTypes.map(genre => (
             <option key={genre.id} value={genre.value}>
