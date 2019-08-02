@@ -82,9 +82,11 @@ export default class Movies extends Component {
                 <thead>
                     <tr>
                         <th style={{ textAlign: "center" }}>ADD TO FAV LIST</th>
+
                         <th style={{ textAlign: "center" }}>
                             ADD TO WATCH LIST
                         </th>
+
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Movie Name</th>
                         <th style={{ textAlign: "center" }}>Genre</th>

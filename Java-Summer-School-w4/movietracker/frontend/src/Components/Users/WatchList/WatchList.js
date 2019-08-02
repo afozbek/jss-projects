@@ -19,9 +19,6 @@ export default class WatchList extends Component {
 
     watchRemoveButtonHandler = movieId => {
         const jwttoken = localStorage.getItem("jwttoken");
-
-        console.log("WATCH REMOVE HANDLER");
-
         if (!jwttoken) {
             this.props.history.push("/login");
         }
@@ -126,9 +123,6 @@ export default class WatchList extends Component {
             <table>
                 <thead>
                     <tr>
-                        <th style={{ textAlign: "center" }}>
-                            REMOVE FROM FAV LIST
-                        </th>
                         <th style={{ textAlign: "center" }}>
                             REMOVE FROM WATCH LIST
                         </th>

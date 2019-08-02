@@ -56,7 +56,6 @@ export default class FavList extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     favlist: res.data,
                     loading: false
