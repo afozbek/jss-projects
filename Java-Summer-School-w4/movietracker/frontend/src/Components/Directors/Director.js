@@ -9,6 +9,12 @@ const Director = props => {
 
     return (
         <tr>
+            <td>
+                {" "}
+                <Link to={`/directorMovies/${directorId}`}>
+                    Director's Movies
+                </Link>
+            </td>
             <td>{directorId}</td>
             <td>{name}</td>
             <td>{surname}</td>
