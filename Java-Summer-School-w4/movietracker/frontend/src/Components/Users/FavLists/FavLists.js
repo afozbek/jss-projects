@@ -121,26 +121,30 @@ export default class FavList extends Component {
             <Loading />
         );
 
-        const movieTable = (
-            <table>
-                <thead>
-                    <tr>
-                        <th style={{ textAlign: "center" }}>
-                            REMOVE FROM FAV LIST
-                        </th>
-                        <th style={{ textAlign: "center" }}>ID</th>
-                        <th style={{ textAlign: "center" }}>Movie Name</th>
-                        <th style={{ textAlign: "center" }}>Genre</th>
-                        <th style={{ textAlign: "center" }}>IMDB Rating</th>
-                        <th style={{ textAlign: "center" }}>Director</th>
-                        <th style={{ textAlign: "center" }}>UPDATE</th>
-                        <th style={{ textAlign: "center" }}>DELETE</th>
-                    </tr>
-                </thead>
+        const movieTable = this.state.favlist ? (
+            this.state.favlist.length === 0 ? (
+                <h1>You dont have movies</h1>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={{ textAlign: "center" }}>
+                                REMOVE FROM FAV LIST
+                            </th>
+                            <th style={{ textAlign: "center" }}>ID</th>
+                            <th style={{ textAlign: "center" }}>Movie Name</th>
+                            <th style={{ textAlign: "center" }}>Genre</th>
+                            <th style={{ textAlign: "center" }}>IMDB Rating</th>
+                            <th style={{ textAlign: "center" }}>Director</th>
+                            <th style={{ textAlign: "center" }}>UPDATE</th>
+                            <th style={{ textAlign: "center" }}>DELETE</th>
+                        </tr>
+                    </thead>
 
-                <tbody>{movies}</tbody>
-            </table>
-        );
+                    <tbody>{movies}</tbody>
+                </table>
+            )
+        ) : null;
 
         const content = this.state.loading ? (
             <Loading />
@@ -178,6 +182,7 @@ export default class FavList extends Component {
                     </button>
                 </div>
                 <Link to="/movies">MOVIES</Link>
+
                 {content}
             </>
         );
