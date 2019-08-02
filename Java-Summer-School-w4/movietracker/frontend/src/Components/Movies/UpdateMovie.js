@@ -9,14 +9,33 @@ import Loading from "../../Util/Loading";
 export default class UpdateMovie extends Component {
     state = {
         movieData: {},
+        directorData: [],
         loading: true,
         message: "",
-        directorId: "",
+        genreTypes: [
+            { id: 1, value: "COMEDY" },
+            { id: 2, value: "ACTION" },
+            { id: 3, value: "DRAMA" }
+        ],
         input: {
             name: "",
-            genreType: "",
-            director: ""
+            genreType: "COMEDY",
+            directorId: ""
         }
+    };
+
+    dropDownChangeHandler = e => {
+        let value = e.target.value;
+        let name = e.target.name;
+
+        this.setState(prevState => ({
+            ...prevState,
+            directorId: "",
+            input: {
+                ...prevState.input,
+                [name]: value
+            }
+        }));
     };
 
     inputChangeHandler = e => {
@@ -48,11 +67,36 @@ export default class UpdateMovie extends Component {
                 }
             })
             .then(res => {
-                this.setState({
-                    movieData: res.data,
-                    directorId: res.data.director.directorId,
-                    loading: false
-                });
+                const movieData = res.data;
+                const directorId = res.data.director.directorId;
+
+                axios
+                    .get(`/admin/director`, {
+                        headers: {
+                            Authorization: `Bearer ${jwttoken}`
+                        }
+                    })
+                    .then(res => {
+                        const directors = res.data;
+
+                        this.setState(prevState => ({
+                            ...prevState,
+                            movieData: movieData,
+                            directorId: directorId,
+                            loading: false,
+                            directorData: directors,
+                            input: {
+                                ...prevState.input,
+                                directorId: res.data[0].directorId
+                            }
+                        }));
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.setState({
+                            loading: false
+                        });
+                    });
             })
             .catch(err => {
                 console.log(err);
@@ -71,8 +115,7 @@ export default class UpdateMovie extends Component {
 
         const movieId = this.props.match.params.movieId;
 
-        const { directorId } = this.state;
-        const { name, genreType, director } = this.state.input;
+        const { name, genreType, directorId } = this.state.input;
 
         axios
             .put(
@@ -80,7 +123,7 @@ export default class UpdateMovie extends Component {
                 {
                     name,
                     genreType,
-                    director: { directorId: directorId, name: director }
+                    director: { directorId }
                 },
                 {
                     headers: {
@@ -105,6 +148,22 @@ export default class UpdateMovie extends Component {
     };
 
     render() {
+        const directors = this.state.loading ? (
+            <Loading />
+        ) : this.state.directorData ? (
+            this.state.directorData.map(director => (
+                <option key={director.directorId} value={director.directorId}>
+                    {director.name}
+                </option>
+            ))
+        ) : null;
+
+        const genreTypes = this.state.genreTypes.map(genre => (
+            <option key={genre.id} value={genre.value}>
+                {genre.value}
+            </option>
+        ));
+
         const form = (
             <form onSubmit={this.formSubmitHandler}>
                 <div className="inner-container">
@@ -127,29 +186,26 @@ export default class UpdateMovie extends Component {
                     </div>
                     <div className="form-input">
                         <label htmlFor="genreType" className="form-label">
-                            <span className="form-label-text">Genre:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Movie Genre Type"
-                                id="genreType"
-                                type="text"
+                            <span className="form-label-text">
+                                Movie Genre:
+                            </span>
+                            <select
+                                onChange={this.dropDownChangeHandler}
                                 name="genreType"
-                            />
+                            >
+                                {genreTypes}
+                            </select>
                         </label>
                     </div>
                     <div className="form-input">
                         <label htmlFor="director" className="form-label">
                             <span className="form-label-text">Director:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                placeholder="Enter your director name"
-                                className="form-text"
-                                id="director"
-                                type="text"
-                                name="director"
-                                required
-                            />
+                            <select
+                                onChange={this.dropDownChangeHandler}
+                                name="directorId"
+                            >
+                                {directors}
+                            </select>
                         </label>
                     </div>
                     <h3>{this.state.message}</h3>
