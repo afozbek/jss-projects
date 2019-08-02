@@ -8,11 +8,31 @@ import Logout from "../Auth/Logout/Logout";
 
 export default class Movies extends Component {
     state = {
+        genreTypes: [
+            { id: 1, value: "COMEDY" },
+            { id: 2, value: "ACTION" },
+            { id: 3, value: "DRAMA" }
+        ],
         movies: [],
         loading: true,
         input: {
-            search: ""
+            search_movie: "",
+            search_genre: "COMEDY"
         }
+    };
+
+    dropDownChangeHandler = e => {
+        let value = e.target.value;
+        let name = e.target.name;
+
+        this.setState(prevState => ({
+            ...prevState,
+            directorId: "",
+            input: {
+                ...prevState.input,
+                [name]: value
+            }
+        }));
     };
 
     inputChangeHandler = e => {
@@ -28,16 +48,33 @@ export default class Movies extends Component {
         }));
     };
 
-    searchButtonHandler = e => {
+    searchMovieButtonHandler = e => {
         const jwttoken = localStorage.getItem("jwttoken");
 
         axios
             .get("/movies", {
-                params: { movie: this.state.input.search },
+                params: { movie: this.state.input.search_movie },
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
-                console.log(res.data);
+                this.setState({
+                    movies: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    searchGenreButtonHandler = e => {
+        const jwttoken = localStorage.getItem("jwttoken");
+
+        axios
+            .get("/movies", {
+                params: { genre: this.state.input.search_genre },
+                headers: { Authorization: "Bearer " + jwttoken }
+            })
+            .then(res => {
                 this.setState({
                     movies: res.data
                 });
@@ -82,6 +119,11 @@ export default class Movies extends Component {
                 <thead>
                     <tr>
                         <th style={{ textAlign: "center" }}>ADD TO FAV LIST</th>
+
+                        <th style={{ textAlign: "center" }}>
+                            ADD TO WATCH LIST
+                        </th>
+
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Movie Name</th>
                         <th style={{ textAlign: "center" }}>Genre</th>
@@ -108,27 +150,64 @@ export default class Movies extends Component {
             </div>
         );
 
-        // MOVIE YOKSA MESAJ VER
+        const genreTypes = this.state.genreTypes.map(genre => (
+            <option key={genre.id} value={genre.value}>
+                {genre.value}
+            </option>
+        ));
 
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <div className="search">
                     <div className="form-input">
-                        <label htmlFor="search" className="form-label">
+                        <label htmlFor="search_movie" className="form-label">
                             <input
                                 onChange={this.inputChangeHandler}
-                                placeholder="Search..."
+                                placeholder="Search movie by name..."
                                 className="form-text"
-                                id="search"
+                                id="search_movie"
                                 type="text"
-                                name="search"
+                                name="search_movie"
                             />
                         </label>
                     </div>
                     <button
                         className="button"
-                        onClick={this.searchButtonHandler}
+                        onClick={this.searchMovieButtonHandler}
+                    >
+                        SEARCH
+                    </button>
+                </div>
+                <div className="search">
+                    <div className="form-input">
+                        <div className="form-input">
+                            <label htmlFor="genreType" className="form-label">
+                                <span className="form-label-text">
+                                    Movie Genre:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="search_genre"
+                                >
+                                    {genreTypes}
+                                </select>
+                            </label>
+                        </div>
+                        {/* <label htmlFor="search_genre" className="form-label">
+                            <input
+                                onChange={this.inputChangeHandler}
+                                placeholder="Search movie by genre..."
+                                className="form-text"
+                                id="search_genre"
+                                type="text"
+                                name="search_genre"
+                            />
+                        </label> */}
+                    </div>
+                    <button
+                        className="button"
+                        onClick={this.searchGenreButtonHandler}
                     >
                         SEARCH
                     </button>

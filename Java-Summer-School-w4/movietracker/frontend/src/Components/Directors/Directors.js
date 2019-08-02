@@ -46,6 +46,7 @@ export default class Directors extends Component {
             <table>
                 <thead>
                     <tr>
+                        <th style={{ textAlign: "center" }}>MOVIES</th>
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Name</th>
                         <th style={{ textAlign: "center" }}>Surname</th>
@@ -71,14 +72,6 @@ export default class Directors extends Component {
                 </Link>
             </div>
         );
-
-        // TODO
-        // const body =
-        //     this.state.directors.length === 0 ? (
-        //         <h2>You don't have any directors</h2>
-        //     ) : (
-        //         content
-        //     );
 
         return (
             <Fragment>

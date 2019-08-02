@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 
 import axios from "../../axios-instance";
 import Logout from "../Auth/Logout/Logout";
+import Loading from "../../Util/Loading";
 
 export default class UpdateUser extends Component {
     state = {
         userData: {},
+        loading: true,
         message: "",
         input: {
             username: "",
@@ -37,7 +39,7 @@ export default class UpdateUser extends Component {
             this.props.history.push("/login");
         }
 
-        const username = this.props.match.params.username;
+        const username = localStorage.getItem("username");
 
         axios
             .get(`/admin/user/${username}`, {
@@ -47,11 +49,13 @@ export default class UpdateUser extends Component {
             })
             .then(res => {
                 this.setState({
-                    userData: res.data
+                    userData: res.data,
+                    loading: false
                 });
             })
             .catch(err => {
                 console.log(err);
+                this.setState({ loading: false });
             });
     }
 
@@ -79,27 +83,34 @@ export default class UpdateUser extends Component {
                 }
             )
             .then(res => {
-                this.setState({ userData: res.data });
+                this.setState({ userData: res.data, loading: false });
+
+                alert("Successfully updated user 😊");
 
                 this.props.history.push("/users");
             })
             .catch(err => {
                 console.log(err);
+
+                this.setState({ loading: false });
             });
     };
 
     render() {
+        const content = this.state.loading ? (
+            <Loading />
+        ) : this.state.userData ? (
+            this.state.userData.username
+        ) : null;
         return (
             <Fragment>
                 <Logout {...this.props} />
-                <Link to="/register">To Register</Link>
-                <Link to="/users">See Users</Link>
+                <Link to="/uses">See All Users</Link>
+                <Link to="/">Home Page</Link>
 
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
-                        <h1 className="header">
-                            Update User: {this.state.userData.username}
-                        </h1>
+                        <h1 className="header">Update User: {content}</h1>
                         <div className="form-input">
                             <label htmlFor="username" className="form-label">
                                 <span className="form-label-text">

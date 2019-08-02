@@ -63,8 +63,13 @@ export default class RegisterForm extends Component {
             .post("http://localhost:8080/auth/register", responseData)
             .then(res => {
                 this.setState({
+                    user: res.data,
                     message: res.data.username + " successfully registered 😊"
                 });
+
+                alert("Successfully registered 😊");
+
+                this.props.history.push("/login");
             })
             .catch(err => {
                 console.log(err);

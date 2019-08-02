@@ -107,6 +107,7 @@ public class DirectorController {
         return new ResponseEntity<>(new InfoMessage("Director was not deleted"), HttpStatus.BAD_REQUEST);
     }
 
+
     @GetMapping("/{directorId}/movies")
     public ResponseEntity<?> getDirectorMovies(@PathVariable Long directorId) {
         List<MovieEntity> directorMovies = movieService.getDirectorsMovies(directorId);

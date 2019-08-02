@@ -94,6 +94,8 @@ export default class UpdateMovie extends Component {
                     loading: false
                 });
 
+                alert("Successfully updated 😊");
+
                 this.props.history.push("/movies");
             })
             .catch(err => {

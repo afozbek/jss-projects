@@ -28,6 +28,8 @@ export default class DeleteMovie extends Component {
             .then(res => {
                 this.setState({ message: res.data });
 
+                alert("Successfully deleted 😊");
+
                 this.props.history.push("/directors");
             })
             .catch(err => {

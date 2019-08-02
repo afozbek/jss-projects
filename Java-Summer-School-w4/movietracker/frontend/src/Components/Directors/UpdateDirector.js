@@ -82,8 +82,9 @@ export default class UpdateDirector extends Component {
                 }
             )
             .then(res => {
-                console.log(res.data);
                 this.setState({ directorData: res.data, loading: false });
+
+                alert("Successfully updated 😊");
 
                 this.props.history.push("/directors");
             })

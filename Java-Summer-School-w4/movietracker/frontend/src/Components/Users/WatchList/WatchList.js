@@ -7,9 +7,9 @@ import Logout from "../../Auth/Logout/Logout";
 
 import axios from "../../../axios-instance";
 
-export default class FavList extends Component {
+export default class WatchList extends Component {
     state = {
-        favlist: [],
+        watchlist: [],
         movies: [],
         loading: true,
         input: {
@@ -17,11 +17,8 @@ export default class FavList extends Component {
         }
     };
 
-    favRemoveButtonHandler = movieId => {
+    watchRemoveButtonHandler = movieId => {
         const jwttoken = localStorage.getItem("jwttoken");
-
-        console.log("FAV REMOVE HANDLER");
-
         if (!jwttoken) {
             this.props.history.push("/login");
         }
@@ -29,12 +26,12 @@ export default class FavList extends Component {
         const username = localStorage.getItem("username");
 
         axios
-            .delete(`/${username}/favList/${movieId}`, {
+            .delete(`/${username}/watchList/${movieId}`, {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
                 this.setState({
-                    favlist: res.data
+                    watchlist: res.data
                 });
             })
             .catch(err => {
@@ -52,12 +49,12 @@ export default class FavList extends Component {
         const username = localStorage.getItem("username");
 
         axios
-            .get(`/${username}/favList`, {
+            .get(`/${username}/watchList`, {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
                 this.setState({
-                    favlist: res.data,
+                    watchlist: res.data,
                     loading: false
                 });
             })
@@ -105,13 +102,13 @@ export default class FavList extends Component {
     };
 
     render() {
-        const movies = this.state.favlist ? (
-            this.state.favlist.map(movie => {
+        const movies = this.state.watchlist ? (
+            this.state.watchlist.map(movie => {
                 return (
                     <Movie
                         {...this.props}
-                        favRemoveButtonHandler={this.favRemoveButtonHandler}
-                        isFav={true}
+                        watchRemoveButtonHandler={this.watchRemoveButtonHandler}
+                        isWatch={true}
                         key={movie.movieId}
                         movieData={movie}
                     />
@@ -126,7 +123,7 @@ export default class FavList extends Component {
                 <thead>
                     <tr>
                         <th style={{ textAlign: "center" }}>
-                            REMOVE FROM FAV LIST
+                            REMOVE FROM WATCH LIST
                         </th>
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Movie Name</th>
@@ -146,7 +143,7 @@ export default class FavList extends Component {
             <Loading />
         ) : (
             <div>
-                <h1>Your FavList</h1>
+                <h1>Your WatchList</h1>
                 <div>{movieTable}</div>
                 <Link to="/" style={{ marginTop: 30 }}>
                     Home Page
