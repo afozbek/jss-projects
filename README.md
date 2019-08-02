@@ -60,3 +60,16 @@
         -   Request Param --> Query Param
         -   String username --> Form field
         -   Path Variable --> Dynamic value in the URL
+
+---
+
+-   Fifth Week
+    -   Introduction to React
+    -   State Management
+    -   Props, SetState, Component Definition
+    -   Custom Form components
+    -   Event Handling with React
+    -   Working on UI for _Movie Tracker_ project
+    -   Creating front-end with React.
+    -   Adding routes with React Router
+    -   Finishing full-stack project
