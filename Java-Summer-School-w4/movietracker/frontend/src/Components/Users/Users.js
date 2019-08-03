@@ -62,20 +62,20 @@ export default class Users extends Component {
             this.state.users.length < 1 ? (
                 <h1>You don't have any Users</h1>
             ) : (
-                content
+                <div>
+                    <h1>Your Users</h1>
+                    <div>{content}</div>
+                    <Link to="/" style={{ marginTop: 30 }}>
+                        Home Page
+                    </Link>
+                </div>
             );
 
         return (
             <Fragment>
                 <Logout {...this.props} />
                 <Link to="/add-user">ADD A USER</Link>
-                <div>
-                    <h1>Your Users</h1>
-                    <div>{body}</div>
-                    <Link to="/" style={{ marginTop: 30 }}>
-                        Home Page
-                    </Link>
-                </div>
+                {body}
             </Fragment>
         );
     }
