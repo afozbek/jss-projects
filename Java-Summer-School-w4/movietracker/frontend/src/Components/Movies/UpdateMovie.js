@@ -19,7 +19,7 @@ export default class UpdateMovie extends Component {
         ],
         input: {
             name: "",
-            genreType: "COMEDY",
+            genreType: "",
             directorId: ""
         }
     };
@@ -70,6 +70,8 @@ export default class UpdateMovie extends Component {
                 const movieData = res.data;
                 const directorId = res.data.director.directorId;
 
+                console.log(movieData);
+
                 axios
                     .get(`/admin/director`, {
                         headers: {
@@ -87,7 +89,8 @@ export default class UpdateMovie extends Component {
                             directorData: directors,
                             input: {
                                 ...prevState.input,
-                                directorId: res.data[0].directorId
+                                directorId: res.data[0].directorId,
+                                genreType: movieData.genreType
                             }
                         }));
                     })
