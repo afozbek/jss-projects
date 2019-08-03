@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -70,7 +69,7 @@ public class DirectorController {
         String directorName = directorObj.getName();
         String surname = directorObj.getSurname();
         String birthPlace = directorObj.getBirthPlace();
-//        Date birthDate = directorObj.getBirthDate();
+        // Date birthDate = directorObj.getBirthDate();
 
         if (directorName == null || surname == null || birthPlace == null) {
             return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
@@ -89,7 +88,6 @@ public class DirectorController {
 
         DirectorEntity updatedDirector = directorService.updateDirector(newDirector);
 
-
         if (updatedDirector == null) {
             return new ResponseEntity<>(new InfoMessage("Update failed!"), HttpStatus.EXPECTATION_FAILED);
         }
@@ -107,17 +105,12 @@ public class DirectorController {
         return new ResponseEntity<>(new InfoMessage("Director was not deleted"), HttpStatus.BAD_REQUEST);
     }
 
-
     @GetMapping("/{directorId}/movies")
     public ResponseEntity<?> getDirectorMovies(@PathVariable Long directorId) {
         List<MovieEntity> directorMovies = movieService.getDirectorsMovies(directorId);
 
         if (directorMovies == null) {
             return new ResponseEntity<>(new InfoMessage("Director or movies not found"), HttpStatus.BAD_REQUEST);
-        }
-
-        if (directorMovies.size() == 0) {
-            return new ResponseEntity<>(new InfoMessage("No movies directed by this director"), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(directorMovies, HttpStatus.OK);
