@@ -7,11 +7,11 @@ import java.util.Collection;
 
 // INSTANCE OF AUTHENTICATION
 public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken {
+    private static final long serialVersionUID = 121212L;
 
     private String token;
 
     private String username;
-
 
     public JwtAuthenticationToken(String token) {
         super(null, null);
@@ -22,6 +22,7 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken 
         super(null, null, authorities);
         this.token = token;
     }
+
     public JwtAuthenticationToken(String token, Collection<? extends GrantedAuthority> authorities, String username) {
         super(null, null, authorities);
         this.token = token;

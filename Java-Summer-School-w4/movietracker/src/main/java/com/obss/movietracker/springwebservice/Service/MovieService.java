@@ -1,6 +1,5 @@
 package com.obss.movietracker.springwebservice.Service;
 
-import com.obss.movietracker.springwebservice.Model.DirectorEntity;
 import com.obss.movietracker.springwebservice.Model.MovieEntity;
 import com.obss.movietracker.springwebservice.Model.Types.Genre;
 

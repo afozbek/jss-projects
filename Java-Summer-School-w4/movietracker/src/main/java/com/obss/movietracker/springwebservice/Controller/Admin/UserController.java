@@ -1,7 +1,6 @@
 package com.obss.movietracker.springwebservice.Controller.Admin;
 
 import com.obss.movietracker.springwebservice.Messages.InfoMessage;
-import com.obss.movietracker.springwebservice.Model.Jwt.JwtUser;
 import com.obss.movietracker.springwebservice.Model.UserEntity;
 import com.obss.movietracker.springwebservice.Service.Impl.UserServiceImpl;
 import com.obss.movietracker.springwebservice.Service.Impl.Util.PasswordServiceImpl;
@@ -48,7 +47,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
         if (userEntity.getUsername() == null || userEntity.getPassword() == null) {
-            return new ResponseEntity<>(new InfoMessage("Please enter your email and password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InfoMessage("Please enter your email and password"),
+                    HttpStatus.BAD_REQUEST);
         }
 
         if (!userService.registerUser(userEntity)) {
@@ -96,7 +96,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         UserEntity user = userService.findById(userId);
 
-        if(user==null){
+        if (user == null) {
             return new ResponseEntity<>(new InfoMessage("User was not found"), HttpStatus.NOT_FOUND);
         }
 
@@ -104,6 +104,5 @@ public class UserController {
 
         return new ResponseEntity<>(new InfoMessage("Successfully deleted"), HttpStatus.OK);
     }
-
 
 }

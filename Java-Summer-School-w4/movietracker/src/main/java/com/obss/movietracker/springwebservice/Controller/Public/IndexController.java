@@ -19,7 +19,6 @@ import java.util.Set;
 @RestController
 @RequestMapping("/")
 public class IndexController {
-    // GET MOVIE OR MOVIES
 
     @Autowired
     private MovieServiceImpl movieService;
@@ -35,7 +34,7 @@ public class IndexController {
     // GET MOVIE OR MOVIES
     @GetMapping("/movies")
     public ResponseEntity<?> getMovies(@RequestParam(required = false, name = "movie") String movieName,
-                                       @RequestParam(required = false, name = "genre") Genre genre) {
+            @RequestParam(required = false, name = "genre") Genre genre) {
         List<MovieEntity> movieList;
 
         if (movieName != null && genre != null) {
@@ -57,7 +56,7 @@ public class IndexController {
     }
 
     @GetMapping("/{username}/favList")
-    public ResponseEntity<?> getFavList(@PathVariable String username){
+    public ResponseEntity<?> getFavList(@PathVariable String username) {
         UserEntity user = userService.getUserByUsername(username);
 
         Set<MovieEntity> favLists = user.getFavList();
@@ -66,15 +65,15 @@ public class IndexController {
     }
 
     @DeleteMapping("/{username}/favList/{movieId}")
-    public ResponseEntity<?> deleteFromFavList(@PathVariable String username, @PathVariable Long movieId){
+    public ResponseEntity<?> deleteFromFavList(@PathVariable String username, @PathVariable Long movieId) {
         UserEntity user = userService.getUserByUsername(username);
 
         Set<MovieEntity> favLists = user.getFavList();
 
         Set<MovieEntity> newFavList = new HashSet<>();
 
-        for(MovieEntity movie: favLists){
-            if(movie.getMovieId().equals(movieId)){
+        for (MovieEntity movie : favLists) {
+            if (movie.getMovieId().equals(movieId)) {
                 continue;
             }
             newFavList.add(movie);
@@ -87,9 +86,8 @@ public class IndexController {
         return new ResponseEntity<>(updatedUser.getFavList(), HttpStatus.OK);
     }
 
-
     @PostMapping("/{userId}/favList/{movieId}")
-    public ResponseEntity<?> addToFavList(@PathVariable Long userId,@PathVariable Long movieId) {
+    public ResponseEntity<?> addToFavList(@PathVariable Long userId, @PathVariable Long movieId) {
         Set<MovieEntity> favList = userService.addMovieToFavList(userId, movieId);
 
         if (favList == null) {
@@ -100,7 +98,7 @@ public class IndexController {
     }
 
     @GetMapping("/{username}/watchList")
-    public ResponseEntity<?> getWatchList(@PathVariable String username){
+    public ResponseEntity<?> getWatchList(@PathVariable String username) {
         UserEntity user = userService.getUserByUsername(username);
 
         Set<MovieEntity> watchList = user.getWatchList();
@@ -109,15 +107,15 @@ public class IndexController {
     }
 
     @DeleteMapping("/{username}/watchList/{movieId}")
-    public ResponseEntity<?> deleteFromWatchList(@PathVariable String username, @PathVariable Long movieId){
+    public ResponseEntity<?> deleteFromWatchList(@PathVariable String username, @PathVariable Long movieId) {
         UserEntity user = userService.getUserByUsername(username);
 
         Set<MovieEntity> watchList = user.getWatchList();
 
         Set<MovieEntity> newWatchList = new HashSet<>();
 
-        for(MovieEntity movie: watchList){
-            if(movie.getMovieId().equals(movieId)){
+        for (MovieEntity movie : watchList) {
+            if (movie.getMovieId().equals(movieId)) {
                 continue;
             }
             newWatchList.add(movie);
@@ -131,7 +129,7 @@ public class IndexController {
     }
 
     @PostMapping("/{userId}/watchList/{movieId}")
-    public ResponseEntity<?> addToWatchList(@PathVariable Long userId,@PathVariable Long movieId) {
+    public ResponseEntity<?> addToWatchList(@PathVariable Long userId, @PathVariable Long movieId) {
         Set<MovieEntity> wathcList = userService.addMovieToWatchList(userId, movieId);
 
         if (wathcList == null) {
