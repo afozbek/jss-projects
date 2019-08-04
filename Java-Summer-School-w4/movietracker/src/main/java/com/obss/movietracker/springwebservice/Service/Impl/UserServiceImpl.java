@@ -42,7 +42,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     // Search DB for existing user
-    public UserDetails loadUserByUsernameAndPassword(String username, String password) throws UsernameNotFoundException, PasswordWrongException {
+    public UserDetails loadUserByUsernameAndPassword(String username, String password)
+            throws UsernameNotFoundException, PasswordWrongException {
         String hashedPassword = passwordService.hashPassword(password);
 
         UserEntity user = userRepository.findByUsername(username);
@@ -62,8 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new JwtUserDetails(user.getUserId(), username, user.getPassword(), user.getAuthorities());
     }
 
-
-    public UserEntity getUserByUsername(String username){
+    public UserEntity getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return true;
     }
 
-    public UserEntity findById(Long userId){
+    public UserEntity findById(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user.setFavList(favList);
 
-        UserEntity savedUser = userRepository.save(user);
+        userRepository.save(user);
 
         return favList;
     }
@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user.setWatchList(watchList);
 
-        UserEntity savedUser = userRepository.save(user);
+        userRepository.save(user);
 
         return watchList;
     }

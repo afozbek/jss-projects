@@ -68,13 +68,13 @@ export default class UpdateUser extends Component {
             this.props.history.push("/login");
         }
 
-        const paramUsername = this.props.match.params.username;
+        const currentUsername = localStorage.getItem("username");
 
         const { username, password, firstName, lastName } = this.state.input;
 
         axios
             .put(
-                `/admin/user/${paramUsername}`,
+                `/admin/user/${currentUsername}`,
                 { username, password, firstName, lastName },
                 {
                     headers: {

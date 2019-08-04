@@ -1,6 +1,5 @@
 package com.obss.movietracker.springwebservice.Security;
 
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -12,7 +11,8 @@ import java.io.IOException;
 public class JwtSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        System.out.println("Successfully Authenticated");
+    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+            Authentication authentication) throws IOException, ServletException {
+        System.out.println("SUCCESSFULLY AUTHENTICATED-2....................");
     }
 }

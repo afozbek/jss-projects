@@ -31,7 +31,6 @@ export default class DirectorMovies extends Component {
             })
             .catch(err => {
                 this.setState({
-                    err,
                     loading: false,
                     message: "Maybe you don't have permission to access"
                 });
@@ -44,7 +43,6 @@ export default class DirectorMovies extends Component {
                 <Movie {...this.props} key={movie.movieId} movieData={movie} />
             );
         });
-
         const movieTable = (
             <table>
                 <thead>
@@ -71,8 +69,14 @@ export default class DirectorMovies extends Component {
             <Loading />
         ) : (
             <div>
-                <h1>Your Director's Movies</h1>
-                <div>{movieTable}</div>
+                <h1 style={{ marginBottom: 20 }}>Your Director's Movies</h1>
+                <div>
+                    {this.state.directorsMovies.length === 0 ? (
+                        <h1>Your director doesn't have movies</h1>
+                    ) : (
+                        movieTable
+                    )}
+                </div>
                 <Link to="/" style={{ marginTop: 30 }}>
                     Home Page
                 </Link>

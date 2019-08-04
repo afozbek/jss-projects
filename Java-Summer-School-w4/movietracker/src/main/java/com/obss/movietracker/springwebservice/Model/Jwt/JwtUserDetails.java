@@ -9,6 +9,8 @@ import java.util.List;
 
 public class JwtUserDetails implements UserDetails {
 
+    private static final long serialVersionUID = 121212L;
+
     private Long id;
 
     private String userName;

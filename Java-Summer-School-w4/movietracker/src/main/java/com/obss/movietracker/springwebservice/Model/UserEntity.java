@@ -1,6 +1,5 @@
 package com.obss.movietracker.springwebservice.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
@@ -24,7 +23,6 @@ public class UserEntity {
     private String lastName;
 
     @Column
-//    @JsonIgnore
     private String password;
 
     @Column
@@ -54,7 +52,8 @@ public class UserEntity {
         this.authorities = authorities;
     }
 
-    public UserEntity(String username, String firstName, String lastName, String password, List<SimpleGrantedAuthority> authorities) {
+    public UserEntity(String username, String firstName, String lastName, String password,
+            List<SimpleGrantedAuthority> authorities) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,7 +61,8 @@ public class UserEntity {
         this.authorities = authorities;
     }
 
-    public UserEntity(String username, String firstName, String lastName, String password, boolean status, Set<MovieEntity> favList, Set<MovieEntity> watchList) {
+    public UserEntity(String username, String firstName, String lastName, String password, boolean status,
+            Set<MovieEntity> favList, Set<MovieEntity> watchList) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -71,7 +71,6 @@ public class UserEntity {
         this.favList = favList;
         this.watchList = watchList;
     }
-
 
     public String getUsername() {
         return username;
