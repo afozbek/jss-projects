@@ -105,7 +105,7 @@ export default class UpdateUser extends Component {
         return (
             <Fragment>
                 <Logout {...this.props} />
-                <Link to="/uses">See All Users</Link>
+                <Link to="/users">See All Users</Link>
                 <Link to="/">Home Page</Link>
 
                 <form onSubmit={this.formSubmitHandler}>
