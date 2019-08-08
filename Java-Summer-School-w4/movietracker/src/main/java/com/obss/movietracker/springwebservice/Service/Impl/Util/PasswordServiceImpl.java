@@ -10,11 +10,6 @@ import java.nio.charset.StandardCharsets;
 public class PasswordServiceImpl implements PasswordService {
 
     public String hashPassword(String password) {
-
-        String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-
-        System.out.println(hashedPassword);
-
-        return hashedPassword;
+        return Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
     }
 }
