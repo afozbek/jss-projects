@@ -8,7 +8,6 @@ import Loading from "../../Util/Loading";
 
 export default class UpdateMovie extends Component {
     state = {
-        movieData: {},
         directorData: [],
         loading: true,
         message: "",
@@ -30,7 +29,6 @@ export default class UpdateMovie extends Component {
 
         this.setState(prevState => ({
             ...prevState,
-            directorId: "",
             input: {
                 ...prevState.input,
                 [name]: value
@@ -68,9 +66,6 @@ export default class UpdateMovie extends Component {
             })
             .then(res => {
                 const movieData = res.data;
-                const directorId = res.data.director.directorId;
-
-                console.log(movieData);
 
                 axios
                     .get(`/admin/director`, {
@@ -81,15 +76,38 @@ export default class UpdateMovie extends Component {
                     .then(res => {
                         const directors = res.data;
 
+                        const filteredGenres = this.state.genreTypes.filter(
+                            genre => genre.value !== movieData.genreType
+                        );
+                        const movieDirector = directors.filter(
+                            director =>
+                                director.directorId ===
+                                movieData.director.directorId
+                        );
+
+                        const filteredDirectors = directors.filter(
+                            director =>
+                                director.directorId !==
+                                movieData.director.directorId
+                        );
+
+                        const directorData = [
+                            ...movieDirector,
+                            ...filteredDirectors
+                        ];
+
                         this.setState(prevState => ({
                             ...prevState,
-                            movieData: movieData,
-                            directorId: directorId,
                             loading: false,
-                            directorData: directors,
+                            directorData,
+                            genreTypes: [
+                                { id: 5, value: movieData.genreType },
+                                ...filteredGenres
+                            ],
                             input: {
                                 ...prevState.input,
-                                directorId: res.data[0].directorId,
+                                name: movieData.name,
+                                directorId: directorData[0].directorId,
                                 genreType: movieData.genreType
                             }
                         }));
@@ -136,7 +154,6 @@ export default class UpdateMovie extends Component {
             )
             .then(res => {
                 this.setState({
-                    movieData: res.data,
                     loading: false
                 });
 
@@ -168,53 +185,70 @@ export default class UpdateMovie extends Component {
         ));
 
         const form = (
-            <form onSubmit={this.formSubmitHandler}>
-                <div className="inner-container">
-                    <h1 className="header">
-                        Update Movie: {this.state.movieData.name}
-                    </h1>
-                    <div className="form-input">
-                        <label htmlFor="name" className="form-label">
-                            <span className="form-label-text">Name:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Movie Name"
-                                id="name"
-                                type="text"
-                                name="name"
-                                required
-                            />
-                        </label>
+            <>
+                <form onSubmit={this.formSubmitHandler}>
+                    <div className="inner-container">
+                        <h1 className="header">
+                            Update Movie: {this.state.input.name}
+                        </h1>
+                        <div className="form-input">
+                            <label htmlFor="name" className="form-label">
+                                <span className="form-label-text">Name:</span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Movie Name"
+                                    id="name"
+                                    value={this.state.input.name}
+                                    type="text"
+                                    name="name"
+                                    required
+                                />
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="genreType" className="form-label">
+                                <span className="form-label-text">
+                                    Movie Genre:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="genreType"
+                                >
+                                    {genreTypes}
+                                </select>
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="director" className="form-label">
+                                <span className="form-label-text">
+                                    Director:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="directorId"
+                                >
+                                    {directors}
+                                </select>
+                            </label>
+                        </div>
+                        <h3>{this.state.message}</h3>
+                        <input
+                            className="button"
+                            type="submit"
+                            value="UPDATE"
+                        />
                     </div>
-                    <div className="form-input">
-                        <label htmlFor="genreType" className="form-label">
-                            <span className="form-label-text">
-                                Movie Genre:
-                            </span>
-                            <select
-                                onChange={this.dropDownChangeHandler}
-                                name="genreType"
-                            >
-                                {genreTypes}
-                            </select>
-                        </label>
-                    </div>
-                    <div className="form-input">
-                        <label htmlFor="director" className="form-label">
-                            <span className="form-label-text">Director:</span>
-                            <select
-                                onChange={this.dropDownChangeHandler}
-                                name="directorId"
-                            >
-                                {directors}
-                            </select>
-                        </label>
-                    </div>
-                    <h3>{this.state.message}</h3>
-                    <input className="button" type="submit" value="UPDATE" />
-                </div>
-            </form>
+                </form>
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
         );
 
         const content = this.state.loading ? <Loading /> : form;
@@ -222,8 +256,10 @@ export default class UpdateMovie extends Component {
         return (
             <Fragment>
                 <Logout {...this.props} />
+
                 <Link to="/movies">To Movies</Link>
                 <Link to="/">Home Page</Link>
+
                 {content}
             </Fragment>
         );

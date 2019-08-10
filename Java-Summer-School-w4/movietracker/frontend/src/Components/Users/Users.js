@@ -24,6 +24,7 @@ export default class Users extends Component {
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {
+                console.log(res.data);
                 this.setState({ users: res.data, loading: false });
             })
             .catch(err => {
@@ -47,6 +48,7 @@ export default class Users extends Component {
                         <th style={{ textAlign: "center" }}>ID</th>
                         <th style={{ textAlign: "center" }}>Username</th>
                         <th style={{ textAlign: "center" }}>Name</th>
+                        <th style={{ textAlign: "center" }}>Last Name</th>
                         <th style={{ textAlign: "center" }}>UPDATE</th>
                         <th style={{ textAlign: "center" }}>DELETE</th>
                     </tr>

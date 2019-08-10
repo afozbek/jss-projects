@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -65,6 +68,7 @@ public class UserController {
         String newPassword = userEntity.getPassword();
         String newFirstName = userEntity.getFirstName();
         String newLastName = userEntity.getLastName();
+        List<SimpleGrantedAuthority> authorities = userEntity.getAuthorities();
 
         UserEntity user = userService.findUserByUsername(username);
 
@@ -72,7 +76,7 @@ public class UserController {
             return new ResponseEntity<>(new InfoMessage("User was not found"), HttpStatus.NOT_FOUND);
         }
 
-        if (newUsername == null || newPassword == null) {
+        if (newUsername == null || newPassword == null || authorities == null) {
             return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
@@ -80,6 +84,7 @@ public class UserController {
 
         user.setUsername(newUsername);
         user.setPassword(newHashedPassword);
+        user.setAuthorities(authorities);
 
         if (newFirstName != null && newLastName != null) {
             user.setFirstName(newFirstName);

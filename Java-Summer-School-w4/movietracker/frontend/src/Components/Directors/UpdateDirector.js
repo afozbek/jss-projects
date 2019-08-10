@@ -5,16 +5,19 @@ import { Link } from "react-router-dom";
 import axios from "../../axios-instance";
 import Logout from "../Auth/Logout/Logout";
 import Loading from "../../Util/Loading";
+import { birthPlaces } from "./BirthPlaces";
 
 export default class UpdateDirector extends Component {
     state = {
         directorData: {},
+        birthPlaces,
         loading: true,
         message: "",
         input: {
             name: "",
             surname: "",
-            birthPlace: ""
+            birthPlace: birthPlaces[0].place,
+            birthDate: ""
         }
     };
 
@@ -27,6 +30,19 @@ export default class UpdateDirector extends Component {
             input: {
                 ...prevState.input,
                 [inputName]: value
+            }
+        }));
+    };
+
+    dropDownChangeHandler = e => {
+        let value = e.target.value;
+        let name = e.target.name;
+
+        this.setState(prevState => ({
+            ...prevState,
+            input: {
+                ...prevState.input,
+                [name]: value
             }
         }));
     };
@@ -47,10 +63,29 @@ export default class UpdateDirector extends Component {
                 }
             })
             .then(res => {
-                this.setState({
-                    directorData: res.data,
-                    loading: false
-                });
+                const date = new Date(res.data.birthDate)
+                    .toISOString()
+                    .split("T")[0];
+
+                const birthPlaces = this.state.birthPlaces.filter(
+                    place => place.place !== res.data.birthPlace
+                );
+
+                this.setState(prevState => ({
+                    ...prevState,
+                    loading: false,
+                    birthPlaces: [
+                        { birthPlaceId: 7, place: res.data.birthPlace },
+                        ...birthPlaces
+                    ],
+                    input: {
+                        ...prevState.input,
+                        name: res.data.name,
+                        surname: res.data.surname,
+                        birthDate: date,
+                        birthPlace: res.data.birthPlace
+                    }
+                }));
             })
             .catch(err => {
                 console.log(err);
@@ -69,12 +104,12 @@ export default class UpdateDirector extends Component {
 
         const directorId = this.props.match.params.directorId;
 
-        const { name, surname, birthPlace } = this.state.input;
+        const { name, surname, birthPlace, birthDate } = this.state.input;
 
         axios
             .put(
                 `/admin/director/${directorId}`,
-                { name, surname, birthPlace },
+                { name, surname, birthPlace, birthDate },
                 {
                     headers: {
                         Authorization: `Bearer ${jwttoken}`
@@ -82,7 +117,7 @@ export default class UpdateDirector extends Component {
                 }
             )
             .then(res => {
-                this.setState({ directorData: res.data, loading: false });
+                this.setState({ loading: false });
 
                 alert("Successfully updated 😊");
 
@@ -95,59 +130,103 @@ export default class UpdateDirector extends Component {
     };
 
     render() {
+        const birthPlaces = this.state.loading ? (
+            <Loading />
+        ) : this.state.birthPlaces ? (
+            this.state.birthPlaces.map(birthPlace => (
+                <option key={birthPlace.birthPlaceId} value={birthPlace.place}>
+                    {birthPlace.place}
+                </option>
+            ))
+        ) : null;
+
         const form = (
-            <form onSubmit={this.formSubmitHandler}>
-                <div className="inner-container">
-                    <h1 className="header">
-                        Update Director: {this.state.directorData.name}
-                    </h1>
-                    <div className="form-input">
-                        <label htmlFor="name" className="form-label">
-                            <span className="form-label-text">Name:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Director Name"
-                                id="name"
-                                type="text"
-                                name="name"
-                                required
-                            />
-                        </label>
+            <>
+                <form onSubmit={this.formSubmitHandler}>
+                    <div className="inner-container">
+                        <h1 className="header">
+                            Update Director: {this.state.input.name}
+                        </h1>
+
+                        <div className="form-input">
+                            <label htmlFor="name" className="form-label">
+                                <span className="form-label-text">Name:</span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Director Name"
+                                    value={this.state.input.name}
+                                    id="name"
+                                    type="text"
+                                    name="name"
+                                    required
+                                />
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="surname" className="form-label">
+                                <span className="form-label-text">
+                                    Surname:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Director Surname"
+                                    value={this.state.input.surname}
+                                    id="surname"
+                                    type="text"
+                                    name="surname"
+                                />
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="birthPlace" className="form-label">
+                                <span className="form-label-text">
+                                    Birth Place:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="birthPlace"
+                                >
+                                    {birthPlaces}
+                                </select>
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="birthDate" className="form-label">
+                                <span className="form-label-text">
+                                    Birth Date:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text"
+                                    value={this.state.input.birthDate}
+                                    id="birthDate"
+                                    type="date"
+                                    name="birthDate"
+                                    required
+                                />
+                            </label>
+                        </div>
+
+                        <h3>{this.state.message}</h3>
+                        <input
+                            className="button"
+                            type="submit"
+                            value="UPDATE"
+                        />
                     </div>
-                    <div className="form-input">
-                        <label htmlFor="surname" className="form-label">
-                            <span className="form-label-text">Surname:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Director Surname"
-                                id="surname"
-                                type="text"
-                                name="surname"
-                            />
-                        </label>
-                    </div>
-                    <div className="form-input">
-                        <label htmlFor="birthPlace" className="form-label">
-                            <span className="form-label-text">
-                                Birth Place:
-                            </span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                placeholder="Enter Director's Birth Place"
-                                className="form-text"
-                                id="birthPlace"
-                                type="text"
-                                name="birthPlace"
-                                required
-                            />
-                        </label>
-                    </div>
-                    <h3>{this.state.message}</h3>
-                    <input className="button" type="submit" value="UPDATE" />
-                </div>
-            </form>
+                </form>
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
         );
 
         const content = this.state.loading ? <Loading /> : form;
