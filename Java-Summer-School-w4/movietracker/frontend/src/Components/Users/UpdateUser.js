@@ -62,10 +62,19 @@ export default class UpdateUser extends Component {
                 }
             })
             .then(res => {
-                this.setState({
-                    userData: res.data,
-                    loading: false
-                });
+                let confirm = res.data.authorities.length >= 2 ? true : false;
+
+                this.setState(prevState => ({
+                    ...prevState,
+                    loading: false,
+                    input: {
+                        ...prevState.input,
+                        username: res.data.username,
+                        firstName: res.data.firstName,
+                        lastName: res.data.lastName,
+                        confirm
+                    }
+                }));
             })
             .catch(err => {
                 console.log(err);
@@ -125,17 +134,17 @@ export default class UpdateUser extends Component {
     };
 
     render() {
-        const content = this.state.loading ? (
+        const username = this.state.loading ? (
             <Loading />
-        ) : this.state.userData ? (
-            this.state.userData.username
+        ) : this.state.input ? (
+            this.state.input.username
         ) : null;
 
         const form = (
             <>
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
-                        <h1 className="header">Update User: {content}</h1>
+                        <h1 className="header">Update User: {username}</h1>
                         <div className="form-input">
                             <label htmlFor="username" className="form-label">
                                 <span className="form-label-text">
@@ -148,6 +157,7 @@ export default class UpdateUser extends Component {
                                     id="username"
                                     type="text"
                                     name="username"
+                                    value={this.state.input.username}
                                     required
                                 />
                             </label>
@@ -160,6 +170,7 @@ export default class UpdateUser extends Component {
                                     className="form-text form-label-input"
                                     placeholder="Enter Your Name"
                                     id="firstName"
+                                    value={this.state.input.firstName}
                                     type="text"
                                     name="firstName"
                                 />
@@ -174,6 +185,7 @@ export default class UpdateUser extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     placeholder="Enter Your Last Name"
+                                    value={this.state.input.lastName}
                                     id="lastName"
                                     type="text"
                                     name="lastName"
@@ -204,6 +216,7 @@ export default class UpdateUser extends Component {
                                 <input
                                     onChange={this.confirmChangeHandler}
                                     className="form-text"
+                                    checked={this.state.input.confirm}
                                     id="confirm"
                                     type="checkbox"
                                     name="confirm"

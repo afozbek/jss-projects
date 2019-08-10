@@ -67,9 +67,6 @@ export default class UpdateMovie extends Component {
             })
             .then(res => {
                 const movieData = res.data;
-                const directorId = res.data.director.directorId;
-
-                console.log(movieData);
 
                 axios
                     .get(`/admin/director`, {
@@ -80,15 +77,38 @@ export default class UpdateMovie extends Component {
                     .then(res => {
                         const directors = res.data;
 
+                        const filteredGenres = this.state.genreTypes.filter(
+                            genre => genre.value !== movieData.genreType
+                        );
+                        const movieDirector = directors.filter(
+                            director =>
+                                director.directorId ===
+                                movieData.director.directorId
+                        );
+
+                        const filteredDirectors = directors.filter(
+                            director =>
+                                director.directorId !==
+                                movieData.director.directorId
+                        );
+
+                        const directorData = [
+                            ...movieDirector,
+                            ...filteredDirectors
+                        ];
+
                         this.setState(prevState => ({
                             ...prevState,
                             movieData: movieData,
-                            directorId: directorId,
                             loading: false,
-                            directorData: directors,
+                            directorData,
+                            genreTypes: [
+                                { id: 5, value: movieData.genreType },
+                                ...filteredGenres
+                            ],
                             input: {
                                 ...prevState.input,
-                                directorId: res.data[0].directorId,
+                                directorId: directorData[0].directorId,
                                 genreType: movieData.genreType
                             }
                         }));
