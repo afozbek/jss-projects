@@ -3,12 +3,10 @@ import React from "react";
 import "./App.css";
 import AppRouter from "../AppRouter";
 
-const App = props => {
-    return (
-        <div className="table-app">
-            <AppRouter />
-        </div>
-    );
-};
+class App extends React.Component {
+    render() {
+        return <AppRouter {...this.props} />;
+    }
+}
 
 export default App;
