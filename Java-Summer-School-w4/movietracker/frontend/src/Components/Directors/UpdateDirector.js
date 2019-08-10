@@ -5,16 +5,18 @@ import { Link } from "react-router-dom";
 import axios from "../../axios-instance";
 import Logout from "../Auth/Logout/Logout";
 import Loading from "../../Util/Loading";
+import { birthPlaces } from "./BirthPlaces";
 
 export default class UpdateDirector extends Component {
     state = {
         directorData: {},
+        birthPlaces,
         loading: true,
         message: "",
         input: {
             name: "",
             surname: "",
-            birthPlace: "",
+            birthPlace: birthPlaces[0].place,
             birthDate: ""
         }
     };
@@ -28,6 +30,19 @@ export default class UpdateDirector extends Component {
             input: {
                 ...prevState.input,
                 [inputName]: value
+            }
+        }));
+    };
+
+    dropDownChangeHandler = e => {
+        let value = e.target.value;
+        let name = e.target.name;
+
+        this.setState(prevState => ({
+            ...prevState,
+            input: {
+                ...prevState.input,
+                [name]: value
             }
         }));
     };
@@ -96,12 +111,23 @@ export default class UpdateDirector extends Component {
     };
 
     render() {
+        const birthPlaces = this.state.loading ? (
+            <Loading />
+        ) : this.state.birthPlaces ? (
+            this.state.birthPlaces.map(birthPlace => (
+                <option key={birthPlace.birthPlaceId} value={birthPlace.place}>
+                    {birthPlace.place}
+                </option>
+            ))
+        ) : null;
+
         const form = (
             <form onSubmit={this.formSubmitHandler}>
                 <div className="inner-container">
                     <h1 className="header">
                         Update Director: {this.state.directorData.name}
                     </h1>
+
                     <div className="form-input">
                         <label htmlFor="name" className="form-label">
                             <span className="form-label-text">Name:</span>
@@ -116,6 +142,7 @@ export default class UpdateDirector extends Component {
                             />
                         </label>
                     </div>
+
                     <div className="form-input">
                         <label htmlFor="surname" className="form-label">
                             <span className="form-label-text">Surname:</span>
@@ -129,22 +156,21 @@ export default class UpdateDirector extends Component {
                             />
                         </label>
                     </div>
+
                     <div className="form-input">
                         <label htmlFor="birthPlace" className="form-label">
                             <span className="form-label-text">
                                 Birth Place:
                             </span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                placeholder="Enter Director's Birth Place"
-                                className="form-text"
-                                id="birthPlace"
-                                type="text"
+                            <select
+                                onChange={this.dropDownChangeHandler}
                                 name="birthPlace"
-                                required
-                            />
+                            >
+                                {birthPlaces}
+                            </select>
                         </label>
                     </div>
+
                     <div className="form-input">
                         <label htmlFor="birthDate" className="form-label">
                             <span className="form-label-text">Birth Date:</span>
@@ -158,6 +184,7 @@ export default class UpdateDirector extends Component {
                             />
                         </label>
                     </div>
+
                     <h3>{this.state.message}</h3>
                     <input className="button" type="submit" value="UPDATE" />
                 </div>

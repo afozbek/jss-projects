@@ -30,7 +30,6 @@ export default class UpdateMovie extends Component {
 
         this.setState(prevState => ({
             ...prevState,
-            directorId: "",
             input: {
                 ...prevState.input,
                 [name]: value
@@ -187,6 +186,7 @@ export default class UpdateMovie extends Component {
                             />
                         </label>
                     </div>
+
                     <div className="form-input">
                         <label htmlFor="genreType" className="form-label">
                             <span className="form-label-text">
@@ -200,6 +200,7 @@ export default class UpdateMovie extends Component {
                             </select>
                         </label>
                     </div>
+
                     <div className="form-input">
                         <label htmlFor="director" className="form-label">
                             <span className="form-label-text">Director:</span>

@@ -5,22 +5,19 @@ import { Link } from "react-router-dom";
 import axios from "../../axios-instance";
 import Logout from "../Auth/Logout/Logout";
 import Loading from "../../Util/Loading";
+import { birthPlaces } from "./BirthPlaces";
 
 export default class AddMovie extends Component {
     state = {
         directorData: [],
+        birthPlaces,
         loading: true,
         message: "",
-        birthPlaces: [
-            { id: 1, value: "ISTANBUL" },
-            { id: 2, value: "ANKARA" },
-            { id: 3, value: "IZMIR" },
-            { id: 4, value: "KASTAMONU" }
-        ],
         input: {
             name: "",
             surname: "",
-            birthPlace: "ISTANBUL"
+            birthPlace: birthPlaces[0].place,
+            birthDate: ""
         }
     };
 
@@ -88,7 +85,7 @@ export default class AddMovie extends Component {
             this.props.history.push("/login");
         }
 
-        const { name, surname, birthPlace } = this.state.input;
+        const { name, surname, birthPlace, birthDate } = this.state.input;
 
         axios
             .post(
@@ -96,7 +93,8 @@ export default class AddMovie extends Component {
                 {
                     name,
                     surname,
-                    birthPlace
+                    birthPlace,
+                    birthDate
                 },
                 {
                     headers: {
@@ -124,9 +122,9 @@ export default class AddMovie extends Component {
     };
 
     render() {
-        const birthPlaces = this.state.birthPlaces.map(place => (
-            <option key={place.id} value={place.value}>
-                {place.value}
+        const birthPlaces = this.state.birthPlaces.map(birthPlace => (
+            <option key={birthPlace.birthPlaceId} value={birthPlace.place}>
+                {birthPlace.place}
             </option>
         ));
 
@@ -172,6 +170,20 @@ export default class AddMovie extends Component {
                             >
                                 {birthPlaces}
                             </select>
+                        </label>
+                    </div>
+
+                    <div className="form-input">
+                        <label htmlFor="birthDate" className="form-label">
+                            <span className="form-label-text">Birth Date:</span>
+                            <input
+                                onChange={this.inputChangeHandler}
+                                className="form-text"
+                                id="birthDate"
+                                type="date"
+                                name="birthDate"
+                                required
+                            />
                         </label>
                     </div>
 
