@@ -167,55 +167,69 @@ export default class UpdateMovie extends Component {
         ));
 
         const form = (
-            <form onSubmit={this.formSubmitHandler}>
-                <div className="inner-container">
-                    <h1 className="header">
-                        Update Movie: {this.state.movieData.name}
-                    </h1>
-                    <div className="form-input">
-                        <label htmlFor="name" className="form-label">
-                            <span className="form-label-text">Name:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Movie Name"
-                                id="name"
-                                type="text"
-                                name="name"
-                                required
-                            />
-                        </label>
-                    </div>
+            <>
+                <form onSubmit={this.formSubmitHandler}>
+                    <div className="inner-container">
+                        <h1 className="header">
+                            Update Movie: {this.state.movieData.name}
+                        </h1>
+                        <div className="form-input">
+                            <label htmlFor="name" className="form-label">
+                                <span className="form-label-text">Name:</span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Movie Name"
+                                    id="name"
+                                    type="text"
+                                    name="name"
+                                    required
+                                />
+                            </label>
+                        </div>
 
-                    <div className="form-input">
-                        <label htmlFor="genreType" className="form-label">
-                            <span className="form-label-text">
-                                Movie Genre:
-                            </span>
-                            <select
-                                onChange={this.dropDownChangeHandler}
-                                name="genreType"
-                            >
-                                {genreTypes}
-                            </select>
-                        </label>
-                    </div>
+                        <div className="form-input">
+                            <label htmlFor="genreType" className="form-label">
+                                <span className="form-label-text">
+                                    Movie Genre:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="genreType"
+                                >
+                                    {genreTypes}
+                                </select>
+                            </label>
+                        </div>
 
-                    <div className="form-input">
-                        <label htmlFor="director" className="form-label">
-                            <span className="form-label-text">Director:</span>
-                            <select
-                                onChange={this.dropDownChangeHandler}
-                                name="directorId"
-                            >
-                                {directors}
-                            </select>
-                        </label>
+                        <div className="form-input">
+                            <label htmlFor="director" className="form-label">
+                                <span className="form-label-text">
+                                    Director:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="directorId"
+                                >
+                                    {directors}
+                                </select>
+                            </label>
+                        </div>
+                        <h3>{this.state.message}</h3>
+                        <input
+                            className="button"
+                            type="submit"
+                            value="UPDATE"
+                        />
                     </div>
-                    <h3>{this.state.message}</h3>
-                    <input className="button" type="submit" value="UPDATE" />
-                </div>
-            </form>
+                </form>
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
         );
 
         const content = this.state.loading ? <Loading /> : form;

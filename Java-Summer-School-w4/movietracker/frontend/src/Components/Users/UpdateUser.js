@@ -130,12 +130,9 @@ export default class UpdateUser extends Component {
         ) : this.state.userData ? (
             this.state.userData.username
         ) : null;
-        return (
-            <Fragment>
-                <Logout {...this.props} />
-                <Link to="/users">See All Users</Link>
-                <Link to="/">Home Page</Link>
 
+        const form = (
+            <>
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">Update User: {content}</h1>
@@ -221,6 +218,24 @@ export default class UpdateUser extends Component {
                         />
                     </div>
                 </form>
+
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
+        );
+
+        return (
+            <Fragment>
+                <Logout {...this.props} />
+
+                <Link to="/users">See All Users</Link>
+                <Link to="/">Home Page</Link>
+
+                {form}
             </Fragment>
         );
     }

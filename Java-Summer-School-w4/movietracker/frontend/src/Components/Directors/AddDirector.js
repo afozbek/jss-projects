@@ -129,72 +129,86 @@ export default class AddMovie extends Component {
         ));
 
         const form = (
-            <form onSubmit={this.formSubmitHandler}>
-                <div className="inner-container">
-                    <div className="form-input">
-                        <label htmlFor="name" className="form-label">
-                            <span className="form-label-text">Name:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Director's Name"
-                                id="name"
-                                type="text"
-                                name="name"
-                                required
-                            />
-                        </label>
-                    </div>
+            <>
+                <form onSubmit={this.formSubmitHandler}>
+                    <div className="inner-container">
+                        <div className="form-input">
+                            <label htmlFor="name" className="form-label">
+                                <span className="form-label-text">Name:</span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Director's Name"
+                                    id="name"
+                                    type="text"
+                                    name="name"
+                                    required
+                                />
+                            </label>
+                        </div>
 
-                    <div className="form-input">
-                        <label htmlFor="surname" className="form-label">
-                            <span className="form-label-text">Surname:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text form-label-input"
-                                placeholder="Enter Director's Surname"
-                                id="surname"
-                                type="text"
-                                name="surname"
-                                required
-                            />
-                        </label>
-                    </div>
+                        <div className="form-input">
+                            <label htmlFor="surname" className="form-label">
+                                <span className="form-label-text">
+                                    Surname:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text form-label-input"
+                                    placeholder="Enter Director's Surname"
+                                    id="surname"
+                                    type="text"
+                                    name="surname"
+                                    required
+                                />
+                            </label>
+                        </div>
 
-                    <div className="form-input">
-                        <label htmlFor="director" className="form-label">
-                            <span className="form-label-text">BirthPlace:</span>
-                            <select
-                                onChange={this.dropDownChangeHandler}
-                                name="birthPlace"
-                            >
-                                {birthPlaces}
-                            </select>
-                        </label>
-                    </div>
+                        <div className="form-input">
+                            <label htmlFor="director" className="form-label">
+                                <span className="form-label-text">
+                                    BirthPlace:
+                                </span>
+                                <select
+                                    onChange={this.dropDownChangeHandler}
+                                    name="birthPlace"
+                                >
+                                    {birthPlaces}
+                                </select>
+                            </label>
+                        </div>
 
-                    <div className="form-input">
-                        <label htmlFor="birthDate" className="form-label">
-                            <span className="form-label-text">Birth Date:</span>
-                            <input
-                                onChange={this.inputChangeHandler}
-                                className="form-text"
-                                id="birthDate"
-                                type="date"
-                                name="birthDate"
-                                required
-                            />
-                        </label>
-                    </div>
+                        <div className="form-input">
+                            <label htmlFor="birthDate" className="form-label">
+                                <span className="form-label-text">
+                                    Birth Date:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text"
+                                    id="birthDate"
+                                    type="date"
+                                    name="birthDate"
+                                    required
+                                />
+                            </label>
+                        </div>
 
-                    <h3>{this.state.message}</h3>
-                    <input
-                        className="button"
-                        type="submit"
-                        value="ADD DIRECTOR"
-                    />
-                </div>
-            </form>
+                        <h3>{this.state.message}</h3>
+                        <input
+                            className="button"
+                            type="submit"
+                            value="ADD DIRECTOR"
+                        />
+                    </div>
+                </form>
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
         );
 
         const content = this.state.loading ? <Loading /> : form;
