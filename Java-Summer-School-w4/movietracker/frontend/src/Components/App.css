@@ -151,7 +151,7 @@ tr:nth-child(even) {
 }
 .table-app {
     margin: 30px auto;
-    min-width: 500px;
+    min-width: 525px;
 }
 .transportWelcome {
     text-align: start;
