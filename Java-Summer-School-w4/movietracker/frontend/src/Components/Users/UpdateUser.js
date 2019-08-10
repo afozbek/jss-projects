@@ -53,7 +53,7 @@ export default class UpdateUser extends Component {
             this.props.history.push("/login");
         }
 
-        const username = localStorage.getItem("username");
+        const username = this.props.match.params.username;
 
         axios
             .get(`/admin/user/${username}`, {
