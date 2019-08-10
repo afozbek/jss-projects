@@ -23,15 +23,18 @@ const Director = props => {
                 </Link>
             </td>
             <td>{directorId}</td>
+
             <td>{name}</td>
             <td>{surname}</td>
             <td>{birthPlace}</td>
             <td>{formattedDate}</td>
+
             <td>
                 <Link to={`/update-director/${directorId}`}>
                     <FontAwesomeIcon icon={faEdit} />
                 </Link>
             </td>
+
             <td>
                 <Link to={`/delete-director-confirm/${directorId}`}>
                     <FontAwesomeIcon icon={faTrash} />

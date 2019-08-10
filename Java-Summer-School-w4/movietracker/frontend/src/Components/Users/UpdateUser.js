@@ -212,6 +212,7 @@ export default class UpdateUser extends Component {
                         </div>
                         <h3>{this.state.message}</h3>
                         <input
+                            style={{ marginTop: 8, marginBottom: 6 }}
                             className="button"
                             type="submit"
                             value="UPDATE"

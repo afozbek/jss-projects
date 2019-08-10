@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import axios from "../../axios-instance";
 
+import axios from "../../axios-instance";
 import Director from "./Director";
 import Loading from "../../Util/Loading";
 import Logout from "../Auth/Logout/Logout";
@@ -42,6 +42,7 @@ export default class Directors extends Component {
                 <Director key={director.directorId} directorData={director} />
             );
         });
+
         const directorTable = (
             <table>
                 <thead>
@@ -67,7 +68,9 @@ export default class Directors extends Component {
             <div>
                 <h1>Your Directors</h1>
                 <h2>{this.state.message}</h2>
+
                 <div>{directorTable}</div>
+
                 <Link to="/" style={{ marginTop: 30 }}>
                     Home Page
                 </Link>
@@ -77,7 +80,9 @@ export default class Directors extends Component {
         return (
             <Fragment>
                 <Logout {...this.props} />
+
                 <Link to="/add-director">ADD A DIRECTOR</Link>
+
                 {content}
             </Fragment>
         );

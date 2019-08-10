@@ -184,6 +184,7 @@ export default class RegisterForm extends Component {
                         <h2>{this.state.message}</h2>
 
                         <input
+                            style={{ marginTop: 8, marginBottom: 6 }}
                             className="button"
                             type="submit"
                             value="CREATE USER"
