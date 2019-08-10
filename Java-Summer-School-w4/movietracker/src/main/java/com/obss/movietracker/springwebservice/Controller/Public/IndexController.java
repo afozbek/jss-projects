@@ -34,7 +34,7 @@ public class IndexController {
     // GET MOVIE OR MOVIES
     @GetMapping("/movies")
     public ResponseEntity<?> getMovies(@RequestParam(required = false, name = "movie") String movieName,
-            @RequestParam(required = false, name = "genre") Genre genre) {
+                                       @RequestParam(required = false, name = "genre") Genre genre) {
         List<MovieEntity> movieList;
 
         if (movieName != null && genre != null) {
@@ -44,7 +44,11 @@ public class IndexController {
             movieList = movieService.getMovieByName(movieName);
 
         } else if (genre != null) {
-            movieList = movieService.getMovieByGenre(genre);
+            if (genre == Genre.ALL_MOVIES) {
+                movieList = movieService.getMovies();
+            } else {
+                movieList = movieService.getMovieByGenre(genre);
+            }
 
         } else {
             movieList = movieService.getMovies();
