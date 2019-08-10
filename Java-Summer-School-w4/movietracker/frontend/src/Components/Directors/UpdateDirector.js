@@ -63,10 +63,29 @@ export default class UpdateDirector extends Component {
                 }
             })
             .then(res => {
-                this.setState({
-                    directorData: res.data,
-                    loading: false
-                });
+                const date = new Date(res.data.birthDate)
+                    .toISOString()
+                    .split("T")[0];
+
+                const birthPlaces = this.state.birthPlaces.filter(
+                    place => place.place !== res.data.birthPlace
+                );
+
+                this.setState(prevState => ({
+                    ...prevState,
+                    loading: false,
+                    birthPlaces: [
+                        { birthPlaceId: 7, place: res.data.birthPlace },
+                        ...birthPlaces
+                    ],
+                    input: {
+                        ...prevState.input,
+                        name: res.data.name,
+                        surname: res.data.surname,
+                        birthDate: date,
+                        birthPlace: res.data.birthPlace
+                    }
+                }));
             })
             .catch(err => {
                 console.log(err);
@@ -98,7 +117,7 @@ export default class UpdateDirector extends Component {
                 }
             )
             .then(res => {
-                this.setState({ directorData: res.data, loading: false });
+                this.setState({ loading: false });
 
                 alert("Successfully updated 😊");
 
@@ -126,7 +145,7 @@ export default class UpdateDirector extends Component {
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">
-                            Update Director: {this.state.directorData.name}
+                            Update Director: {this.state.input.name}
                         </h1>
 
                         <div className="form-input">
@@ -136,6 +155,7 @@ export default class UpdateDirector extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     placeholder="Enter Director Name"
+                                    value={this.state.input.name}
                                     id="name"
                                     type="text"
                                     name="name"
@@ -153,6 +173,7 @@ export default class UpdateDirector extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     placeholder="Enter Director Surname"
+                                    value={this.state.input.surname}
                                     id="surname"
                                     type="text"
                                     name="surname"
@@ -182,6 +203,7 @@ export default class UpdateDirector extends Component {
                                 <input
                                     onChange={this.inputChangeHandler}
                                     className="form-text"
+                                    value={this.state.input.birthDate}
                                     id="birthDate"
                                     type="date"
                                     name="birthDate"

@@ -8,7 +8,6 @@ import Loading from "../../Util/Loading";
 
 export default class UpdateMovie extends Component {
     state = {
-        movieData: {},
         directorData: [],
         loading: true,
         message: "",
@@ -99,7 +98,6 @@ export default class UpdateMovie extends Component {
 
                         this.setState(prevState => ({
                             ...prevState,
-                            movieData: movieData,
                             loading: false,
                             directorData,
                             genreTypes: [
@@ -108,6 +106,7 @@ export default class UpdateMovie extends Component {
                             ],
                             input: {
                                 ...prevState.input,
+                                name: movieData.name,
                                 directorId: directorData[0].directorId,
                                 genreType: movieData.genreType
                             }
@@ -155,7 +154,6 @@ export default class UpdateMovie extends Component {
             )
             .then(res => {
                 this.setState({
-                    movieData: res.data,
                     loading: false
                 });
 
@@ -191,7 +189,7 @@ export default class UpdateMovie extends Component {
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
                         <h1 className="header">
-                            Update Movie: {this.state.movieData.name}
+                            Update Movie: {this.state.input.name}
                         </h1>
                         <div className="form-input">
                             <label htmlFor="name" className="form-label">
@@ -201,6 +199,7 @@ export default class UpdateMovie extends Component {
                                     className="form-text form-label-input"
                                     placeholder="Enter Movie Name"
                                     id="name"
+                                    value={this.state.input.name}
                                     type="text"
                                     name="name"
                                     required
@@ -257,8 +256,10 @@ export default class UpdateMovie extends Component {
         return (
             <Fragment>
                 <Logout {...this.props} />
+
                 <Link to="/movies">To Movies</Link>
                 <Link to="/">Home Page</Link>
+
                 {content}
             </Fragment>
         );
