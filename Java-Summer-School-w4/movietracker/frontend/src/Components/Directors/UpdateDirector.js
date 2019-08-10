@@ -14,7 +14,8 @@ export default class UpdateDirector extends Component {
         input: {
             name: "",
             surname: "",
-            birthPlace: ""
+            birthPlace: "",
+            birthDate: ""
         }
     };
 
@@ -69,12 +70,12 @@ export default class UpdateDirector extends Component {
 
         const directorId = this.props.match.params.directorId;
 
-        const { name, surname, birthPlace } = this.state.input;
+        const { name, surname, birthPlace, birthDate } = this.state.input;
 
         axios
             .put(
                 `/admin/director/${directorId}`,
-                { name, surname, birthPlace },
+                { name, surname, birthPlace, birthDate },
                 {
                     headers: {
                         Authorization: `Bearer ${jwttoken}`
@@ -140,6 +141,19 @@ export default class UpdateDirector extends Component {
                                 id="birthPlace"
                                 type="text"
                                 name="birthPlace"
+                                required
+                            />
+                        </label>
+                    </div>
+                    <div className="form-input">
+                        <label htmlFor="birthDate" className="form-label">
+                            <span className="form-label-text">Birth Date:</span>
+                            <input
+                                onChange={this.inputChangeHandler}
+                                className="form-text"
+                                id="birthDate"
+                                type="date"
+                                name="birthDate"
                                 required
                             />
                         </label>
