@@ -14,7 +14,7 @@ const User = props => {
             <td>{firstName}</td>
             <td>{lastName}</td>
             <td>
-                <Link to={`/update-user/${userId}`}>
+                <Link to={`/update-user/${username}`}>
                     <FontAwesomeIcon icon={faEdit} />
                 </Link>
             </td>
