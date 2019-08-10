@@ -15,8 +15,22 @@ export default class UpdateUser extends Component {
             username: "",
             firstName: "",
             lastName: "",
-            password: ""
+            password: "",
+            confirm: false
         }
+    };
+
+    confirmChangeHandler = e => {
+        let checked = e.target.checked;
+        let name = e.target.name;
+
+        this.setState(prevState => ({
+            ...prevState,
+            input: {
+                ...prevState.input,
+                [name]: checked
+            }
+        }));
     };
 
     inputChangeHandler = e => {
@@ -70,12 +84,26 @@ export default class UpdateUser extends Component {
 
         const currentUsername = localStorage.getItem("username");
 
-        const { username, password, firstName, lastName } = this.state.input;
+        const {
+            username,
+            password,
+            firstName,
+            lastName,
+            confirm
+        } = this.state.input;
 
         axios
             .put(
                 `/admin/user/${currentUsername}`,
-                { username, password, firstName, lastName },
+                {
+                    username,
+                    password,
+                    firstName,
+                    lastName,
+                    authorities: confirm
+                        ? ["ROLE_ADMIN", "ROLE_USER"]
+                        : ["ROLE_USER"]
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${jwttoken}`
@@ -168,6 +196,20 @@ export default class UpdateUser extends Component {
                                     type="password"
                                     name="password"
                                     required
+                                />
+                            </label>
+                        </div>
+                        <div className="form-input">
+                            <label htmlFor="confirm" className="form-label">
+                                <span className="form-label-text">
+                                    User is Admin ?:
+                                </span>
+                                <input
+                                    onChange={this.confirmChangeHandler}
+                                    className="form-text"
+                                    id="confirm"
+                                    type="checkbox"
+                                    name="confirm"
                                 />
                             </label>
                         </div>
