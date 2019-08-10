@@ -51,6 +51,7 @@ export default class Directors extends Component {
                         <th style={{ textAlign: "center" }}>Name</th>
                         <th style={{ textAlign: "center" }}>Surname</th>
                         <th style={{ textAlign: "center" }}>Birth Place</th>
+                        <th style={{ textAlign: "center" }}>Birth Date</th>
                         <th style={{ textAlign: "center" }}>UPDATE </th>
                         <th style={{ textAlign: "center" }}>DELETE </th>
                     </tr>
