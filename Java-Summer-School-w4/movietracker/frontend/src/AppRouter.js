@@ -32,6 +32,7 @@ const AppRouter = props => {
                 <Route path="/login" exact component={LoginForm} />
                 <Route path="/logout" exact component={Logout} />
                 <Route path="/register" exact component={RegisterForm} />
+
                 {/* USERS */}
                 <Route path="/users" exact component={Users} />
                 <Route
