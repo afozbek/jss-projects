@@ -174,7 +174,6 @@ tr:nth-child(even) {
     justify-content: space-around;
     list-style: none;
     top: 35px;
-    left: 10rem;
 }
 
 .nav-item {
