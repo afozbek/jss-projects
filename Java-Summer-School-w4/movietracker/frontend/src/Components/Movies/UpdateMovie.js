@@ -19,7 +19,9 @@ export default class UpdateMovie extends Component {
         input: {
             name: "",
             genreType: "",
-            directorId: ""
+            directorId: "",
+            rating: "",
+            releaseDate: ""
         }
     };
 
@@ -66,6 +68,11 @@ export default class UpdateMovie extends Component {
             })
             .then(res => {
                 const movieData = res.data;
+                console.log("TCL: UpdateMovie -> movieData", movieData);
+
+                const releaseDate = new Date(movieData.releaseDate)
+                    .toISOString()
+                    .split("T")[0];
 
                 axios
                     .get(`/admin/director`, {
@@ -107,6 +114,8 @@ export default class UpdateMovie extends Component {
                             input: {
                                 ...prevState.input,
                                 name: movieData.name,
+                                rating: movieData.rating,
+                                releaseDate,
                                 directorId: directorData[0].directorId,
                                 genreType: movieData.genreType
                             }
@@ -218,6 +227,43 @@ export default class UpdateMovie extends Component {
                                 >
                                     {genreTypes}
                                 </select>
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="rating" className="form-label">
+                                <span className="form-label-text">
+                                    IMDB Rating:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text"
+                                    id="rating"
+                                    max={10}
+                                    min={1}
+                                    step={0.5}
+                                    value={this.state.input.rating}
+                                    type="number"
+                                    name="rating"
+                                    required
+                                />
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="releaseDate" className="form-label">
+                                <span className="form-label-text">
+                                    Release Date:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text"
+                                    id="releaseDate"
+                                    value={this.state.input.releaseDate}
+                                    type="date"
+                                    name="releaseDate"
+                                    required
+                                />
                             </label>
                         </div>
 
