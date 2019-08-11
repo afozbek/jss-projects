@@ -27,7 +27,6 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieEntity updateMovie(MovieEntity movieEntity) {
-
         return movieRepository.save(movieEntity);
     }
 

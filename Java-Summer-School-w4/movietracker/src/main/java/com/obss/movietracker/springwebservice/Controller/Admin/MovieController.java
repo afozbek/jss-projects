@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
@@ -29,9 +31,10 @@ public class MovieController {
     public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
         String movieName = movie.getName();
         Genre genre = movie.getGenreType();
+        Date releaseDate = movie.getReleaseDate();
         DirectorEntity newDirector = movie.getDirector();
 
-        if (movieName == null || newDirector == null || genre==null) {
+        if (movieName == null || newDirector == null || genre == null || releaseDate == null) {
             return new ResponseEntity<>(new InfoMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 
@@ -68,6 +71,8 @@ public class MovieController {
     public ResponseEntity<?> updateMovie(@PathVariable Long movieId, @RequestBody MovieEntity movieObj) {
         String movieName = movieObj.getName();
         Genre genre = movieObj.getGenreType();
+        double rating = movieObj.getRating();
+        Date releaseDate = movieObj.getReleaseDate();
         DirectorEntity director = movieObj.getDirector();
 
         if (movieName == null || genre == null || director == null) {
@@ -88,7 +93,10 @@ public class MovieController {
 
         movie.setName(movieName);
         movie.setGenreType(genre);
+        movie.setReleaseDate(releaseDate);
         movie.setDirector(newDirector);
+        movie.setRating(rating);
+
 
         MovieEntity updatedMovie = movieService.updateMovie(movie);
 
@@ -109,3 +117,4 @@ public class MovieController {
         return new ResponseEntity<>(new InfoMessage("Movie was not deleted"), HttpStatus.BAD_REQUEST);
     }
 }
+    

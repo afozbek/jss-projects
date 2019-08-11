@@ -19,6 +19,8 @@ export default class AddMovie extends Component {
         input: {
             name: "",
             genreType: "COMEDY",
+            rating: "",
+            releaseDate: "",
             directorId: ""
         }
     };
@@ -95,7 +97,13 @@ export default class AddMovie extends Component {
             this.props.history.push("/login");
         }
 
-        const { name, genreType, directorId } = this.state.input;
+        const {
+            name,
+            genreType,
+            rating,
+            directorId,
+            releaseDate
+        } = this.state.input;
 
         axios
             .post(
@@ -103,6 +111,8 @@ export default class AddMovie extends Component {
                 {
                     name,
                     genreType,
+                    rating,
+                    releaseDate,
                     director: { directorId: directorId }
                 },
                 {
@@ -158,7 +168,7 @@ export default class AddMovie extends Component {
                                 <input
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
-                                    placeholder="Enter Movie Name"
+                                    placeholder="Enter Movie Name 😅"
                                     id="name"
                                     type="text"
                                     name="name"
@@ -178,6 +188,42 @@ export default class AddMovie extends Component {
                                 >
                                     {genreTypes}
                                 </select>
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="rating" className="form-label">
+                                <span className="form-label-text">
+                                    IMDB Rating:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text"
+                                    id="rating"
+                                    placeholder="Enter IMDB Rating 😀"
+                                    max={10}
+                                    min={1}
+                                    step={0.5}
+                                    type="number"
+                                    name="rating"
+                                    required
+                                />
+                            </label>
+                        </div>
+
+                        <div className="form-input">
+                            <label htmlFor="releaseDate" className="form-label">
+                                <span className="form-label-text">
+                                    Release Date:
+                                </span>
+                                <input
+                                    onChange={this.inputChangeHandler}
+                                    className="form-text"
+                                    id="releaseDate"
+                                    type="date"
+                                    name="releaseDate"
+                                    required
+                                />
                             </label>
                         </div>
 

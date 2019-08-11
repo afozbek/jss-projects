@@ -132,6 +132,9 @@ export default class WatchList extends Component {
                             <th style={{ textAlign: "center" }}>Movie Name</th>
                             <th style={{ textAlign: "center" }}>Genre</th>
                             <th style={{ textAlign: "center" }}>IMDB Rating</th>
+                            <th style={{ textAlign: "center" }}>
+                                Release Date
+                            </th>
                             <th style={{ textAlign: "center" }}>Director</th>
                             <th style={{ textAlign: "center" }}>UPDATE</th>
                             <th style={{ textAlign: "center" }}>DELETE</th>
