@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RestController
@@ -29,9 +31,10 @@ public class MovieController {
     public ResponseEntity<?> createMovie(@RequestBody MovieEntity movie) {
         String movieName = movie.getName();
         Genre genre = movie.getGenreType();
+        Date releaseDate = movie.getReleaseDate();
         DirectorEntity newDirector = movie.getDirector();
 
-        if (movieName == null || newDirector == null || genre==null) {
+        if (movieName == null || newDirector == null || genre==null || releaseDate==null) {
             return new ResponseEntity<>(new InfoMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 

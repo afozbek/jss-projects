@@ -8,13 +8,8 @@ import axios from "../../axios-instance";
 class Movie extends Component {
     state = {
         userId: "",
-        movieId: "",
         favList: {},
-        watchList: {},
-        name: "",
-        genreType: "",
-        rating: "",
-        director: ""
+        watchList: {}
     };
     watchButtonClickHandler = e => {
         const jwttoken = localStorage.getItem("jwttoken");
@@ -25,7 +20,9 @@ class Movie extends Component {
 
         axios
             .post(
-                `/${this.state.userId}/watchList/${this.state.movieId}`,
+                `/${this.state.userId}/watchList/${
+                    this.props.movieData.movieId
+                }`,
                 null,
                 {
                     headers: { Authorization: "Bearer " + jwttoken }
@@ -51,9 +48,13 @@ class Movie extends Component {
         }
 
         axios
-            .post(`/${this.state.userId}/favList/${this.state.movieId}`, null, {
-                headers: { Authorization: "Bearer " + jwttoken }
-            })
+            .post(
+                `/${this.state.userId}/favList/${this.props.movieData.movieId}`,
+                null,
+                {
+                    headers: { Authorization: "Bearer " + jwttoken }
+                }
+            )
             .then(res => {
                 this.setState({
                     favList: res.data
@@ -73,14 +74,6 @@ class Movie extends Component {
             this.props.history.push("/login");
         }
 
-        const {
-            movieId,
-            name,
-            genreType,
-            rating,
-            director
-        } = this.props.movieData;
-
         const username = localStorage.getItem("username");
 
         axios
@@ -89,11 +82,6 @@ class Movie extends Component {
             })
             .then(res => {
                 this.setState({
-                    movieId,
-                    name,
-                    genreType,
-                    rating,
-                    director,
                     userId: res.data.userId
                 });
             })
@@ -107,9 +95,12 @@ class Movie extends Component {
             movieId,
             name,
             genreType,
+            releaseDate,
             rating,
             director
         } = this.props.movieData;
+
+        const releaseDateFormatted = new Date(releaseDate).toDateString();
 
         return (
             <tr>
@@ -121,7 +112,7 @@ class Movie extends Component {
                                 this.props.isFav
                                     ? () =>
                                           this.props.favRemoveButtonHandler(
-                                              this.state.movieId
+                                              this.props.movieData.movieId
                                           )
                                     : this.favButtonClickHandler
                             }
@@ -138,7 +129,7 @@ class Movie extends Component {
                                 this.props.isWatch
                                     ? () =>
                                           this.props.watchRemoveButtonHandler(
-                                              this.state.movieId
+                                              this.props.movieData.movieId
                                           )
                                     : this.watchButtonClickHandler
                             }
@@ -151,6 +142,7 @@ class Movie extends Component {
                 <td>{name}</td>
                 <td>{genreType}</td>
                 <td>{rating}</td>
+                <td>{releaseDateFormatted}</td>
                 <td>{director.name}</td>
                 <td>
                     <Link to={`/update-movie/${movieId}`}>
