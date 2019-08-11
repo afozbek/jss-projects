@@ -9,15 +9,16 @@ import Logout from "../Auth/Logout/Logout";
 export default class Movies extends Component {
     state = {
         genreTypes: [
-            { id: 1, value: "COMEDY" },
-            { id: 2, value: "ACTION" },
-            { id: 3, value: "DRAMA" }
+            { id: 1, value: "ALL MOVIES" },
+            { id: 2, value: "COMEDY" },
+            { id: 3, value: "ACTION" },
+            { id: 4, value: "DRAMA" }
         ],
         movies: [],
         loading: true,
         input: {
             search_movie: "",
-            search_genre: "COMEDY"
+            search_genre: "ALL MOVIES"
         }
     };
 
@@ -69,9 +70,14 @@ export default class Movies extends Component {
     searchGenreButtonHandler = e => {
         const jwttoken = localStorage.getItem("jwttoken");
 
+        const genre =
+            this.state.input.search_genre === "ALL MOVIES"
+                ? "ALL_MOVIES"
+                : this.state.input.search_genre;
+
         axios
             .get("/movies", {
-                params: { genre: this.state.input.search_genre },
+                params: { genre },
                 headers: { Authorization: "Bearer " + jwttoken }
             })
             .then(res => {

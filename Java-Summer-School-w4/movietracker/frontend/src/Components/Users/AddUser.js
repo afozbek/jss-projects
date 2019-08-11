@@ -94,14 +94,12 @@ export default class RegisterForm extends Component {
     };
 
     render() {
-        return (
-            <Fragment>
-                <Logout {...this.props} />
-                <Link to="/users">See Users</Link>
-                <Link to="/">Home Page</Link>
+        const form = (
+            <>
                 <form className="form" onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
-                        <h1 className="header">Add User</h1>
+                        <h1 className="header">Create User</h1>
+
                         <div className="form-input">
                             <label htmlFor="firstName" className="form-label">
                                 <span className="form-label-text">
@@ -111,12 +109,13 @@ export default class RegisterForm extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     id="firstName"
+                                    placeholder="Enter your Firstname"
                                     type="text"
                                     name="firstName"
-                                    required
                                 />
                             </label>
                         </div>
+
                         <div className="form-input">
                             <label htmlFor="lastName" className="form-label">
                                 <span className="form-label-text">
@@ -126,12 +125,13 @@ export default class RegisterForm extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     id="lastName"
+                                    placeholder="Enter your Lastname"
                                     type="text"
                                     name="lastName"
-                                    required
                                 />
                             </label>
                         </div>
+
                         <div className="form-input">
                             <label htmlFor="username" className="form-label">
                                 <span className="form-label-text">
@@ -142,6 +142,7 @@ export default class RegisterForm extends Component {
                                     className="form-text form-label-input"
                                     id="username"
                                     type="text"
+                                    placeholder="Enter your username"
                                     name="username"
                                     required
                                 />
@@ -157,6 +158,7 @@ export default class RegisterForm extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text"
                                     id="password"
+                                    placeholder="Enter your password"
                                     type="password"
                                     name="password"
                                     required
@@ -167,7 +169,7 @@ export default class RegisterForm extends Component {
                         <div className="form-input">
                             <label htmlFor="confirm" className="form-label">
                                 <span className="form-label-text">
-                                    Are you an admin:
+                                    Is Admin:
                                 </span>
                                 <input
                                     onChange={this.confirmChangeHandler}
@@ -180,13 +182,32 @@ export default class RegisterForm extends Component {
                         </div>
 
                         <h2>{this.state.message}</h2>
+
                         <input
+                            style={{ marginTop: 8, marginBottom: 6 }}
                             className="button"
                             type="submit"
-                            value="REGISTER"
+                            value="CREATE USER"
                         />
                     </div>
                 </form>
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
+        );
+
+        return (
+            <Fragment>
+                <Logout {...this.props} />
+
+                <Link to="/users">See Users</Link>
+                <Link to="/">Home Page</Link>
+
+                {form}
             </Fragment>
         );
     }

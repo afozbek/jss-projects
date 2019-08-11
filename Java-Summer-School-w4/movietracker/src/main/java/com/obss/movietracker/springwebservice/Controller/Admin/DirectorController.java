@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -29,11 +30,11 @@ public class DirectorController {
     @GetMapping
     public ResponseEntity<?> getDirectors(@RequestParam(required = false, name = "director") String directorName) {
 
-        List<DirectorEntity> directors = directorService.getDirectorByName(directorName);
-
-        if (directors.size() == 0) {
+        if (directorName == null) {
             return new ResponseEntity<>(directorService.getDirectors(), HttpStatus.OK);
         }
+
+        List<DirectorEntity> directors = directorService.getDirectorByName(directorName);
 
         return new ResponseEntity<>(directors, HttpStatus.OK);
     }
@@ -69,9 +70,9 @@ public class DirectorController {
         String directorName = directorObj.getName();
         String surname = directorObj.getSurname();
         String birthPlace = directorObj.getBirthPlace();
-        // Date birthDate = directorObj.getBirthDate();
+        Date birthDate = directorObj.getBirthDate();
 
-        if (directorName == null || surname == null || birthPlace == null) {
+        if (directorName == null || surname == null || birthPlace == null || birthDate==null) {
             return new ResponseEntity<>(new InfoMessage("Please fill the form"), HttpStatus.BAD_REQUEST);
         }
 
@@ -85,6 +86,7 @@ public class DirectorController {
         newDirector.setName(directorName);
         newDirector.setSurname(surname);
         newDirector.setBirthPlace(birthPlace);
+        newDirector.setBirthDate(birthDate);
 
         DirectorEntity updatedDirector = directorService.updateDirector(newDirector);
 

@@ -15,8 +15,22 @@ export default class UpdateUser extends Component {
             username: "",
             firstName: "",
             lastName: "",
-            password: ""
+            password: "",
+            confirm: false
         }
+    };
+
+    confirmChangeHandler = e => {
+        let checked = e.target.checked;
+        let name = e.target.name;
+
+        this.setState(prevState => ({
+            ...prevState,
+            input: {
+                ...prevState.input,
+                [name]: checked
+            }
+        }));
     };
 
     inputChangeHandler = e => {
@@ -39,7 +53,7 @@ export default class UpdateUser extends Component {
             this.props.history.push("/login");
         }
 
-        const username = localStorage.getItem("username");
+        const username = this.props.match.params.username;
 
         axios
             .get(`/admin/user/${username}`, {
@@ -48,10 +62,19 @@ export default class UpdateUser extends Component {
                 }
             })
             .then(res => {
-                this.setState({
-                    userData: res.data,
-                    loading: false
-                });
+                let confirm = res.data.authorities.length >= 2 ? true : false;
+
+                this.setState(prevState => ({
+                    ...prevState,
+                    loading: false,
+                    input: {
+                        ...prevState.input,
+                        username: res.data.username,
+                        firstName: res.data.firstName,
+                        lastName: res.data.lastName,
+                        confirm
+                    }
+                }));
             })
             .catch(err => {
                 console.log(err);
@@ -70,12 +93,26 @@ export default class UpdateUser extends Component {
 
         const currentUsername = localStorage.getItem("username");
 
-        const { username, password, firstName, lastName } = this.state.input;
+        const {
+            username,
+            password,
+            firstName,
+            lastName,
+            confirm
+        } = this.state.input;
 
         axios
             .put(
                 `/admin/user/${currentUsername}`,
-                { username, password, firstName, lastName },
+                {
+                    username,
+                    password,
+                    firstName,
+                    lastName,
+                    authorities: confirm
+                        ? ["ROLE_ADMIN", "ROLE_USER"]
+                        : ["ROLE_USER"]
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${jwttoken}`
@@ -97,20 +134,17 @@ export default class UpdateUser extends Component {
     };
 
     render() {
-        const content = this.state.loading ? (
+        const username = this.state.loading ? (
             <Loading />
-        ) : this.state.userData ? (
-            this.state.userData.username
+        ) : this.state.input ? (
+            this.state.input.username
         ) : null;
-        return (
-            <Fragment>
-                <Logout {...this.props} />
-                <Link to="/users">See All Users</Link>
-                <Link to="/">Home Page</Link>
 
+        const form = (
+            <>
                 <form onSubmit={this.formSubmitHandler}>
                     <div className="inner-container">
-                        <h1 className="header">Update User: {content}</h1>
+                        <h1 className="header">Update User: {username}</h1>
                         <div className="form-input">
                             <label htmlFor="username" className="form-label">
                                 <span className="form-label-text">
@@ -123,6 +157,7 @@ export default class UpdateUser extends Component {
                                     id="username"
                                     type="text"
                                     name="username"
+                                    value={this.state.input.username}
                                     required
                                 />
                             </label>
@@ -135,6 +170,7 @@ export default class UpdateUser extends Component {
                                     className="form-text form-label-input"
                                     placeholder="Enter Your Name"
                                     id="firstName"
+                                    value={this.state.input.firstName}
                                     type="text"
                                     name="firstName"
                                 />
@@ -149,6 +185,7 @@ export default class UpdateUser extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
                                     placeholder="Enter Your Last Name"
+                                    value={this.state.input.lastName}
                                     id="lastName"
                                     type="text"
                                     name="lastName"
@@ -171,14 +208,48 @@ export default class UpdateUser extends Component {
                                 />
                             </label>
                         </div>
+                        <div className="form-input">
+                            <label htmlFor="confirm" className="form-label">
+                                <span className="form-label-text">
+                                    User is Admin ?:
+                                </span>
+                                <input
+                                    onChange={this.confirmChangeHandler}
+                                    className="form-text"
+                                    checked={this.state.input.confirm}
+                                    id="confirm"
+                                    type="checkbox"
+                                    name="confirm"
+                                />
+                            </label>
+                        </div>
                         <h3>{this.state.message}</h3>
                         <input
+                            style={{ marginTop: 8, marginBottom: 6 }}
                             className="button"
                             type="submit"
                             value="UPDATE"
                         />
                     </div>
                 </form>
+
+                <button
+                    className="button"
+                    onClick={() => this.props.history.goBack()}
+                >
+                    GO BACK
+                </button>
+            </>
+        );
+
+        return (
+            <Fragment>
+                <Logout {...this.props} />
+
+                <Link to="/users">See All Users</Link>
+                <Link to="/">Home Page</Link>
+
+                {form}
             </Fragment>
         );
     }
