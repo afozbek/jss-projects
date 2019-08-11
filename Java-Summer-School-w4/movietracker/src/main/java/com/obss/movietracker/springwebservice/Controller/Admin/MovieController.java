@@ -117,3 +117,4 @@ public class MovieController {
         return new ResponseEntity<>(new InfoMessage("Movie was not deleted"), HttpStatus.BAD_REQUEST);
     }
 }
+    
