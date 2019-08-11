@@ -145,13 +145,21 @@ export default class UpdateMovie extends Component {
 
         const movieId = this.props.match.params.movieId;
 
-        const { name, genreType, directorId } = this.state.input;
+        const {
+            name,
+            genreType,
+            rating,
+            releaseDate,
+            directorId
+        } = this.state.input;
 
         axios
             .put(
                 `/admin/movie/${movieId}`,
                 {
                     name,
+                    rating,
+                    releaseDate,
                     genreType,
                     director: { directorId }
                 },

@@ -34,7 +34,7 @@ public class MovieController {
         Date releaseDate = movie.getReleaseDate();
         DirectorEntity newDirector = movie.getDirector();
 
-        if (movieName == null || newDirector == null || genre==null || releaseDate==null) {
+        if (movieName == null || newDirector == null || genre == null || releaseDate == null) {
             return new ResponseEntity<>(new InfoMessage("Your movie must have a director"), HttpStatus.BAD_REQUEST);
         }
 
@@ -71,6 +71,8 @@ public class MovieController {
     public ResponseEntity<?> updateMovie(@PathVariable Long movieId, @RequestBody MovieEntity movieObj) {
         String movieName = movieObj.getName();
         Genre genre = movieObj.getGenreType();
+        double rating = movieObj.getRating();
+        Date releaseDate = movieObj.getReleaseDate();
         DirectorEntity director = movieObj.getDirector();
 
         if (movieName == null || genre == null || director == null) {
@@ -91,7 +93,10 @@ public class MovieController {
 
         movie.setName(movieName);
         movie.setGenreType(genre);
+        movie.setReleaseDate(releaseDate);
         movie.setDirector(newDirector);
+        movie.setRating(rating);
+
 
         MovieEntity updatedMovie = movieService.updateMovie(movie);
 
