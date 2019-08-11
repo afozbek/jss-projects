@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     // Search DB for existing user
-    public UserDetails loadUserByUsernameAndPassword(String username, String password)
-            throws UsernameNotFoundException, PasswordWrongException {
+    public UserDetails loadUserByUsernameAndPassword(String username, String password) throws UsernameNotFoundException, PasswordWrongException {
         String hashedPassword = passwordService.hashPassword(password);
 
         UserEntity user = userRepository.findByUsername(username);
