@@ -168,7 +168,7 @@ export default class AddMovie extends Component {
                                 <input
                                     onChange={this.inputChangeHandler}
                                     className="form-text form-label-input"
-                                    placeholder="Enter Movie Name"
+                                    placeholder="Enter Movie Name 😅"
                                     id="name"
                                     type="text"
                                     name="name"
@@ -200,6 +200,7 @@ export default class AddMovie extends Component {
                                     onChange={this.inputChangeHandler}
                                     className="form-text"
                                     id="rating"
+                                    placeholder="Enter IMDB Rating 😀"
                                     max={10}
                                     min={1}
                                     step={0.5}
